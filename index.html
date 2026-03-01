@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luma - Pro-Level Vocal Clarity</title>
+  <title>Luma - AI Noise Removal That Sounds Like You</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,12 +47,14 @@
 
     .text-gradient {
       background: linear-gradient(to bottom right, #ffffff, #a1a1aa);
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .text-gradient-subtle {
       background: linear-gradient(to right, #e4e4e7, #71717a);
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -113,13 +115,18 @@
         <span class="text-xs font-medium tracking-wide text-zinc-300">Waitlist Now Open</span>
       </div>
 
-      <h1 class="text-5xl md:text-7xl font-medium tracking-tight text-white leading-[1.1] md:leading-[1.1]">
-        Pro‑Level Vocal Clarity<br>for Creators
+      <h1
+        class="text-5xl md:text-7xl font-medium tracking-tight text-white leading-[1.1] md:leading-[1.1] text-balance">
+        Noise Removal That Doesn't<br>Make You Sound Like a Robot
       </h1>
 
       <p class="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto font-light leading-relaxed">
-        Eliminate background noise, room echo, and harshness in seconds so your channel always sounds polished and
-        professional.
+        Clean audio in under a minute. No plugins. No subscriptions. No cloud uploads. Luma runs entirely on your Mac
+        so your recording never leaves your machine.
+      </p>
+
+      <p class="text-sm md:text-base text-zinc-500 max-w-2xl mx-auto">
+        Viewers will tolerate average visuals. They will not tolerate fatiguing audio.
       </p>
 
       <div class="w-full max-w-md mx-auto pt-4 flex flex-col items-center gap-4">
@@ -130,11 +137,12 @@
             required="">
           <button type="submit"
             class="bg-white text-black px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-zinc-200 transition-colors flex items-center gap-2 whitespace-nowrap">
-            Join Waitlist
+            Join Early Access
             <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
           </button>
         </form>
-        <p class="text-xs text-zinc-500">First 10 subscribers receive lifetime access for free.</p>
+        <p class="text-xs text-zinc-500">Early access is capped for personal onboarding. One-time purchase positioning,
+          no recurring subscription.</p>
       </div>
 
       <!-- App Preview Placeholder -->
@@ -168,10 +176,10 @@
   <section class="py-24 px-4 border-t border-white/5 bg-black">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white mb-4">Built for Serious YouTube Creators
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white mb-4">Built for Solo Mac Creators
         </h2>
-        <p class="text-zinc-400 max-w-2xl mx-auto">Most “one‑click” tools are an afterthought. This is a dedicated vocal
-          engine for creators who treat sound as part of their brand.</p>
+        <p class="text-zinc-400 max-w-2xl mx-auto">Built for voice recordings made in bedrooms and home offices, where
+          untreated rooms create noise, hum, and listener fatigue.</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -181,9 +189,9 @@
             class="w-10 h-10 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
             <iconify-icon icon="solar:videocamera-record-linear" width="20" stroke-width="1.5"></iconify-icon>
           </div>
-          <h3 class="text-lg font-medium text-white mb-2 tracking-tight">Optimized for Voice</h3>
-          <p class="text-sm text-zinc-400 leading-relaxed">Tailored specifically for talking‑head videos, tutorials, and
-            voiceovers rather than generic audio.</p>
+          <h3 class="text-lg font-medium text-white mb-2 tracking-tight">Your Voice Stays Your Voice</h3>
+          <p class="text-sm text-zinc-400 leading-relaxed">Clean up hiss, hum, and background noise without turning your
+            voice into a synthetic AI version of you.</p>
         </div>
 
         <!-- Feature 2 -->
@@ -192,9 +200,9 @@
             class="w-10 h-10 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
             <iconify-icon icon="solar:home-linear" width="20" stroke-width="1.5"></iconify-icon>
           </div>
-          <h3 class="text-lg font-medium text-white mb-2 tracking-tight">Real-World Tuning</h3>
-          <p class="text-sm text-zinc-400 leading-relaxed">Tuned for real‑world recording spaces: bedrooms, offices,
-            small studios where reflections are common.</p>
+          <h3 class="text-lg font-medium text-white mb-2 tracking-tight">Tuned for Real Rooms</h3>
+          <p class="text-sm text-zinc-400 leading-relaxed">Purpose-built for bedroom and office recordings, not only
+            perfect studio conditions.</p>
         </div>
 
         <!-- Feature 3 -->
@@ -203,9 +211,9 @@
             class="w-10 h-10 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
             <iconify-icon icon="solar:layers-linear" width="20" stroke-width="1.5"></iconify-icon>
           </div>
-          <h3 class="text-lg font-medium text-white mb-2 tracking-tight">Workflow Friendly</h3>
-          <p class="text-sm text-zinc-400 leading-relaxed">Designed to sit alongside your existing editing stack, not
-            replace it. Export and sync in seconds.</p>
+          <h3 class="text-lg font-medium text-white mb-2 tracking-tight">Drag In. Clean. Export.</h3>
+          <p class="text-sm text-zinc-400 leading-relaxed">Fast creator workflow: import your file, pick a profile, and
+            export a polished vocal track in under 60 seconds.</p>
         </div>
       </div>
 
@@ -228,12 +236,13 @@
         <div
           class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/20 bg-purple-500/5 text-purple-300">
           <iconify-icon icon="solar:magic-stick-3-linear" width="14"></iconify-icon>
-          <span class="text-xs font-medium tracking-wide">Core Engine</span>
+          <span class="text-xs font-medium tracking-wide">Local Processing</span>
         </div>
 
-        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white">Powered by Premium<br>AI Models</h2>
-        <p class="text-zinc-400 leading-relaxed">Behind the simple interface is a chain of advanced, production‑grade AI
-          models engineered specifically for voice.</p>
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white">Runs on Your Mac.<br>Sounds Like You.
+        </h2>
+        <p class="text-zinc-400 leading-relaxed">Luma processes your audio locally so you can get clean, natural vocal
+          output without uploading your recordings to a cloud service.</p>
 
         <ul class="space-y-4">
           <li class="flex items-start gap-3">
@@ -241,14 +250,16 @@
               width="20"></iconify-icon>
             <div>
 
-              <span class="text-sm text-zinc-500">Separates your voice from background clutter instantly.</span>
+              <span class="text-sm text-zinc-500">No uploads, no cloud queue, and no external storage of your
+                recordings.</span>
             </div>
           </li>
           <li class="flex items-start gap-3">
             <iconify-icon icon="solar:tuning-4-linear" class="text-white mt-1 shrink-0" width="20"></iconify-icon>
             <div>
 
-              <span class="text-sm text-zinc-500">Reduces room echo while retaining natural tone.</span>
+              <span class="text-sm text-zinc-500">Profile-based cleanup for Bedroom Voiceover, Office Setup, and Podcast
+                Mic workflows.</span>
             </div>
           </li>
           <li class="flex items-start gap-3">
@@ -256,13 +267,14 @@
               width="20"></iconify-icon>
             <div>
 
-              <span class="text-sm text-zinc-500">Adds clarity without sounding processed or robotic.</span>
+              <span class="text-sm text-zinc-500">Voice-first tuning that keeps your tone natural instead of robotic or
+                overprocessed.</span>
             </div>
           </li>
         </ul>
 
         <p class="text-sm text-white pt-4 border-l-2 border-white pl-4">Your viewers hear <span
-            class="font-semibold">you</span>—just cleaner, clearer, and more controlled.</p>
+            class="font-semibold">you</span> - just cleaner, clearer, and easier to listen to.</p>
       </div>
 
       <div class="w-full md:w-1/2 relative">
@@ -342,6 +354,78 @@
     </div>
   </section>
 
+  <!-- Proof Section -->
+  <section class="py-24 px-4 border-t border-white/5 bg-black">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white mb-4">Hear the Difference</h2>
+        <p class="text-zinc-400 max-w-2xl mx-auto">Add your before/after audio samples here to prove natural cleanup
+          quality.
+          This section is intentionally placed before the main CTA.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="glass-panel p-8 rounded-2xl">
+          <span class="text-xs uppercase tracking-[0.2em] text-zinc-500">Before</span>
+          <h3 class="text-xl text-white mt-3 mb-3 tracking-tight">Untreated Room Recording</h3>
+          <p class="text-sm text-zinc-400 mb-5">Background fan noise, room reflections, and listening fatigue.</p>
+          <div
+            class="h-14 rounded-xl border border-white/10 bg-zinc-950/70 flex items-center justify-center text-zinc-500 text-xs">
+            Audio demo placeholder
+          </div>
+        </div>
+
+        <div class="glass-panel p-8 rounded-2xl">
+          <span class="text-xs uppercase tracking-[0.2em] text-zinc-500">After</span>
+          <h3 class="text-xl text-white mt-3 mb-3 tracking-tight">Cleaned with Luma</h3>
+          <p class="text-sm text-zinc-400 mb-5">Cleaner dialogue that still sounds like the original speaker.</p>
+          <div
+            class="h-14 rounded-xl border border-white/10 bg-zinc-950/70 flex items-center justify-center text-zinc-500 text-xs">
+            Audio demo placeholder
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="mt-8 glass-panel rounded-2xl p-6 md:p-8">
+        <p class="text-zinc-300 italic">"I expected the usual AI voice effect. Instead it kept my tone intact and
+          removed the
+          room noise."</p>
+        <p class="text-xs text-zinc-500 mt-3">Early beta creator testimonial placeholder</p>
+      </div> -->
+    </div>
+  </section>
+
+  <!-- Competitive Contrast -->
+  <section class="py-24 px-4 border-t border-white/5 bg-zinc-950/40">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white mb-4">How Luma Compares</h2>
+        <p class="text-zinc-400 max-w-2xl mx-auto">A quick decision guide for creators choosing between browser tools,
+          call-focused apps, and a dedicated local workflow.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-panel p-7 rounded-2xl">
+          <h3 class="text-lg text-white mb-3 tracking-tight">Browser AI Enhancers</h3>
+          <p class="text-sm text-zinc-400">Convenient for quick tests, but often cloud-dependent and less predictable
+            for
+            preserving your natural vocal identity.</p>
+        </div>
+        <div class="glass-panel p-7 rounded-2xl">
+          <h3 class="text-lg text-white mb-3 tracking-tight">Call Noise Apps</h3>
+          <p class="text-sm text-zinc-400">Great for meetings, but usually built around real-time call use cases instead
+            of
+            creator post-production workflows.</p>
+        </div>
+        <div class="glass-panel p-7 rounded-2xl border-white/20">
+          <h3 class="text-lg text-white mb-3 tracking-tight">Luma for Creators</h3>
+          <p class="text-sm text-zinc-400">Local Mac processing, creator-focused room profiles, and one-time-purchase
+            positioning for people who publish every week.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Benefits Section -->
   <section class="py-24 px-4 border-t border-white/5">
     <div class="max-w-4xl mx-auto text-center">
@@ -373,35 +457,39 @@
   <section class="py-24 px-4 border-t border-white/5 bg-zinc-900/20">
     <div class="max-w-5xl mx-auto flex flex-col md:flex-row gap-12 items-center">
       <div class="w-full md:w-1/2">
-        <h2 class="text-3xl font-medium tracking-tight text-white mb-6">Who This Is For</h2>
+        <h2 class="text-3xl font-medium tracking-tight text-white mb-6">Who Luma Is Built For</h2>
         <div class="space-y-4">
           <div class="flex items-center gap-3">
             <div class="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0">
               <iconify-icon icon="solar:check-read-linear" class="text-white" width="12"></iconify-icon>
             </div>
-            <span class="text-zinc-400 text-sm">Creators who record in untreated or semi‑treated rooms.</span>
+            <span class="text-zinc-400 text-sm">Solo Mac creators recording voice in untreated bedrooms or home
+              offices.</span>
           </div>
           <div class="flex items-center gap-3">
             <div class="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0">
               <iconify-icon icon="solar:check-read-linear" class="text-white" width="12"></iconify-icon>
             </div>
-            <span class="text-zinc-400 text-sm">Those who battle hiss, hum, fan noise, or room echo.</span>
+            <span class="text-zinc-400 text-sm">YouTube, podcast, and course creators shipping content every
+              week.</span>
           </div>
           <div class="flex items-center gap-3">
             <div class="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0">
               <iconify-icon icon="solar:check-read-linear" class="text-white" width="12"></iconify-icon>
             </div>
-            <span class="text-zinc-400 text-sm">People wanting pro results without complex audio plugins.</span>
+            <span class="text-zinc-400 text-sm">People who currently use browser enhancers or just accept noisy
+              recordings.</span>
           </div>
           <div class="flex items-center gap-3">
             <div class="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0">
               <iconify-icon icon="solar:check-read-linear" class="text-white" width="12"></iconify-icon>
             </div>
-            <span class="text-zinc-400 text-sm">Anyone caring about delivering a premium experience.</span>
+            <span class="text-zinc-400 text-sm">Creators who want clean results without learning complex audio plugin
+              chains.</span>
           </div>
         </div>
-        <p class="mt-8 text-white font-medium text-sm">If audio quality is part of your competitive edge, this product
-          is for you.</p>
+        <p class="mt-8 text-white font-medium text-sm">If your voice is your product, your cleanup workflow should be
+          fast, local, and reliable.</p>
       </div>
       <div
         class="w-full md:w-1/2 h-64 rounded-2xl bg-gradient-to-br from-zinc-800 to-black border border-white/5 flex items-center justify-center">
@@ -417,13 +505,13 @@
         class="w-16 h-16 bg-zinc-900 rounded-full border border-white/10 mx-auto mb-6 flex items-center justify-center">
         <iconify-icon icon="solar:user-linear" class="text-zinc-400" width="24"></iconify-icon>
       </div>
-      <h2 class="text-2xl font-medium tracking-tight text-white mb-4">Built by an Audio‑Focused Indie Developer</h2>
+      <h2 class="text-2xl font-medium tracking-tight text-white mb-4">Built by an Audio-Focused Indie Developer</h2>
       <p class="text-zinc-400 leading-relaxed mb-6">
-        This is not a generic, all‑purpose “AI toolkit.” It is a focused product built by a developer with deep
-        experience in audio and a singular goal: make your vocal chain sound like it belongs in a professional studio.
+        Luma is a focused creator tool, not an all-purpose AI bundle. The product direction is simple: natural-sounding
+        voice cleanup, local processing, and a workflow that respects your time.
       </p>
       <p class="text-sm text-zinc-500 italic">
-        Early users will have direct influence on the roadmap, feature priorities, and presets.
+        Early users shape profile tuning, roadmap priorities, and release quality before public launch.
       </p>
     </div>
   </section>
@@ -435,34 +523,40 @@
     </div>
     <div
       class="max-w-3xl mx-auto text-center bg-zinc-900/30 p-8 md:p-12 rounded-3xl border border-white/10 backdrop-blur-xl">
-      <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-white mb-6">Early Access &amp; Special Offer</h2>
-      <p class="text-zinc-400 mb-8 max-w-lg mx-auto">I’m opening access in stages to ensure a high‑quality experience
-        and tight feedback loop.</p>
+      <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-white mb-6">Early Access With Hands-On Onboarding
+      </h2>
+      <p class="text-zinc-400 mb-8 max-w-lg mx-auto">Access opens in small cohorts so each creator gets direct
+        onboarding,
+        high-quality support, and a fast feedback loop.</p>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 text-left">
         <div class="bg-black/40 border border-white/5 p-4 rounded-xl">
-          <span class="block text-white font-medium mb-1">First 10</span>
-          <span class="text-xs text-zinc-400">Receive lifetime access for free.</span>
+          <span class="block text-white font-medium mb-1">Founding Cohort</span>
+          <span class="text-xs text-zinc-400">First 10 receive the deepest onboarding and founding pricing terms.</span>
         </div>
         <div class="bg-black/40 border border-white/5 p-4 rounded-xl">
-          <span class="block text-white font-medium mb-1">Next 50</span>
-          <span class="text-xs text-zinc-400">Receive an exclusive early‑adopter discount.</span>
+          <span class="block text-white font-medium mb-1">Creator Cohort</span>
+          <span class="text-xs text-zinc-400">Next 50 receive early-adopter pricing and priority onboarding.</span>
         </div>
         <div class="bg-black/40 border border-white/5 p-4 rounded-xl">
-          <span class="block text-white font-medium mb-1">Waitlist</span>
-          <span class="text-xs text-zinc-400">Priority access and founding pricing.</span>
+          <span class="block text-white font-medium mb-1">General Waitlist</span>
+          <span class="text-xs text-zinc-400">Priority release updates and access order as capacity opens.</span>
         </div>
       </div>
 
-      <form id="waitlist-form" class="max-w-md mx-auto space-y-4">
+      <p class="text-xs text-zinc-500 mb-8">Positioned as a one-time purchase product, with optional paid upgrades in
+        future major versions.</p>
+
+      <form id="waitlist-form" class="max-w-lg mx-auto space-y-4">
         <div class="flex flex-col md:flex-row gap-2">
           <input type="email" placeholder="name@example.com"
             class="flex-1 bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-white/30 transition-colors">
           <button type="submit"
             class="bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-zinc-200 transition-colors">Join
-            Waitlist</button>
+            Early Access</button>
         </div>
-        <p class="text-xs text-zinc-600">“No spam. You’ll only hear from me when there’s something worth sharing.”</p>
+        <p class="text-xs text-zinc-600">No spam. You'll hear about cohort openings, launch timing, and onboarding
+          details only.</p>
       </form>
     </div>
   </section>
@@ -477,27 +571,27 @@
   </footer>
 
 
-<script>
-  async function handleWaitlistSubmit(event) {
-    event.preventDefault();
-    const form = event.target;
-    const email = form.querySelector('input[type="email"]').value;
-    try {
-      const res = await fetch('/api/hello', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-      const data = await res.json();
-      alert(data.success ? 'Success! You\'re on the waitlist.' : 'Error. Please try again.');
-    } catch (e) {
-      alert('Error. Please try again.');
+  <script>
+    async function handleWaitlistSubmit(event) {
+      event.preventDefault();
+      const form = event.target;
+      const email = form.querySelector('input[type="email"]').value;
+      try {
+        const res = await fetch('/api/hello', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        alert(data.success ? 'Success! You\'re on the waitlist.' : 'Error. Please try again.');
+      } catch (e) {
+        alert('Error. Please try again.');
+      }
     }
-  }
 
-  document.getElementById('hero-form').addEventListener('submit', handleWaitlistSubmit);
-  document.getElementById('waitlist-form').addEventListener('submit', handleWaitlistSubmit);
-</script>
+    document.getElementById('hero-form').addEventListener('submit', handleWaitlistSubmit);
+    document.getElementById('waitlist-form').addEventListener('submit', handleWaitlistSubmit);
+  </script>
 
 </body>
 
