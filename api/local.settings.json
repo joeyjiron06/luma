@@ -2,6 +2,11 @@
   "IsEncrypted": false,
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "node",
-    "AzureWebJobsFeatureFlags": "EnableWorkerIndexing"
+    "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
+    "RESEND_API_KEY": "",
+    "RESEND_AUDIENCE_ID": "",
+    "RESEND_FROM_EMAIL": "Luma <onboarding@resend.dev>",
+    "WAITLIST_TOKEN_SECRET": "",
+    "WAITLIST_TOKEN_TTL_SECONDS": "86400"
   }
 }
