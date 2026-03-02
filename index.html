@@ -72,6 +72,37 @@
       mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
       -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
     }
+
+    .waitlist-submit {
+      position: relative;
+    }
+
+    .waitlist-submit[aria-busy="true"] {
+      cursor: wait;
+    }
+
+    .waitlist-submit[aria-busy="true"] [data-button-label] {
+      visibility: hidden;
+    }
+
+    .waitlist-submit [data-button-spinner] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 150ms ease;
+    }
+
+    .waitlist-submit[aria-busy="true"] [data-button-spinner] {
+      opacity: 1;
+    }
+
+    .waitlist-popover {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
   </style>
 </head>
 
@@ -129,21 +160,35 @@
         Viewers will tolerate average visuals. They will not tolerate fatiguing audio.
       </p>
 
-      <div class="w-full max-w-md mx-auto pt-4 flex flex-col items-center gap-4">
-        <form id="hero-form"
+      <form id="hero-form" class="w-full max-w-md mx-auto pt-4 flex flex-col items-center gap-4">
+        <div
           class="flex w-full gap-2 p-1 bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm focus-within:ring-1 focus-within:ring-white/20 transition-all">
           <input type="email" placeholder="Enter your email"
             class="flex-1 bg-transparent border-none focus:outline-none px-4 py-3 text-sm text-white placeholder-zinc-500"
             required="">
-          <button type="submit"
-            class="bg-white text-black px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-zinc-200 transition-colors flex items-center gap-2 whitespace-nowrap">
-            Join Early Access
-            <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
-          </button>
-        </form>
+          <div class="relative shrink-0">
+            <button type="submit" data-waitlist-submit aria-busy="false"
+              class="waitlist-submit bg-white text-black px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-zinc-200 transition-colors inline-flex items-center justify-center whitespace-nowrap disabled:opacity-80">
+              <span data-button-label class="inline-flex items-center gap-2">
+                <span>Join Early Access</span>
+                <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
+              </span>
+              <span data-button-spinner
+                class="h-4 w-4 rounded-full border-2 border-black/80 border-t-transparent animate-spin"
+                aria-hidden="true"></span>
+            </button>
+            <div data-waitlist-popover
+              class="waitlist-popover hidden px-2.5 py-1 rounded-md text-xs bg-zinc-100 text-zinc-900 shadow-lg border border-zinc-300/60"
+              role="status" aria-live="polite">
+              Check your email
+            </div>
+          </div>
+        </div>
+        <p data-waitlist-error class="hidden text-xs text-red-300"></p>
+
         <p class="text-xs text-zinc-500">Early access is capped for personal onboarding. One-time purchase positioning,
           no recurring subscription.</p>
-      </div>
+      </form>
 
       <!-- App Preview Placeholder -->
       <div
@@ -550,11 +595,24 @@
       <form id="waitlist-form" class="max-w-lg mx-auto space-y-4">
         <div class="flex flex-col md:flex-row gap-2">
           <input type="email" placeholder="name@example.com"
-            class="flex-1 bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-white/30 transition-colors">
-          <button type="submit"
-            class="bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-zinc-200 transition-colors">Join
-            Early Access</button>
+            class="flex-1 bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-white/30 transition-colors"
+            required="">
+          <div class="relative">
+            <button type="submit" data-waitlist-submit aria-busy="false"
+              class="waitlist-submit bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-zinc-200 transition-colors inline-flex items-center justify-center whitespace-nowrap disabled:opacity-80">
+              <span data-button-label>Join Early Access</span>
+              <span data-button-spinner
+                class="h-4 w-4 rounded-full border-2 border-black/80 border-t-transparent animate-spin"
+                aria-hidden="true"></span>
+            </button>
+            <div data-waitlist-popover
+              class="waitlist-popover hidden px-2.5 py-1 rounded-md text-xs bg-zinc-100 text-zinc-900 shadow-lg border border-zinc-300/60"
+              role="status" aria-live="polite">
+              Check your email
+            </div>
+          </div>
         </div>
+        <p data-waitlist-error class="hidden text-xs text-red-300 text-left md:text-right"></p>
         <p class="text-xs text-zinc-600">No spam. You'll hear about cohort openings, launch timing, and onboarding
           details only.</p>
       </form>
@@ -572,25 +630,96 @@
 
 
   <script>
+    const popoverTimers = new WeakMap();
+
+    function setSubmitButtonLoading(button, isLoading) {
+      button.setAttribute('aria-busy', isLoading ? 'true' : 'false');
+      button.disabled = isLoading;
+    }
+
+    function hidePopover(popover) {
+      const existingTimer = popoverTimers.get(popover);
+      if (existingTimer) {
+        clearTimeout(existingTimer);
+        popoverTimers.delete(popover);
+      }
+      popover.classList.add('hidden');
+    }
+
+    function showPopover(popover) {
+      hidePopover(popover);
+      popover.classList.remove('hidden');
+
+      const timerId = setTimeout(() => {
+        popover.classList.add('hidden');
+        popoverTimers.delete(popover);
+      }, 4000);
+
+      popoverTimers.set(popover, timerId);
+    }
+
+    function setFormError(errorEl, message) {
+      if (!message) {
+        errorEl.textContent = '';
+        errorEl.classList.add('hidden');
+        return;
+      }
+
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
+    }
+
     async function handleWaitlistSubmit(event) {
       event.preventDefault();
       const form = event.target;
-      const email = form.querySelector('input[type="email"]').value;
+      const emailInput = form.querySelector('input[type="email"]');
+      const submitButton = form.querySelector('[data-waitlist-submit]');
+      const popover = form.querySelector('[data-waitlist-popover]');
+      const errorEl = form.querySelector('[data-waitlist-error]');
+      const email = emailInput.value.trim();
+
+      if (submitButton.getAttribute('aria-busy') === 'true') {
+        return;
+      }
+
+      setFormError(errorEl, '');
+      hidePopover(popover);
+      setSubmitButtonLoading(submitButton, true);
+
       try {
-        const res = await fetch('/api/hello', {
+        const res = await fetch('/api/waitlist-subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email })
         });
-        const data = await res.json();
-        alert(data.success ? 'Success! You\'re on the waitlist.' : 'Error. Please try again.');
+
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && data.success) {
+          form.reset();
+          showPopover(popover);
+          return;
+        }
+
+        setFormError(errorEl, data.message || 'Could not join the waitlist. Please try again.');
       } catch (e) {
-        alert('Error. Please try again.');
+        setFormError(errorEl, 'Network error. Please try again.');
+      } finally {
+        setSubmitButtonLoading(submitButton, false);
       }
     }
 
     document.getElementById('hero-form').addEventListener('submit', handleWaitlistSubmit);
     document.getElementById('waitlist-form').addEventListener('submit', handleWaitlistSubmit);
+
+    document.querySelectorAll('#hero-form, #waitlist-form').forEach((form) => {
+      const input = form.querySelector('input[type="email"]');
+      const errorEl = form.querySelector('[data-waitlist-error]');
+      const popover = form.querySelector('[data-waitlist-popover]');
+
+      input.addEventListener('input', () => setFormError(errorEl, ''));
+      input.addEventListener('focus', () => hidePopover(popover));
+    });
   </script>
 
 </body>
