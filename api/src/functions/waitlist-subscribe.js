@@ -46,6 +46,11 @@ function createConfirmationEmailHtml(confirmUrl) {
 }
 
 function getRequestBaseUrl(request) {
+  const origin = request.headers.get('origin');
+  if (origin) {
+    return origin;
+  }
+  
   try {
     const parsed = new URL(request.url);
     if (parsed.origin && parsed.origin !== 'null') {
