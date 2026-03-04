@@ -5,7 +5,6 @@ import path from "node:path";
 import fs from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
-// @ts-expect-error process is a nodejs global
 const host = process.env.TAURI_DEV_HOST;
 
 const currentFile = fileURLToPath(import.meta.url);
@@ -20,19 +19,20 @@ const deepFilterLocalAssetPlugin = {
   configureServer(server: import("vite").ViteDevServer) {
     server.middlewares.use(async (req, res, next) => {
       const reqUrl = req.url ?? "";
-      const mapping: Record<string, { filePath: string; contentType: string }> = {
-        "/deepfilter-local/pkg/df_bg.wasm": {
-          filePath: path.join(deepFilterPublicRoot, "pkg/df_bg.wasm"),
-          contentType: "application/wasm",
-        },
-        "/deepfilter-local/models/DeepFilterNet3_onnx.tar.gz": {
-          filePath: path.join(
-            deepFilterPublicRoot,
-            "models/DeepFilterNet3_onnx.tar.gz"
-          ),
-          contentType: "application/gzip",
-        },
-      };
+      const mapping: Record<string, { filePath: string; contentType: string }> =
+        {
+          "/deepfilter-local/pkg/df_bg.wasm": {
+            filePath: path.join(deepFilterPublicRoot, "pkg/df_bg.wasm"),
+            contentType: "application/wasm",
+          },
+          "/deepfilter-local/models/DeepFilterNet3_onnx.tar.gz": {
+            filePath: path.join(
+              deepFilterPublicRoot,
+              "models/DeepFilterNet3_onnx.tar.gz"
+            ),
+            contentType: "application/gzip",
+          },
+        };
 
       const asset = mapping[reqUrl];
       if (!asset) {
@@ -71,6 +71,8 @@ export default defineConfig(async () => ({
     headers: {
       "Cross-Origin-Opener-Policy": "same-origin",
       "Cross-Origin-Embedder-Policy": "require-corp",
+      "Cross-Origin-Resource-Policy": "cross-origin",
+      "Access-Control-Allow-Origin": "*",
     },
     hmr: host
       ? {

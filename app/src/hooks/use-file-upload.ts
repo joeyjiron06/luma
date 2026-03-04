@@ -37,6 +37,9 @@ export type FileUploadState = {
   files: FileWithPreview[];
   isDragging: boolean;
   errors: string[];
+  output: string;
+  format: string;
+  outputFolder: string;
 };
 
 export type FileUploadActions = {
@@ -50,6 +53,9 @@ export type FileUploadActions = {
   handleDrop: (e: DragEvent<HTMLElement>) => void;
   handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
   openFileDialog: () => void;
+  setOutput: (output: string) => void;
+  setFormat: (format: string) => void;
+  setOutputFolder: (outputFolder: string) => void;
   getInputProps: (
     props?: InputHTMLAttributes<HTMLInputElement>,
   ) => InputHTMLAttributes<HTMLInputElement> & {
@@ -80,6 +86,9 @@ export const useFileUpload = (
       preview: file.url,
     })),
     isDragging: false,
+    output: "enhanced",
+    format: "same-as-input",
+    outputFolder: "same-as-input",
   });
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -366,6 +375,18 @@ export const useFileUpload = (
     }
   }, []);
 
+  const setOutput = useCallback((output: string) => {
+    setState((prev) => ({ ...prev, output }));
+  }, []);
+
+  const setFormat = useCallback((format: string) => {
+    setState((prev) => ({ ...prev, format }));
+  }, []);
+
+  const setOutputFolder = useCallback((outputFolder: string) => {
+    setState((prev) => ({ ...prev, outputFolder }));
+  }, []);
+
   const getInputProps = useCallback(
     (props: InputHTMLAttributes<HTMLInputElement> = {}) => {
       return {
@@ -396,6 +417,9 @@ export const useFileUpload = (
       handleFileChange,
       openFileDialog,
       removeFile,
+      setOutput,
+      setFormat,
+      setOutputFolder,
     },
   ];
 };

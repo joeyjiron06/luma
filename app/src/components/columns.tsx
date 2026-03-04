@@ -1,36 +1,26 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
 import {
-  DownloadIcon,
-  Trash2Icon,
   Loader2,
   MusicIcon
 } from "lucide-react"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 
 export interface ProcessedFile {
   id: string;
   file: File;
   status: "queued" | "processing" | "completed" | "error";
   originalName: string;
-  outputUrl?: string;
   outputName?: string;
-  format?: "wav";
+  outputPath?: string;
+  format?: string;
   durationSec?: number;
   error?: string;
   timestamp: number;
 }
 
-interface ColumnsProps {
-  handleRemoveItem: (id: string) => void;
-  handleDownloadItem: (id: string) => void;
-}
-
-export const getColumns = ({
-  handleRemoveItem,
-  handleDownloadItem,
-}: ColumnsProps): ColumnDef<ProcessedFile>[] => [
+export const getColumns = (): ColumnDef<ProcessedFile>[] => [
   {
     accessorKey: "originalName",
     header: "Name",
@@ -59,7 +49,7 @@ export const getColumns = ({
     },
   },
   {
-    accessorKey: "duration",
+    accessorKey: "durationSec",
     header: "Duration",
     cell: ({ row }) => {
       const duration = row.original.durationSec;
@@ -75,38 +65,30 @@ export const getColumns = ({
   },
   {
     accessorKey: "format",
-    header: "Format",
+    header: "Output Format",
     cell: ({ row }) => (
       <span className="text-muted-foreground">{row.original.format ?? "--"}</span>
     ),
   },
   {
-    id: "actions",
+    accessorKey: "outputName",
+    header: "Output File",
     cell: ({ row }) => {
       const item = row.original
+      if (!item.outputName) {
+        return <span className="text-muted-foreground">--</span>
+      }
       return (
-        <div className="flex items-center justify-end gap-2">
-            {item.status === 'completed' && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="size-8"
-                  title="Download"
-                  onClick={() => handleDownloadItem(item.id)}
-                >
-                    <DownloadIcon className="size-4" />
-                </Button>
-            )}
-            <Button
-                variant="ghost"
-                size="icon"
-                className="size-8 hover:text-destructive"
-                onClick={() => handleRemoveItem(item.id)}
-                title="Remove"
-            >
-                <Trash2Icon className="size-4" />
-            </Button>
-        </div>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span className="inline-block max-w-60 truncate cursor-default text-muted-foreground">
+              {item.outputName}
+            </span>
+          </TooltipTrigger>
+          <TooltipContent>
+            {item.outputPath ?? item.outputName}
+          </TooltipContent>
+        </Tooltip>
       )
     },
   },
