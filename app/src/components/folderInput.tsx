@@ -1,23 +1,3 @@
-import { useId } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
-
-type Props = {
-  label: string;
-  className?: string;
-}
-
-export default function Component({ label, className }: Props) {
-  const id = useId();
-  return (
-    <div className={cn("*:not-first:mt-2", className)}>
-      <Label htmlFor={id}>{label}</Label>
-      <Input
-        className="p-0 pe-3 file:me-3 file:border-0 file:border-e"
-        id={id}
-        type="file"
-      />
-    </div>
-  );
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:98e133b5f2741ba7b5583937488cde685bb12acfd09f1f9506369e3e61e7bb16
+size 556

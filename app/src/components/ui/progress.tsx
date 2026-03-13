@@ -1,25 +1,3 @@
-import * as React from "react"
-
-import { cn } from "@/lib/utils"
-
-const Progress = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { value?: number }
->(({ className, value, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "relative h-2 w-full overflow-hidden rounded-full bg-secondary",
-      className
-    )}
-    {...props}
-  >
-    <div
-      className="h-full w-full flex-1 bg-primary transition-all"
-      style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
-    />
-  </div>
-))
-Progress.displayName = "Progress"
-
-export { Progress }
+version https://git-lfs.github.com/spec/v1
+oid sha256:1370fed249bed9e6fa70118f432fc1c14eb72d628acd4d313917279d290e5385
+size 592

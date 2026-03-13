@@ -1,11 +1,3 @@
-# Tauri + React + Typescript
-
-This template should help get you started developing with Tauri, React and Typescript in Vite.
-
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
-
-## Links
-
-Inspiration - https://github.com/Rikorose/DeepFilterNet
+version https://git-lfs.github.com/spec/v1
+oid sha256:76ca1ba4988ff40b3ddd32aaeb6f68220c9da5d293ffe43c03befba0daae5149
+size 531
