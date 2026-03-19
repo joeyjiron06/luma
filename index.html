@@ -8,8 +8,17 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Ledger&display=swap"
+    rel="stylesheet">
+
+  <style type="text/tailwindcss">
+    @theme {
+      --font-serif: "Ledger", sans-serif;
+    }
+  </style>
+
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -19,6 +28,77 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
+
+    /* From Uiverse.io by kennyotsu-monochromia */
+    .shiny-button {
+      --black: #000000;
+      --ch-black: #141414;
+      --eer-black: #1b1b1b;
+      --night-rider: #2e2e2e;
+      --white: #ffffff;
+      --af-white: #f3f3f3;
+      --ch-white: #e1e1e1;
+      border-radius: 8px;
+      /* height: 40px; */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      /* padding: var(--spacing-3) var(--spacing-4); */
+      border: none;
+      /* color: white; */
+      position: relative;
+      cursor: pointer;
+      font-weight: 700;
+      transition-duration: .2s;
+      /* background-color: var(--ch-black); */
+
+      background-color: var(--ch-white);
+      color: var(--color-black);
+      font-weight: 700;
+      font-size: var(--text-sm);
+      white-space: nowrap;
+      /* bg-white text-black px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-zinc-200 transition-colors inline-flex items-center justify-center whitespace-nowrap disabled:opacity-80  */
+
+    }
+
+    .shiny-button:before,
+    .shiny-button:after {
+      content: '';
+      position: absolute;
+      left: -2px;
+      top: -2px;
+      border-radius: 10px;
+      background: linear-gradient(45deg,
+          var(--ch-black), var(--eer-black),
+          var(--night-rider), var(--ch-white), var(--night-rider),
+          var(--eer-black), var(--ch-black), var(--ch-black));
+      background-size: 400%;
+      width: calc(100% + 4px);
+      height: calc(100% + 4px);
+      z-index: -1;
+      animation: steam 20s linear infinite;
+    }
+
+    @keyframes steam {
+      0% {
+        background-position: 0 0;
+      }
+
+      50% {
+        background-position: 400% 0;
+      }
+
+      100% {
+        background-position: 0 0;
+      }
+    }
+
+    .shiny-button:after {
+      filter: blur(50px);
+    }
+
+
 
     /* Custom scrollbar for webkit */
     ::-webkit-scrollbar {
@@ -47,14 +127,12 @@
 
     .text-gradient {
       background: linear-gradient(to bottom right, #ffffff, #a1a1aa);
-      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .text-gradient-subtle {
       background: linear-gradient(to right, #e4e4e7, #71717a);
-      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -109,13 +187,13 @@
 <body class="bg-black text-zinc-300 selection:bg-white/20 selection:text-white relative">
 
   <!-- Nav -->
-  <nav
-    class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center bg-black/50 backdrop-blur-md border-b border-white/5">
+  <nav id="main-nav"
+    class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center border-b border-transparent transition-all duration-300">
     <div class="flex items-center gap-2">
       <div class="w-6 h-6 bg-white rounded-md flex items-center justify-center text-black">
         <iconify-icon icon="solar:soundwave-linear" width="16" height="16" stroke-width="1.5"></iconify-icon>
       </div>
-      <span class="font-medium tracking-tighter text-white text-lg">Luma (beta)</span>
+      <span class="font-medium tracking-tighter text-white text-lg">Luma</span>
     </div>
     <a href="#waitlist"
       class="hidden md:inline-flex text-xs font-medium text-white bg-white/10 border border-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition-colors tracking-wide">
@@ -126,14 +204,10 @@
   <!-- Hero Section -->
   <section
     class="min-h-screen flex flex-col overflow-hidden text-center pt-20 pr-4 pl-4 relative items-center justify-center">
-    <!-- Aura Background Component -->
+    <!-- Aura Background Component (Converted to OGL Gradient Blinds) -->
     <div class="aura-background-component top-0 w-full h-screen absolute pointer-events-none" data-alpha-mask="100"
       style="mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)">
-      <div data-us-project="ZPruWnhzwuk5Tf6nc1q0" data-us-primary-color="#ff0000"
-        class="absolute w-full h-full left-0 top-0 -z-10 opacity-60"></div>
-      <script type="text/javascript">
-        !function () { if (!window.UnicornStudio) { window.UnicornStudio = { isInitialized: !1 }; var i = document.createElement("script"); i.src = "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js", i.onload = function () { window.UnicornStudio.isInitialized || (UnicornStudio.init(), window.UnicornStudio.isInitialized = !0) }, (document.head || document.body).appendChild(i) } }();
-      </script>
+      <div id="gradient-blinds" class="absolute w-full h-full left-0 top-0 -z-10 opacity-40"></div>
     </div>
 
     <div class="relative z-10 max-w-4xl mx-auto space-y-8 mt-10">
@@ -147,28 +221,34 @@
       </div>
 
       <h1
-        class="text-5xl md:text-7xl font-medium tracking-tight text-white leading-[1.1] md:leading-[1.1] text-balance">
-        Noise Removal That Doesn't<br>Make You Sound Like a Robot
+        class="text-5xl md:text-7xl font-medium tracking-tight text-white leading-[1.1] md:leading-[1.1] text-balance font-serif">
+        <!-- Studio quality speech -->
+        Remove Background Noise
+
+        From Any <span class="word-cycler">
+          <span class="cycling-word active text-violet-500" style="grid-area: word;">Podcast</span>
+          <span class="cycling-word text-green-500" style="grid-area: word;">Video</span>
+          <span class="cycling-word text-blue-500" style="grid-area: word;">Audio</span>
+        </span>
       </h1>
 
-      <p class="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto font-light leading-relaxed">
-        Clean audio in under a minute. No plugins. No subscriptions. No cloud uploads. Luma runs entirely on your Mac
-        so your recording never leaves your machine.
+      <p class="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+        Using luma on your mac, you can turn your audio into crisp clear speech. Perfect for film, podcast, and
+        interview post production.
       </p>
 
       <p class="text-sm md:text-base text-zinc-500 max-w-2xl mx-auto">
         Viewers will tolerate average visuals. They will not tolerate fatiguing audio.
       </p>
 
-      <form id="hero-form" class="w-full max-w-md mx-auto pt-4 flex flex-col items-center gap-4">
-        <div
+      <div class="w-full max-w-md mx-auto pt-4 flex flex-col items-center gap-4">
+        <form
           class="flex w-full gap-2 p-1 bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm focus-within:ring-1 focus-within:ring-white/20 transition-all">
           <input type="email" placeholder="Enter your email"
             class="flex-1 bg-transparent border-none focus:outline-none px-4 py-3 text-sm text-white placeholder-zinc-500"
             required="">
           <div class="relative shrink-0">
-            <button type="submit" data-waitlist-submit aria-busy="false"
-              class="waitlist-submit bg-white text-black px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-zinc-200 transition-colors inline-flex items-center justify-center whitespace-nowrap disabled:opacity-80">
+            <button type="submit" data-waitlist-submit aria-busy="false" class="waitlist-submit shiny-button px-4 py-3">
               <span data-button-label class="inline-flex items-center gap-2">
                 <span>Join Early Access</span>
                 <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
@@ -183,35 +263,18 @@
               Check your email
             </div>
           </div>
-        </div>
-        <p data-waitlist-error class="hidden text-xs text-red-300"></p>
+      </div>
+      <p data-waitlist-error class="hidden text-xs text-red-300"></p>
 
-        <p class="text-xs text-zinc-500">Early access is capped for personal onboarding. One-time purchase positioning,
-          no recurring subscription.</p>
+      <p class="text-xs text-zinc-500">Your email is never shared. We'll only send you updates about the product.</p>
       </form>
 
       <!-- App Preview Placeholder -->
       <div
-        class="mt-16 relative w-full aspect-[16/10] bg-zinc-900/40 rounded-t-xl border-t border-x border-white/10 backdrop-blur-xl shadow-2xl overflow-hidden fade-mask-b">
+        class="mt-16 relative w-full aspect-video bg-zinc-900/40 rounded-t-xl backdrop-blur-xl shadow-2xl overflow-hidden fade-mask-b">
+        <!-- class="mt-16 relative w-full aspect-video bg-zinc-900/40 rounded-t-xl border-t border-x border-white/10 backdrop-blur-xl shadow-2xl overflow-hidden fade-mask-b" -->
         <div class="absolute inset-0 flex items-center justify-center">
-          <div class="w-3/4 h-1/2 flex items-center justify-center gap-1">
-            <!-- Abstract waveform visualization -->
-            <div class="w-1 h-8 bg-zinc-700 rounded-full animate-pulse"></div>
-            <div class="w-1 h-12 bg-zinc-600 rounded-full animate-pulse" style="animation-delay: 0.1s"></div>
-            <div class="w-1 h-16 bg-zinc-500 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
-            <div class="w-1 h-24 bg-white/80 rounded-full animate-pulse" style="animation-delay: 0.3s"></div>
-            <div class="w-1 h-14 bg-zinc-500 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
-            <div class="w-1 h-8 bg-zinc-700 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
-            <div class="w-1 h-4 bg-zinc-800 rounded-full animate-pulse" style="animation-delay: 0.6s"></div>
-          </div>
-        </div>
-        <!-- UI Header -->
-        <div class="absolute top-0 w-full h-8 bg-white/5 border-b border-white/5 flex items-center px-4 gap-2">
-          <div class="flex gap-1.5">
-            <div class="w-2.5 h-2.5 rounded-full bg-zinc-600"></div>
-            <div class="w-2.5 h-2.5 rounded-full bg-zinc-600"></div>
-            <div class="w-2.5 h-2.5 rounded-full bg-zinc-600"></div>
-          </div>
+          <img src="assets/images/app.png" alt="App Preview" class="w-full h-full origin object-cover object-top" />
         </div>
       </div>
     </div>
@@ -262,11 +325,50 @@
         </div>
       </div>
 
-      <div class="mt-12 text-center">
-        <a href="#waitlist"
-          class="text-sm text-white border-b border-white/30 hover:border-white pb-0.5 transition-all">Get on the
-          Waitlist</a>
+      <div
+        class="absolute -left-20 bottom-32 glass-panel p-5 rounded-2xl hidden xl:block shadow-2xl border-white/10 backdrop-blur-2xl">
+        <div class="text-[10px] uppercase tracking-[0.2em] text-zinc-500 mb-4 font-bold">Enhancement</div>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-6 rounded-full bg-zinc-800 border border-white/10 relative cursor-pointer group">
+            <div
+              class="absolute right-1 top-1 w-4 h-4 rounded-full bg-white shadow-[0_0_10px_white] group-hover:scale-110 transition-transform">
+            </div>
+          </div>
+          <span class="text-[10px] text-zinc-300 font-medium tracking-wide">Deep Clean</span>
+        </div>
       </div>
+
+      <!-- Right Side -->
+      <div
+        class="absolute -right-20 top-32 glass-panel p-5 rounded-2xl hidden xl:block shadow-2xl border-white/10 backdrop-blur-2xl">
+        <div class="text-[10px] uppercase tracking-[0.2em] text-zinc-500 mb-4 font-bold">Vocal Texture</div>
+        <div class="grid grid-cols-2 gap-3">
+          <div
+            class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer group">
+            <iconify-icon icon="solar:tuning-square-linear" class="text-zinc-500 group-hover:text-white"
+              width="22"></iconify-icon>
+          </div>
+          <div
+            class="w-11 h-11 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.05)] cursor-pointer">
+            <iconify-icon icon="solar:music-note-linear" class="text-white" width="22"></iconify-icon>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="absolute -right-16 bottom-20 glass-panel p-5 rounded-2xl hidden xl:block shadow-2xl border-white/10 backdrop-blur-2xl">
+        <div class="text-[10px] uppercase tracking-[0.2em] text-zinc-500 mb-4 font-bold">Loudness Target</div>
+        <div class="space-y-3">
+          <div class="h-1.5 w-32 bg-zinc-900 rounded-full overflow-hidden border border-white/5">
+            <div class="h-full w-4/5 bg-linear-to-r from-zinc-700 to-zinc-300"></div>
+          </div>
+          <div class="flex justify-between text-[10px] text-zinc-500 font-mono">
+            <span class="font-bold">-14.0 LUFS</span>
+            <iconify-icon icon="solar:check-read-linear" class="text-emerald-500" width="14"></iconify-icon>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   </section>
 
@@ -281,7 +383,7 @@
         <div
           class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/20 bg-purple-500/5 text-purple-300">
           <iconify-icon icon="solar:magic-stick-3-linear" width="14"></iconify-icon>
-          <span class="text-xs font-medium tracking-wide">Local Processing</span>
+          <span class="text-xs font-medium tracking-wide">Core Engine</span>
         </div>
 
         <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white">Runs on Your Mac.<br>Sounds Like You.
@@ -295,8 +397,7 @@
               width="20"></iconify-icon>
             <div>
 
-              <span class="text-sm text-zinc-500">No uploads, no cloud queue, and no external storage of your
-                recordings.</span>
+              <span class="text-sm text-zinc-500">Separates your voice from background clutter instantly.</span>
             </div>
           </li>
           <li class="flex items-start gap-3">
@@ -351,7 +452,8 @@
   <!-- How It Works Section -->
   <section class="py-24 px-4 border-t border-white/5 bg-zinc-950/50">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white text-center mb-16">How It Works</h2>
+      <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white text-center mb-16 font-serif">How It Works
+      </h2>
 
       <div class="relative grid grid-cols-1 md:grid-cols-3 gap-12">
         <!-- Connecting Line (Desktop) -->
@@ -364,7 +466,7 @@
             class="w-12 h-12 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center text-white text-lg font-medium mb-6 mx-auto md:mx-0 z-10 relative">
             1</div>
           <div class="text-center md:text-left">
-            <h3 class="text-xl font-medium text-white mb-3 tracking-tight">Record as you normally do</h3>
+            <h3 class="text-xl font-medium text-white mb-3 tracking-tight font-serif">Record as you normally do</h3>
             <p class="text-sm text-zinc-400">Import your video or audio file directly from your camera, editor, or
               recorder.</p>
           </div>
@@ -376,9 +478,8 @@
             class="w-12 h-12 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center text-white text-lg font-medium mb-6 mx-auto md:mx-0 z-10 relative">
             2</div>
           <div class="text-center md:text-left">
-            <h3 class="text-xl font-medium text-white mb-3 tracking-tight">Choose your profile</h3>
-            <p class="text-sm text-zinc-400">Select a tailored preset such as “Bedroom Voiceover,” “Office Setup,” or
-              “Podcast Mic.”</p>
+            <h3 class="text-xl font-medium text-white mb-3 tracking-tight font-serif">Process with Luma</h3>
+            <p class="text-sm text-zinc-400">Drop your files into Luma and let it do the magic.</p>
           </div>
         </div>
 
@@ -388,8 +489,9 @@
             class="w-12 h-12 rounded-full bg-white text-black border border-white flex items-center justify-center text-lg font-medium mb-6 mx-auto md:mx-0 z-10 relative">
             3</div>
           <div class="text-center md:text-left">
-            <h3 class="text-xl font-medium text-white mb-3 tracking-tight">Export, sync, publish</h3>
-            <p class="text-sm text-zinc-400 mb-4">Download the cleaned track, drop it into your editor, and publish with
+            <h3 class="text-xl font-medium text-white mb-3 tracking-tight font-serif">Export, sync, publish</h3>
+            <p class="text-sm text-zinc-400 mb-4">Download the cleaned track, drop it into your editor, and publish
+              with
               confidence.</p>
             <p class="text-xs text-zinc-500 border-t border-white/5 pt-4">Compatible with Final Cut Pro, Premiere Pro,
               DaVinci Resolve, and others.</p>
@@ -474,7 +576,8 @@
   <!-- Benefits Section -->
   <section class="py-24 px-4 border-t border-white/5">
     <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white mb-6">Why Audio Quality Matters</h2>
+      <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white mb-6 font-serif">Why Audio Quality Matters
+      </h2>
       <p class="text-lg text-zinc-400 mb-12">Viewers will tolerate average visuals. They will not tolerate fatiguing
         audio.</p>
 
@@ -505,36 +608,32 @@
         <h2 class="text-3xl font-medium tracking-tight text-white mb-6">Who Luma Is Built For</h2>
         <div class="space-y-4">
           <div class="flex items-center gap-3">
-            <div class="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0">
-              <iconify-icon icon="solar:check-read-linear" class="text-white" width="12"></iconify-icon>
+            <div class="w-5 h-5 rounded-full bg-zinc-50 flex items-center justify-center flex-shrink-0">
+              <iconify-icon icon="solar:check-read-linear" class="text-black" width="12"></iconify-icon>
             </div>
-            <span class="text-zinc-400 text-sm">Solo Mac creators recording voice in untreated bedrooms or home
-              offices.</span>
+            <span class="text-zinc-400 text-sm">Creators who record in untreated or semi‑treated rooms.</span>
           </div>
           <div class="flex items-center gap-3">
-            <div class="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0">
-              <iconify-icon icon="solar:check-read-linear" class="text-white" width="12"></iconify-icon>
+            <div class="w-5 h-5 rounded-full bg-zinc-50 flex items-center justify-center flex-shrink-0">
+              <iconify-icon icon="solar:check-read-linear" class="text-black" width="12"></iconify-icon>
             </div>
-            <span class="text-zinc-400 text-sm">YouTube, podcast, and course creators shipping content every
-              week.</span>
+            <span class="text-zinc-400 text-sm">Those who battle hiss, hum, fan noise, or room echo.</span>
           </div>
           <div class="flex items-center gap-3">
-            <div class="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0">
-              <iconify-icon icon="solar:check-read-linear" class="text-white" width="12"></iconify-icon>
+            <div class="w-5 h-5 rounded-full bg-zinc-50 flex items-center justify-center flex-shrink-0">
+              <iconify-icon icon="solar:check-read-linear" class="text-black" width="12"></iconify-icon>
             </div>
-            <span class="text-zinc-400 text-sm">People who currently use browser enhancers or just accept noisy
-              recordings.</span>
+            <span class="text-zinc-400 text-sm">People wanting pro results without complex audio plugins.</span>
           </div>
           <div class="flex items-center gap-3">
-            <div class="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center flex-shrink-0">
-              <iconify-icon icon="solar:check-read-linear" class="text-white" width="12"></iconify-icon>
+            <div class="w-5 h-5 rounded-full bg-zinc-50 flex items-center justify-center flex-shrink-0">
+              <iconify-icon icon="solar:check-read-linear" class="text-black" width="12"></iconify-icon>
             </div>
-            <span class="text-zinc-400 text-sm">Creators who want clean results without learning complex audio plugin
-              chains.</span>
+            <span class="text-zinc-400 text-sm">Anyone caring about delivering a premium experience.</span>
           </div>
         </div>
-        <p class="mt-8 text-white font-medium text-sm">If your voice is your product, your cleanup workflow should be
-          fast, local, and reliable.</p>
+        <p class="mt-8 text-white font-medium text-sm">If audio quality is part of your competitive edge, this product
+          is for you.</p>
       </div>
       <div
         class="w-full md:w-1/2 h-64 rounded-2xl bg-gradient-to-br from-zinc-800 to-black border border-white/5 flex items-center justify-center">
@@ -556,7 +655,7 @@
         voice cleanup, local processing, and a workflow that respects your time.
       </p>
       <p class="text-sm text-zinc-500 italic">
-        Early users shape profile tuning, roadmap priorities, and release quality before public launch.
+        Early users will have direct influence on the roadmap, feature priorities, and presets.
       </p>
     </div>
   </section>
@@ -580,19 +679,16 @@
           <span class="text-xs text-zinc-400">First 10 receive the deepest onboarding and founding pricing terms.</span>
         </div>
         <div class="bg-black/40 border border-white/5 p-4 rounded-xl">
-          <span class="block text-white font-medium mb-1">Creator Cohort</span>
-          <span class="text-xs text-zinc-400">Next 50 receive early-adopter pricing and priority onboarding.</span>
+          <span class="block text-white font-medium mb-1">Next 50</span>
+          <span class="text-xs text-zinc-400">Receive an exclusive early‑adopter discount.</span>
         </div>
         <div class="bg-black/40 border border-white/5 p-4 rounded-xl">
-          <span class="block text-white font-medium mb-1">General Waitlist</span>
-          <span class="text-xs text-zinc-400">Priority release updates and access order as capacity opens.</span>
+          <span class="block text-white font-medium mb-1">Waitlist</span>
+          <span class="text-xs text-zinc-400">Priority access and founding pricing.</span>
         </div>
       </div>
 
-      <p class="text-xs text-zinc-500 mb-8">Positioned as a one-time purchase product, with optional paid upgrades in
-        future major versions.</p>
-
-      <form id="waitlist-form" class="max-w-lg mx-auto space-y-4">
+      <form class="max-w-md mx-auto space-y-4">
         <div class="flex flex-col md:flex-row gap-2">
           <input type="email" placeholder="name@example.com"
             class="flex-1 bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-white/30 transition-colors"
@@ -629,7 +725,284 @@
   </footer>
 
 
+  <!-- hero background code -->
+  <script type="module">
+    import { Renderer, Program, Mesh, Geometry } from 'https://cdn.jsdelivr.net/npm/ogl/dist/ogl.mjs';
+
+    const hexToRGB = (hex) => {
+      const c = hex.replace('#', '').padEnd(6, '0');
+      const r = parseInt(c.slice(0, 2), 16) / 255;
+      const g = parseInt(c.slice(2, 4), 16) / 255;
+      const b = parseInt(c.slice(4, 6), 16) / 255;
+      return [r, g, b];
+    };
+
+    const MAX_COLORS = 8;
+    const prepStops = (stops) => {
+      const base = (stops && stops.length ? stops : ['#FF9FFC', '#5227FF']).slice(0, MAX_COLORS);
+      if (base.length === 1) base.push(base[0]);
+      while (base.length < MAX_COLORS) base.push(base[base.length - 1]);
+      const arr = [];
+      for (let i = 0; i < MAX_COLORS; i++) arr.push(hexToRGB(base[i]));
+      const count = Math.max(2, Math.min(MAX_COLORS, stops?.length ?? 2));
+      return { arr, count };
+    };
+
+    // You can customize the gradient config here!
+    const config = {
+      gradientColors: ['#616161', '#262626'],
+      angle: 0,
+      noise: 0.3,
+      blindCount: 16,
+      blindMinWidth: 60,
+      mouseDampening: 1,
+      mirrorGradient: false,
+      spotlightRadius: 0.5,
+      spotlightSoftness: 1,
+      spotlightOpacity: 1,
+      distortAmount: 0,
+      shineDirection: 'left',
+      mixBlendMode: 'lighten'
+    };
+
+    const container = document.getElementById('gradient-blinds');
+
+    const renderer = new Renderer({
+      dpr: window.devicePixelRatio || 1,
+      alpha: true,
+      antialias: true
+    });
+    const gl = renderer.gl;
+    const canvas = gl.canvas;
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.display = 'block';
+    if (config.mixBlendMode) {
+      canvas.style.mixBlendMode = config.mixBlendMode;
+    }
+    container.appendChild(canvas);
+
+    const vertex = `
+attribute vec2 position;
+attribute vec2 uv;
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  gl_Position = vec4(position, 0.0, 1.0);
+}`;
+
+    const fragment = `
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+uniform vec3  iResolution;
+uniform vec2  iMouse;
+uniform float iTime;
+
+uniform float uAngle;
+uniform float uNoise;
+uniform float uBlindCount;
+uniform float uSpotlightRadius;
+uniform float uSpotlightSoftness;
+uniform float uSpotlightOpacity;
+uniform float uMirror;
+uniform float uDistort;
+uniform float uShineFlip;
+uniform vec3  uColor0;
+uniform vec3  uColor1;
+uniform vec3  uColor2;
+uniform vec3  uColor3;
+uniform vec3  uColor4;
+uniform vec3  uColor5;
+uniform vec3  uColor6;
+uniform vec3  uColor7;
+uniform int   uColorCount;
+
+varying vec2 vUv;
+
+float rand(vec2 co){
+  return fract(sin(dot(co, vec2(12.9898,78.233))) * 43758.5453);
+}
+
+vec2 rotate2D(vec2 p, float a){
+  float c = cos(a);
+  float s = sin(a);
+  return mat2(c, -s, s, c) * p;
+}
+
+vec3 getGradientColor(float t){
+  float tt = clamp(t, 0.0, 1.0);
+  int count = uColorCount;
+  if (count < 2) count = 2;
+  float scaled = tt * float(count - 1);
+  float seg = floor(scaled);
+  float f = fract(scaled);
+
+  if (seg < 1.0) return mix(uColor0, uColor1, f);
+  if (seg < 2.0 && count > 2) return mix(uColor1, uColor2, f);
+  if (seg < 3.0 && count > 3) return mix(uColor2, uColor3, f);
+  if (seg < 4.0 && count > 4) return mix(uColor3, uColor4, f);
+  if (seg < 5.0 && count > 5) return mix(uColor4, uColor5, f);
+  if (seg < 6.0 && count > 6) return mix(uColor5, uColor6, f);
+  if (seg < 7.0 && count > 7) return mix(uColor6, uColor7, f);
+  if (count > 7) return uColor7;
+  if (count > 6) return uColor6;
+  if (count > 5) return uColor5;
+  if (count > 4) return uColor4;
+  if (count > 3) return uColor3;
+  if (count > 2) return uColor2;
+  return uColor1;
+}
+
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+    vec2 uv0 = fragCoord.xy / iResolution.xy;
+
+    float aspect = iResolution.x / iResolution.y;
+    vec2 p = uv0 * 2.0 - 1.0;
+    p.x *= aspect;
+    vec2 pr = rotate2D(p, uAngle);
+    pr.x /= aspect;
+    vec2 uv = pr * 0.5 + 0.5;
+
+    vec2 uvMod = uv;
+    if (uDistort > 0.0) {
+      float a = uvMod.y * 6.0;
+      float b = uvMod.x * 6.0;
+      float w = 0.01 * uDistort;
+      uvMod.x += sin(a) * w;
+      uvMod.y += cos(b) * w;
+    }
+    float t = uvMod.x;
+    if (uMirror > 0.5) {
+      t = 1.0 - abs(1.0 - 2.0 * fract(t));
+    }
+    vec3 base = getGradientColor(t);
+
+    vec2 offset = vec2(iMouse.x/iResolution.x, iMouse.y/iResolution.y);
+  float d = length(uv0 - offset);
+  float r = max(uSpotlightRadius, 1e-4);
+  float dn = d / r;
+  float spot = (1.0 - 2.0 * pow(dn, uSpotlightSoftness)) * uSpotlightOpacity;
+  vec3 cir = vec3(spot);
+  float stripe = fract(uvMod.x * max(uBlindCount, 1.0));
+  if (uShineFlip > 0.5) stripe = 1.0 - stripe;
+    vec3 ran = vec3(stripe);
+
+    vec3 col = cir + base - ran;
+    col += (rand(gl_FragCoord.xy + iTime) - 0.5) * uNoise;
+
+    fragColor = vec4(col, 1.0);
+}
+
+void main() {
+    vec4 color;
+    mainImage(color, vUv * iResolution.xy);
+    gl_FragColor = color;
+}
+`;
+
+    const { arr: colorArr, count: colorCount } = prepStops(config.gradientColors);
+
+    const uniforms = {
+      iResolution: { value: [gl.drawingBufferWidth, gl.drawingBufferHeight, 1] },
+      iMouse: { value: [0, 0] },
+      iTime: { value: 0 },
+      uAngle: { value: (config.angle * Math.PI) / 180 },
+      uNoise: { value: config.noise },
+      uBlindCount: { value: Math.max(1, config.blindCount) },
+      uSpotlightRadius: { value: config.spotlightRadius },
+      uSpotlightSoftness: { value: config.spotlightSoftness },
+      uSpotlightOpacity: { value: config.spotlightOpacity },
+      uMirror: { value: config.mirrorGradient ? 1 : 0 },
+      uDistort: { value: config.distortAmount },
+      uShineFlip: { value: config.shineDirection === 'right' ? 1 : 0 },
+      uColor0: { value: colorArr[0] },
+      uColor1: { value: colorArr[1] },
+      uColor2: { value: colorArr[2] },
+      uColor3: { value: colorArr[3] },
+      uColor4: { value: colorArr[4] },
+      uColor5: { value: colorArr[5] },
+      uColor6: { value: colorArr[6] },
+      uColor7: { value: colorArr[7] },
+      uColorCount: { value: colorCount }
+    };
+
+    const program = new Program(gl, { vertex, fragment, uniforms });
+    const geometry = new Geometry(gl, {
+      position: { size: 2, data: new Float32Array([-1, -1, 3, -1, -1, 3]) },
+      uv: { size: 2, data: new Float32Array([0, 0, 2, 0, 0, 2]) }
+    });
+    const mesh = new Mesh(gl, { geometry, program });
+
+    let firstResize = true;
+    const mouseTarget = [0, 0];
+
+    const resize = () => {
+      const rect = container.getBoundingClientRect();
+      renderer.setSize(rect.width, rect.height);
+      uniforms.iResolution.value = [gl.drawingBufferWidth, gl.drawingBufferHeight, 1];
+
+      if (config.blindMinWidth && config.blindMinWidth > 0) {
+        const maxByMinWidth = Math.max(1, Math.floor(rect.width / config.blindMinWidth));
+        const effective = config.blindCount ? Math.min(config.blindCount, maxByMinWidth) : maxByMinWidth;
+        uniforms.uBlindCount.value = Math.max(1, effective);
+      } else {
+        uniforms.uBlindCount.value = Math.max(1, config.blindCount);
+      }
+
+      if (firstResize) {
+        firstResize = false;
+        const cx = gl.drawingBufferWidth / 2;
+        const cy = gl.drawingBufferHeight / 2;
+        uniforms.iMouse.value = [cx, cy];
+        mouseTarget[0] = cx;
+        mouseTarget[1] = cy;
+      }
+    };
+
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(container);
+
+    window.addEventListener('pointermove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const scale = renderer.dpr || 1;
+      const x = (e.clientX - rect.left) * scale;
+      const y = (rect.height - (e.clientY - rect.top)) * scale;
+      mouseTarget[0] = x;
+      mouseTarget[1] = y;
+      if (config.mouseDampening <= 0) {
+        uniforms.iMouse.value = [x, y];
+      }
+    });
+
+    let lastTime = 0;
+    const loop = (t) => {
+      requestAnimationFrame(loop);
+      uniforms.iTime.value = t * 0.001;
+      if (config.mouseDampening > 0) {
+        if (!lastTime) lastTime = t;
+        const dt = (t - lastTime) / 1000;
+        lastTime = t;
+        const tau = Math.max(1e-4, config.mouseDampening);
+        let factor = 1 - Math.exp(-dt / tau);
+        if (factor > 1) factor = 1;
+        const cur = uniforms.iMouse.value;
+        cur[0] += (mouseTarget[0] - cur[0]) * factor;
+        cur[1] += (mouseTarget[1] - cur[1]) * factor;
+      } else {
+        lastTime = t;
+      }
+      renderer.render({ scene: mesh });
+    };
+    requestAnimationFrame(loop);
+  </script>
+
+  <!-- waitlist form code -->
   <script>
+
     const popoverTimers = new WeakMap();
 
     function setSubmitButtonLoading(button, isLoading) {
@@ -709,6 +1082,24 @@
       }
     }
 
+    (function () {
+      const words = document.querySelectorAll('.cycling-word');
+      let currentIndex = 0;
+
+      setInterval(() => {
+        const prevIndex = currentIndex;
+        currentIndex = (currentIndex + 1) % words.length;
+
+        words[prevIndex].classList.remove('active');
+        words[prevIndex].classList.add('exiting');
+        words[currentIndex].classList.add('active');
+
+        setTimeout(() => {
+          words[prevIndex].classList.remove('exiting');
+        }, 600);
+      }, 2800);
+    })();
+
     document.getElementById('hero-form').addEventListener('submit', handleWaitlistSubmit);
     document.getElementById('waitlist-form').addEventListener('submit', handleWaitlistSubmit);
 
@@ -720,6 +1111,49 @@
       input.addEventListener('input', () => setFormError(errorEl, ''));
       input.addEventListener('focus', () => hidePopover(popover));
     });
+
+    (function () {
+      const nav = document.getElementById('main-nav');
+      function updateNav() {
+        if (window.scrollY > 10) {
+          nav.classList.add('bg-black/50', 'backdrop-blur-md', 'border-white/5');
+          nav.classList.remove('border-transparent');
+        } else {
+          nav.classList.remove('bg-black/50', 'backdrop-blur-md', 'border-white/5');
+          nav.classList.add('border-transparent');
+        }
+      }
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+    })();
+
+    (function () {
+      const audioSwitch = document.getElementById('audio-switch');
+      const switchHandle = document.getElementById('switch-handle');
+      const switchText = document.getElementById('switch-text');
+      let isEnhanced = false;
+
+      audioSwitch.addEventListener('click', () => {
+        isEnhanced = !isEnhanced;
+
+        if (isEnhanced) {
+          switchHandle.style.left = 'calc(100% - 24px)';
+          switchHandle.style.backgroundColor = '#000000';
+          switchHandle.classList.remove('shadow-[0_0_15px_white]');
+          switchText.textContent = 'enhanced audio';
+          switchText.classList.replace('text-zinc-500', 'text-white');
+          audioSwitch.classList.replace('bg-zinc-900', 'bg-white');
+          audioSwitch.classList.replace('border-white/10', 'border-transparent');
+        } else {
+          switchHandle.style.left = '4px';
+          switchHandle.style.backgroundColor = '';
+          switchText.textContent = 'original audio';
+          switchText.classList.replace('text-white', 'text-zinc-500');
+          audioSwitch.classList.replace('bg-white', 'bg-zinc-900');
+          audioSwitch.classList.replace('border-transparent', 'border-white/10');
+        }
+      });
+    })();
   </script>
 
 </body>
