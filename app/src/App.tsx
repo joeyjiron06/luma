@@ -18,7 +18,7 @@ import {
 import { FileMusicIcon } from "lucide-react";
 
 import "./App.css";
-import { processWaveBlob } from "./services/ffmpeg";
+import { processWaveBlob, extractAudioFromVideo, replaceAudioInVideo } from "./services/ffmpeg";
 
 function App() {
   const [fileState, fileActions] = useFileUpload({
@@ -84,25 +84,41 @@ function App() {
             )
           );
           try {
-            const resolvedFormat = resolveOutputFormat(format, upload.file.name);
+            const isVideo = isVideoFile(upload.file);
+
+            const audioFile = isVideo
+              ? new File(
+                  [await extractAudioFromVideo(upload.file)],
+                  "extracted.wav",
+                  { type: "audio/wav" }
+                )
+              : upload.file;
+
             const result =
               selectedModel === "demucs"
-                ? await Demucs.filterVocals(upload.file)
-                : await DeepFilterNet3.filterVocals(upload.file, {
+                ? await Demucs.filterVocals(audioFile)
+                : await DeepFilterNet3.filterVocals(audioFile, {
                   attenuationLimit,
                 });
 
-            const processedBlob = await processWaveBlob(result.wavBlob, resolvedFormat);
+            let finalBlob: Blob;
+            let outputName: string;
+            let resolvedFormat: string;
 
-            const outputName = buildOutputName(
-              upload.file.name,
-              resolvedFormat
-            );
+            if (isVideo) {
+              finalBlob = await replaceAudioInVideo(upload.file, result.wavBlob);
+              resolvedFormat = getFileExtension(upload.file.name) || "mp4";
+              outputName = buildOutputName(upload.file.name, resolvedFormat);
+            } else {
+              resolvedFormat = resolveOutputFormat(format, upload.file.name);
+              finalBlob = await processWaveBlob(result.wavBlob, resolvedFormat);
+              outputName = buildOutputName(upload.file.name, resolvedFormat);
+            }
 
             const destinationFolder = await resolveOutputFolder(outputFolder);
             const outputPath = await join(destinationFolder, outputName);
 
-            await saveBlobToPath(processedBlob, outputPath);
+            await saveBlobToPath(finalBlob, outputPath);
 
             setProcessingQueue((prev) =>
               prev.map((item) =>
@@ -242,4 +258,8 @@ function getFileExtension(name: string): string {
     return "";
   }
   return name.slice(index + 1).toLowerCase();
+}
+
+function isVideoFile(file: File): boolean {
+  return file.type.startsWith("video/");
 }

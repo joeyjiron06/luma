@@ -404,8 +404,7 @@
     <div class="max-w-6xl mx-auto relative z-10">
       <div class="text-center mb-20 mt-3">
         <span class="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-4 block">Pro-level audio</span>
-        <h2 class="text-4xl md:text-6xl font-medium tracking-tight text-white mb-6 font-serif text-balance">Sound as
-          if
+        <h2 class="text-4xl md:text-6xl font-medium tracking-tight text-white mb-6 font-serif text-balance">Sound as if
           you recorded in a studio</h2>
         <p class="text-zinc-400 max-w-2xl mx-auto text-lg leading-relaxed">Be it rain or vehicles honking. Remove any
           noise automatically. No need to record your audio or video again.</p>
@@ -414,37 +413,72 @@
       <div class="relative  mx-auto pt-10 pb-10">
         <!-- Video Placeholder Container -->
         <div
-          class="relative z-10 aspect-video max-w-3xl mx-auto rounded-3xl bg-zinc-950 border border-white/10 overflow-hidden shadow-[0_0_50px_-12px_rgba(255,255,255,0.1)] group">
-          <!-- Play Icon Overlay -->
-          <div
-            class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-all cursor-pointer">
-            <div
+          class="relative z-10 aspect-9/16 max-w-3xl max-h-196 mx-auto rounded-3xl bg-zinc-950 border border-white/10 overflow-hidden shadow-[0_0_50px_-12px_rgba(255,255,255,0.1)] group">
+          <!-- Play/Pause Overlay -->
+          <div id="play-overlay"
+            class="absolute inset-0 z-10 flex items-center justify-center transition-all duration-300 cursor-pointer"
+            onclick="togglePlayback()">
+            <div id="play-pause-btn"
               class="w-24 h-24 rounded-full bg-white/5 backdrop-blur-xl border border-white/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-white/10 transition-all duration-500 shadow-2xl">
-              <iconify-icon icon="solar:play-bold" class="text-white ml-2" width="40"></iconify-icon>
+              <iconify-icon id="play-icon" icon="solar:play-bold" class="text-white ml-2" width="40"></iconify-icon>
+              <iconify-icon id="pause-icon" icon="solar:pause-bold" class="text-white hidden" width="40"></iconify-icon>
             </div>
           </div>
 
           <!-- Placeholder Content (Representing a video) -->
-          <div class="absolute inset-0 -z-10 opacity-30">
-            <div class="absolute inset-0 bg-linear-to-tr from-zinc-900 to-transparent"></div>
+          <div class="absolute inset-0 -z-10 ">
+            <video src="/assets/videos/me.webm" id="video-player" class="w-full h-full object-cover "></video>
+
+
             <div
               class="w-full h-full bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-zinc-800 to-transparent">
             </div>
           </div>
+
+          <!-- Audio label overlay -->
+          <div id="audio-label" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 hidden pointer-events-none">
+            <span
+              class="inline-block bg-black/80 backdrop-blur-sm text-white text-xs font-medium tracking-widest uppercase px-5 py-2.5 rounded-full shadow-lg">
+              Original Audio
+            </span>
+          </div>
         </div>
 
         <!-- Audio Comparison Toggle -->
-        <div class="flex items-center justify-center gap-4 mt-12 relative z-20">
-          <div id="audio-switch"
-            class="w-14 h-7 rounded-full bg-zinc-900 border border-white/10 relative cursor-pointer group transition-all duration-300">
-            <div id="switch-handle"
-              class="absolute left-1 top-1 w-5 h-5 rounded-full bg-zinc-500 transition-all duration-300 group-hover:scale-110">
+        <div class="flex flex-col sm:flex-row items-center justify-center mt-12 gap-3 ">
+          <div class="flex items-center justify-center gap-4 relative z-20">
+            <div id="audio-switch"
+              class="w-14 h-7 rounded-full bg-zinc-900 border border-white/10 relative cursor-pointer group transition-all duration-300">
+              <div id="switch-handle"
+                class="absolute left-1 top-1 w-5 h-5 rounded-full bg-zinc-500 transition-all duration-300 group-hover:scale-110">
+              </div>
             </div>
+            <span id="switch-text"
+              class="inline-block w-34 text-xs font-medium tracking-widest text-zinc-500 uppercase select-none">original
+              audio</span>
           </div>
-          <span id="switch-text"
-            class="inline-block w-40 text-xs font-medium tracking-widest text-zinc-500 uppercase select-none">original
-            audio</span>
+
+          <div class="flex items-center flex-col mt-10 rotate-12">
+
+            <svg viewBox="0 0 219 41" fill="none" xmlns="http://www.w3.org/2000/svg"
+              class="w-20 h-auto rotate-90 sm:rotate-0">
+              <g clip-path="url(#clip0_3_248)">
+                <path
+                  d="M21.489 29.4305C36.9333 31.3498 51.3198 33.0559 65.7063 34.9753C66.7641 35.1885 67.6104 36.4681 69.9376 38.3875C63.1675 39.2406 57.8783 40.3069 52.5892 40.5201C38.6259 40.9467 24.8741 40.9467 10.9107 40.9467C9.21821 40.9467 7.5257 41.1599 5.83317 40.7334C0.332466 39.6671 -1.57164 36.0416 1.39028 31.1365C2.87124 28.7906 4.56377 26.658 6.46786 24.7386C13.6611 17.4876 21.0659 10.4499 28.4707 3.41224C29.7401 2.13265 31.6442 1.49285 34.183 0C34.6061 10.8765 23.8162 13.8622 21.489 22.3927C23.3931 21.9662 25.0856 21.7529 26.5666 21.3264C83.6894 5.54486 140.601 7.25099 197.3 22.606C203.224 24.0988 208.936 26.4447 214.649 28.5773C217.61 29.6437 220.149 31.9896 218.457 35.6151C216.976 39.2406 214.014 39.2406 210.629 37.7477C172.759 20.6866 132.561 18.7672 91.9404 19.407C70.7838 19.6203 50.0504 21.9662 29.5285 26.8713C26.9897 27.5111 24.4509 28.3641 21.489 29.4305Z"
+                  fill="white" />
+              </g>
+              <defs>
+                <clipPath id="clip0_3_248">
+                  <rect width="219" height="41" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+
+            <div class="sm:translate-x-20 sm:rotate-12 translate-y-12 sm:translate-y-0">Click me</div>
+          </div>
+
         </div>
+
 
         <!-- Floating UI Panels (Replicating layout from image) -->
         <!-- Left Side -->
@@ -676,7 +710,7 @@
       <div class="w-full md:w-1/2 relative">
         <div class="aspect-square rounded-2xl relative overflow-hidden flex items-center justify-center">
           <!-- Decorative Graphic -->
-          <img src="/assets/images/macbook.png" alt="App Preview" class="w-full h-full object-contain object-center " />
+          <img src="/assets/images/app.png" alt="App Preview" class="w-full h-full object-contain object-center " />
         </div>
       </div>
     </div>
@@ -1387,6 +1421,32 @@ void main() {
 
   <!-- waitlist form code -->
   <script>
+    let hideOverlayTimer = null;
+
+    function togglePlayback() {
+      const video = document.getElementById('video-player');
+      const overlay = document.getElementById('play-overlay');
+      const audioLabel = document.getElementById('audio-label');
+      const playIcon = document.getElementById('play-icon');
+      const pauseIcon = document.getElementById('pause-icon');
+
+      if (video.paused) {
+        video.play();
+        audioLabel.classList.remove('hidden');
+        playIcon.classList.add('hidden');
+        pauseIcon.classList.remove('hidden');
+
+        hideOverlayTimer = setTimeout(() => {
+          overlay.classList.add('opacity-0');
+        }, 300);
+      } else {
+        video.pause();
+        clearTimeout(hideOverlayTimer);
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        overlay.classList.remove('opacity-0');
+      }
+    }
 
     const popoverTimers = new WeakMap();
 
@@ -1512,15 +1572,45 @@ void main() {
     })();
 
     (function () {
+      const videoContainer = document.getElementById('play-overlay').parentElement;
+      const overlay = document.getElementById('play-overlay');
+      const video = document.getElementById('video-player');
+
+      videoContainer.addEventListener('mouseenter', () => {
+        if (!video.paused) overlay.classList.remove('opacity-0');
+      });
+
+      videoContainer.addEventListener('mouseleave', () => {
+        if (!video.paused) overlay.classList.add('opacity-0');
+      });
+
+      video.addEventListener('ended', () => {
+        const playIcon = document.getElementById('play-icon');
+        const pauseIcon = document.getElementById('pause-icon');
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        overlay.classList.remove('opacity-0');
+      });
+    })();
+
+    (function () {
       const audioSwitch = document.getElementById('audio-switch');
       const switchHandle = document.getElementById('switch-handle');
       const switchText = document.getElementById('switch-text');
+      const video = document.getElementById('video-player');
+      const audioLabel = document.getElementById('audio-label');
+      const audioLabelText = audioLabel.querySelector('span');
+
       let isEnhanced = false;
 
       audioSwitch.addEventListener('click', () => {
         isEnhanced = !isEnhanced;
 
+        const wasPlaying = !video.paused;
+        video.pause();
+
         if (isEnhanced) {
+          video.src = '/assets/videos/me_enhanced.webm';
           switchHandle.style.left = 'calc(100% - 24px)';
           switchHandle.style.backgroundColor = '#000000';
           switchHandle.classList.remove('shadow-[0_0_15px_white]');
@@ -1528,13 +1618,22 @@ void main() {
           switchText.classList.replace('text-zinc-500', 'text-white');
           audioSwitch.classList.replace('bg-zinc-900', 'bg-white');
           audioSwitch.classList.replace('border-white/10', 'border-transparent');
+          audioLabelText.textContent = 'Enhanced Audio';
         } else {
+          video.src = '/assets/videos/me.webm';
           switchHandle.style.left = '4px';
           switchHandle.style.backgroundColor = '';
           switchText.textContent = 'original audio';
           switchText.classList.replace('text-white', 'text-zinc-500');
           audioSwitch.classList.replace('bg-white', 'bg-zinc-900');
           audioSwitch.classList.replace('border-transparent', 'border-white/10');
+          audioLabelText.textContent = 'Original Audio';
+        }
+
+        if (wasPlaying) {
+          video.load();
+          video.play();
+          document.getElementById('play-overlay').classList.add('opacity-0');
         }
       });
     })();
