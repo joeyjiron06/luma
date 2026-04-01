@@ -126,3 +126,58 @@ function buildAudioFilters(): string[] {
     ].join(","),
   ];
 }
+
+export async function extractAudioFromVideo(videoFile: File): Promise<Blob> {
+  const ffmpeg = await getFfmpeg();
+  const ext = videoFile.name.split(".").pop()?.toLowerCase() ?? "mp4";
+  const inputName = `input_video.${ext}`;
+  const outputName = "extracted_audio.wav";
+
+  await ffmpeg.writeFile(inputName, new Uint8Array(await videoFile.arrayBuffer()));
+  await ffmpeg.exec(["-i", inputName, "-vn", "-acodec", "pcm_s16le", outputName]);
+
+  const outputData = await ffmpeg.readFile(outputName);
+  await ffmpeg.deleteFile(inputName);
+  await ffmpeg.deleteFile(outputName);
+
+  const outputBytes =
+    typeof outputData === "string"
+      ? new TextEncoder().encode(outputData)
+      : new Uint8Array(outputData);
+  return new Blob([outputBytes], { type: "audio/wav" });
+}
+
+export async function replaceAudioInVideo(
+  videoFile: File,
+  audioBlob: Blob
+): Promise<Blob> {
+  const ffmpeg = await getFfmpeg();
+  const ext = videoFile.name.split(".").pop()?.toLowerCase() ?? "mp4";
+  const videoInputName = `original_video.${ext}`;
+  const audioInputName = "new_audio.wav";
+  const outputName = `output_video.${ext}`;
+
+  await ffmpeg.writeFile(videoInputName, new Uint8Array(await videoFile.arrayBuffer()));
+  await ffmpeg.writeFile(audioInputName, new Uint8Array(await audioBlob.arrayBuffer()));
+
+  await ffmpeg.exec([
+    "-i", videoInputName,
+    "-i", audioInputName,
+    "-c:v", "copy",
+    "-map", "0:v:0",
+    "-map", "1:a:0",
+    "-shortest",
+    outputName,
+  ]);
+
+  const outputData = await ffmpeg.readFile(outputName);
+  await ffmpeg.deleteFile(videoInputName);
+  await ffmpeg.deleteFile(audioInputName);
+  await ffmpeg.deleteFile(outputName);
+
+  const outputBytes =
+    typeof outputData === "string"
+      ? new TextEncoder().encode(outputData)
+      : new Uint8Array(outputData);
+  return new Blob([outputBytes], { type: videoFile.type || "video/mp4" });
+}
