@@ -337,8 +337,7 @@
 
       <div class="w-full max-w-md mx-auto pt-4 flex flex-col items-center gap-4">
         <form
-          class="flex w-full gap-2 p-1 bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm focus-within:ring-1 focus-within:ring-white/20 transition-all"
-          id="waitlist-form">
+          class="flex w-full gap-2 p-1 bg-zinc-900/50 border border-white/10 rounded-xl backdrop-blur-sm focus-within:ring-1 focus-within:ring-white/20 transition-all waitlist-form">
           <input type="email" placeholder="Enter your email"
             class="flex-1 bg-transparent border-none focus:outline-none px-4 py-3 text-sm text-white placeholder-zinc-500"
             required="">
@@ -770,7 +769,7 @@
 
 
   <!-- Proof Section -->
-  <section class="py-24 px-4 border-t border-white/5 bg-black">
+  <section class="py-24 px-4 border-t border-white/5 bg-black hidden">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-14">
         <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white mb-4 font-serif">Hear the Difference
@@ -1032,29 +1031,33 @@
         </div>
       </div>
 
-      <form class="max-w-md mx-auto space-y-4">
-        <div class="flex flex-col md:flex-row gap-2">
-          <input type="email" placeholder="name@example.com"
-            class="flex-1 bg-zinc-950 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-white/30 transition-colors"
-            required="">
-          <div class="relative">
-            <button type="submit" data-waitlist-submit aria-busy="false"
-              class="waitlist-submit shiny-button px-4 py-3 h-full">
-              <span data-button-label>Join Early Access</span>
-              <span data-button-spinner
-                class="h-4 w-4 rounded-full border-2 border-black/80 border-t-transparent animate-spin"
-                aria-hidden="true"></span>
-            </button>
-            <div data-waitlist-popover
-              class="waitlist-popover hidden px-2.5 py-1 rounded-md text-xs bg-zinc-100 text-zinc-900 shadow-lg border border-zinc-300/60"
-              role="status" aria-live="polite">
-              Check your email
-            </div>
+      <form
+        class="flex w-full gap-2 p-1 border border-white/10 rounded-xl backdrop-blur-sm focus-within:ring-1 focus-within:ring-white/20 transition-all max-w-md mx-auto waitlist-form relative">
+        <input type="email" placeholder="Enter your email"
+          class="flex-1 bg-transparent border-none focus:outline-none px-4 py-3 text-sm text-white placeholder-zinc-500"
+          required="" />
+        <div class="relative shrink-0">
+          <button type="submit" data-waitlist-submit aria-busy="false" class="waitlist-submit shiny-button px-4 py-3">
+            <span data-button-label class="inline-flex items-center gap-2">
+              <span class="hidden sm:inline">Join Early Access</span>
+              <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon>
+            </span>
+            <span data-button-spinner
+              class="h-4 w-4 rounded-full border-2 border-black/80 border-t-transparent animate-spin"
+              aria-hidden="true"></span>
+          </button>
+          <div data-waitlist-popover
+            class="waitlist-popover hidden px-2.5 py-1 rounded-md text-xs bg-zinc-100 text-zinc-900 shadow-lg border border-zinc-300/60"
+            role="status" aria-live="polite">
+            Check your email
           </div>
         </div>
-        <p data-waitlist-error class="hidden text-xs text-red-300 text-left md:text-right"></p>
-        <p class="text-xs text-zinc-600">No spam. You'll hear about cohort openings, launch timing, and onboarding
-          details only.</p>
+        <div class="absolute top-full left-0 mt-2 text-center">
+          <p data-waitlist-error class="hidden text-xs text-red-300"></p>
+
+          <p class="text-xs text-zinc-500">Your email is never shared. We'll only send you updates about the product.
+          </p>
+        </div>
       </form>
     </div>
   </section>
@@ -1069,80 +1072,6 @@
     </div>
     <p class="text-xs text-zinc-600">© 2026 Luma App. All rights reserved.</p>
   </footer>
-
-  <script>
-    (() => {
-      const svgCache = new Map();
-
-      class SvgIcon extends HTMLElement {
-        static get observedAttributes() {
-          return ['name'];
-        }
-
-        connectedCallback() {
-          this.loadIcon();
-        }
-
-        attributeChangedCallback(name, oldValue, newValue) {
-          if (name === 'name' && oldValue !== newValue && this.isConnected) {
-            this.loadIcon();
-          }
-        }
-
-        async loadIcon() {
-          const rawName = (this.getAttribute('name') || '').trim();
-          const className = (this.getAttribute('class') || '').trim();
-          if (!rawName) {
-            this.replaceChildren();
-            return;
-          }
-
-          const normalizedName = rawName.endsWith('.svg') ? rawName : `${rawName}.svg`;
-          if (normalizedName.includes('..')) {
-            console.error(`svg-icon rejected invalid icon name: "${rawName}"`);
-            this.replaceChildren();
-            return;
-          }
-
-          const iconPath = `/assets/images/${normalizedName.replace(/^\/+/, '')}`;
-
-          try {
-            let svgMarkup = svgCache.get(iconPath);
-
-            if (!svgMarkup) {
-              const response = await fetch(iconPath);
-              if (!response.ok) {
-                throw new Error(`Failed to fetch ${iconPath}`);
-              }
-
-              svgMarkup = (await response.text()).trim();
-              svgCache.set(iconPath, svgMarkup);
-            }
-
-            const template = document.createElement('template');
-            template.innerHTML = svgMarkup;
-            const svg = template.content.querySelector('svg');
-
-            if (!svg) {
-              throw new Error(`No <svg> found in ${iconPath}`);
-            }
-
-            if (className) {
-              svg.classList.add(...this.classList.values());
-            }
-
-            this.replaceChildren(svg);
-          } catch (error) {
-            console.error('svg-icon failed to load:', error);
-            this.replaceChildren();
-          }
-        }
-      }
-
-      customElements.define('svg-icon', SvgIcon);
-    })();
-  </script>
-
 
   <!-- hero background code -->
   <script type="module">
@@ -1545,31 +1474,55 @@ void main() {
       }, 2800);
     })();
 
-    document.getElementById('waitlist-form').addEventListener('submit', handleWaitlistSubmit);
 
-    document.querySelectorAll('#hero-form, #waitlist-form').forEach((form) => {
+    const waitlistForms = document.querySelectorAll('.waitlist-form');
+
+    waitlistForms.forEach(form => {
       const input = form.querySelector('input[type="email"]');
       const errorEl = form.querySelector('[data-waitlist-error]');
       const popover = form.querySelector('[data-waitlist-popover]');
 
+      form.addEventListener('submit', handleWaitlistSubmit);
+
       input.addEventListener('input', () => setFormError(errorEl, ''));
       input.addEventListener('focus', () => hidePopover(popover));
-    });
+    })
 
-    (function () {
-      const nav = document.getElementById('main-nav');
-      function updateNav() {
-        if (window.scrollY > 10) {
-          nav.classList.add('bg-black/50', 'backdrop-blur-md', 'border-white/5');
-          nav.classList.remove('border-transparent');
-        } else {
-          nav.classList.remove('bg-black/50', 'backdrop-blur-md', 'border-white/5');
-          nav.classList.add('border-transparent');
+
+      (function () {
+        const nav = document.getElementById('main-nav');
+
+        let isScrolled = false
+        let prevIsScrolled = false;
+
+        function onScroll() {
+          prevIsScrolled = isScrolled;
+
+          if (window.scrollY > 10) {
+            isScrolled = true;
+          } else {
+            isScrolled = false;
+          }
+
+          if (prevIsScrolled !== isScrolled) {
+            scrollChanged();
+          }
         }
-      }
-      window.addEventListener('scroll', updateNav, { passive: true });
-      updateNav();
-    })();
+
+
+        function scrollChanged() {
+          if (isScrolled) {
+            nav.classList.add('bg-black/50', 'backdrop-blur-md', 'border-white/5');
+            nav.classList.remove('border-transparent');
+          } else {
+            nav.classList.remove('bg-black/50', 'backdrop-blur-md', 'border-white/5');
+            nav.classList.add('border-transparent');
+          }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      })();
 
     (function () {
       const videoContainer = document.getElementById('play-overlay').parentElement;
