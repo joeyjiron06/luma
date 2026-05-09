@@ -1,0 +1,131 @@
+---
+import BuiltForCreators from "@/components/landingPage/sections/builtForCreators";
+import EditingStruggle from "@/components/landingPage/sections/editingStruggle";
+import Hero from "@/components/landingPage/sections/hero";
+import LandingFaq from "@/components/landingPage/sections/landingFaq";
+import NavBar from "@/components/landingPage/sections/navBar";
+import OriginalAudioDemo from "@/components/landingPage/sections/originalAudioDemo";
+import ProductIntro from "@/components/landingPage/sections/productIntro";
+import CTA from "@/components/landingPage/sections/cta";
+import StudioSound from "@/components/landingPage/sections/studioSound";
+
+import "./index.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta property="og:title" content="Luma" />
+
+    <meta
+      name="description"
+      content="Luma is an AI background noise removal app that sounds like you. It removes background noise from your audio and turns it into crisp clear speech. Perfect for film, podcast, and audio recordings."
+    />
+    <meta
+      property="og:description"
+      content="Luma is an AI background noise removal app that sounds like you. It removes background noise from your audio and turns it into crisp clear speech. Perfect for film, podcast, and audio recordings."
+    />
+    <meta property="og:image" content="https://luma.app/preview.png" />
+    <meta property="og:url" content="https://luma.app" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Luma" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Luma" />
+    <meta
+      name="twitter:description"
+      content="Luma is an AI background noise removal app that sounds like you. It removes background noise from your audio and turns it into crisp clear speech. Perfect for film, podcast, and audio recordings."
+    />
+    <meta name="twitter:image" content="https://luma.app/preview.png" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Luma",
+        "description": "AI audio cleanup tool",
+        "applicationCategory": "MultimediaApplication"
+      }
+    </script>
+
+    <title>Luma</title>
+  </head>
+
+  <body
+    class="min-h-screen bg-background text-foreground flex items-center justify-center px-4"
+  >
+    <main
+      class="w-full max-w-md rounded-2xl border border-border bg-background/50 p-8 text-center"
+    >
+      <h1 class="text-2xl font-medium text-foreground mb-3">
+        Confirming your email
+      </h1>
+      <p id="status-text" class="text-sm text-muted-foreground mb-4">
+        Please wait while we confirm your early access signup.
+      </p>
+      <div
+        id="status-spinner"
+        class="mx-auto h-6 w-6 rounded-full border-2 border-border border-t-transparent animate-spin"
+        aria-hidden="true"
+      >
+      </div>
+      <a
+        href="/"
+        class="hidden mt-6 inline-flex text-sm text-foreground bg-background/10 border border-border px-4 py-2 rounded-full hover:bg-background/20 transition-colors"
+        id="home-link"
+      >
+        Back to Luma
+      </a>
+    </main>
+
+    <script>
+      const statusText = document.getElementById("status-text");
+      const spinner = document.getElementById("status-spinner");
+      const homeLink = document.getElementById("home-link");
+
+      function setState(message: string, isSuccess: boolean) {
+        statusText!.textContent = message;
+        spinner!.classList.add("hidden");
+        homeLink!.classList.remove("hidden");
+        statusText!.classList.toggle("text-emerald-300", Boolean(isSuccess));
+        statusText!.classList.toggle("text-red-300", isSuccess === false);
+      }
+
+      async function confirmSignup() {
+        const token = new URLSearchParams(window.location.search).get("token");
+        if (!token) {
+          setState(
+            "Missing confirmation token. Please use the link from your email.",
+            false
+          );
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `/api/waitlist-confirm?token=${encodeURIComponent(token)}`
+          );
+          const data = await response.json().catch(() => ({}));
+
+          if (response.ok && data.success) {
+            setState("Your email is confirmed. You are on the waitlist.", true);
+            return;
+          }
+
+          setState(
+            data.message || "Invalid or expired confirmation link.",
+            false
+          );
+        } catch (_) {
+          setState("Network error while confirming. Please try again.", false);
+        }
+      }
+
+      confirmSignup();
+    </script>
+  </body>
+</html>
