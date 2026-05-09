@@ -42,6 +42,8 @@ async function processMono48kBuffer(
   config?: DeepFilterConfig
 ): Promise<DeepFilterNet3Result> {
   const denoiser = await getDenoiser(config);
+  denoiser.setAttenuationLimit(config?.attenuationLimit ?? 100);
+  denoiser.setPostFilterBeta(config?.postFilterBeta ?? 0.05);
   const { audio, stats } = denoiser.processAudioWithStats(mono48k);
   const wavBlob = encodeWavFloat32(audio, TARGET_SAMPLE_RATE);
 

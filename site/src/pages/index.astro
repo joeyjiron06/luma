@@ -1,0 +1,70 @@
+---
+import BuiltForCreators from "@/components/landingPage/sections/builtForCreators";
+import EditingStruggle from "@/components/landingPage/sections/editingStruggle";
+import Hero from "@/components/landingPage/sections/hero";
+import LandingFaq from "@/components/landingPage/sections/landingFaq";
+import NavBar from "@/components/landingPage/sections/navBar";
+import OriginalAudioDemo from "@/components/landingPage/sections/originalAudioDemo";
+import ProductIntro from "@/components/landingPage/sections/productIntro";
+import CTA from "@/components/landingPage/sections/cta";
+import StudioSound from "@/components/landingPage/sections/studioSound";
+
+import "./index.css";
+---
+
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Luma</title>
+  </head>
+  <body class="min-h-screen bg-background text-foreground">
+    <main class="mx-auto flex min-h-screen w-full flex-col py-6">
+      <NavBar />
+
+      <Hero client:load />
+
+      <ProductIntro />
+
+      <div class="relative bg-card/70 mt-12 border-t border-border">
+        <div
+          class="bg-[radial-gradient(35%_80%_at_50%_0%,--theme(--color-foreground/.15),transparent)] absolute inset-0 -z-10 flex size-full min-h-screen items-center justify-center"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 bg-[radial-gradient(color-mix(in_oklab,--theme(--color-foreground/.5)30%,transparent)_1px,transparent_1px)] bg-size-[12px_12px]"
+          >
+          </div>
+        </div>
+
+        <EditingStruggle />
+
+        <StudioSound />
+
+        <OriginalAudioDemo client:load />
+      </div>
+
+      <BuiltForCreators client:load />
+
+      <LandingFaq client:load />
+
+      <CTA client:load />
+    </main>
+  </body>
+</html>
+
+<!-- 
+
+I LIKE THIS COPY
+
+Supercharge your workflow
+
+Build sleek, responsive interfaces in record time with our carefully crafted React and Tailwind CSS components.
+
+
+Browse Components
+
+View Documentation →
+-->

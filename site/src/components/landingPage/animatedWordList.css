@@ -1,0 +1,53 @@
+/* Hero title: last word cycles with exit (fade + move down) / enter (fade + from top) */
+.hero-word {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  --hero-word-ms: 200ms;
+  transition: opacity var(--hero-word-ms) cubic-bezier(0.32, 0, 0.67, 0),
+    transform var(--hero-word-ms) cubic-bezier(0.32, 0, 0.67, 0);
+  will-change: opacity, transform;
+}
+
+.hero-word:not(.active):not(.exiting) {
+  opacity: 0;
+  transform: translateY(-0.42em);
+  pointer-events: none;
+}
+
+.hero-word.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-word.exiting {
+  opacity: 0;
+  transform: translateY(0.36em);
+}
+
+.hero-word.is-idle {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-word {
+    transition: none;
+    will-change: auto;
+  }
+
+  .hero-word:not(.active):not(.exiting) {
+    opacity: 0;
+    transform: none;
+  }
+
+  .hero-word.active {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-word.exiting {
+    opacity: 0;
+    transform: none;
+  }
+}
