@@ -16,7 +16,7 @@
         "minWidth": 800,
         "minHeight": 600,
         "resizable": true,
-        "dragDropEnabled": false,
+        "dragDropEnabled": true,
         "titleBarStyle": "Transparent",
         "hiddenTitle": true,
         "backgroundColor": "#0c0a09"

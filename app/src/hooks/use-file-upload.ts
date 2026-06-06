@@ -21,6 +21,8 @@ export type FileWithPreview = {
   file: File | FileMetadata;
   id: string;
   preview?: string;
+  /** Native filesystem path when the file was picked via Tauri dialog or drag-drop. */
+  sourcePath?: string;
 };
 
 export type FileUploadOptions = {
@@ -49,6 +51,9 @@ export type FileUploadState = {
 
 export type FileUploadActions = {
   addFiles: (files: FileList | File[]) => void;
+  addFilesWithSourcePaths: (
+    entries: Array<{ file: File; sourcePath: string }>
+  ) => void;
   removeFile: (id: string) => void;
   clearFiles: () => void;
   clearErrors: () => void;
@@ -64,6 +69,7 @@ export type FileUploadActions = {
   setBitrate: (bitrate: string) => void;
   setAttenuationLimit: (attenuationLimit: number) => void;
   setSelectedModel: (model: ProcessingModel) => void;
+  setIsDragging: (isDragging: boolean) => void;
   getInputProps: (
     props?: InputHTMLAttributes<HTMLInputElement>
   ) => InputHTMLAttributes<HTMLInputElement> & {
@@ -200,7 +206,10 @@ export const useFileUpload = (
   }, [onFilesChange]);
 
   const addFiles = useCallback(
-    (newFiles: FileList | File[]) => {
+    (
+      newFiles: FileList | File[],
+      options?: { sourcePaths?: string[] }
+    ) => {
       if (!newFiles || newFiles.length === 0) return;
 
       const newFilesArray = Array.from(newFiles);
@@ -227,18 +236,8 @@ export const useFileUpload = (
 
       const validFiles: FileWithPreview[] = [];
 
-      for (const file of newFilesArray) {
-        if (multiple) {
-          const isDuplicate = state.files.some(
-            (existingFile) =>
-              existingFile.file.name === file.name &&
-              existingFile.file.size === file.size
-          );
-
-          if (isDuplicate) {
-            continue;
-          }
-        }
+      for (let index = 0; index < newFilesArray.length; index++) {
+        const file = newFilesArray[index];
 
         if (file.size > maxSize) {
           errors.push(
@@ -260,6 +259,7 @@ export const useFileUpload = (
           file,
           id: generateUniqueId(file),
           preview: createPreview(file),
+          sourcePath: options?.sourcePaths?.[index],
         });
       }
 
@@ -269,9 +269,42 @@ export const useFileUpload = (
         onFilesAdded?.(validFiles);
 
         setState((prev) => {
+          const filesToAdd = multiple
+            ? validFiles.filter((candidate) => {
+                const candidateFile =
+                  candidate.file instanceof File ? candidate.file : null;
+                if (!candidateFile) {
+                  return false;
+                }
+
+                return !prev.files.some((existingFile) => {
+                  if (
+                    candidate.sourcePath &&
+                    existingFile.sourcePath
+                  ) {
+                    return existingFile.sourcePath === candidate.sourcePath;
+                  }
+
+                  const existingSize =
+                    existingFile.file instanceof File
+                      ? existingFile.file.size
+                      : existingFile.file.size;
+
+                  return (
+                    existingFile.file.name === candidateFile.name &&
+                    existingSize === candidateFile.size
+                  );
+                });
+              })
+            : validFiles;
+
+          if (filesToAdd.length === 0) {
+            return prev;
+          }
+
           const newFiles = !multiple
-            ? validFiles
-            : [...prev.files, ...validFiles];
+            ? filesToAdd
+            : [...prev.files, ...filesToAdd];
           onFilesChange?.(newFiles);
           return {
             ...prev,
@@ -292,7 +325,6 @@ export const useFileUpload = (
       }
     },
     [
-      state.files,
       maxFiles,
       multiple,
       maxSize,
@@ -303,6 +335,20 @@ export const useFileUpload = (
       onFilesChange,
       onFilesAdded,
     ]
+  );
+
+  const addFilesWithSourcePaths = useCallback(
+    (entries: Array<{ file: File; sourcePath: string }>) => {
+      if (entries.length === 0) {
+        return;
+      }
+
+      addFiles(
+        entries.map((entry) => entry.file),
+        { sourcePaths: entries.map((entry) => entry.sourcePath) }
+      );
+    },
+    [addFiles]
   );
 
   const removeFile = useCallback(
@@ -438,10 +484,15 @@ export const useFileUpload = (
     setState((prev) => ({ ...prev, selectedModel: model }));
   }, []);
 
+  const setIsDragging = useCallback((isDragging: boolean) => {
+    setState((prev) => ({ ...prev, isDragging }));
+  }, []);
+
   return [
     state,
     {
       addFiles,
+      addFilesWithSourcePaths,
       clearErrors,
       clearFiles,
       getInputProps,
@@ -458,6 +509,7 @@ export const useFileUpload = (
       setBitrate,
       setAttenuationLimit,
       setSelectedModel,
+      setIsDragging,
     },
   ];
 };

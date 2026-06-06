@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import { downloadDir, join } from "@tauri-apps/api/path";
+import { dirname, join } from "@tauri-apps/api/path";
 import { writeFile } from "@tauri-apps/plugin-fs";
 import FileUpload from "./components/fileUpload";
 import { TooltipProvider } from "./components/ui/tooltip";
@@ -49,12 +49,19 @@ function App() {
       }
 
       isProcessingRef.current = true;
-      const uploads = files
-        .map((upload) => ({
-          id: upload.id,
-          file: upload.file instanceof File ? upload.file : null,
-        }))
-        .filter((item): item is { id: string; file: File } => item.file instanceof File);
+      const uploads = files.flatMap((upload) => {
+        if (!(upload.file instanceof File)) {
+          return [];
+        }
+
+        return [
+          {
+            id: upload.id,
+            file: upload.file,
+            sourcePath: upload.sourcePath,
+          },
+        ];
+      });
 
       if (uploads.length === 0) {
         isProcessingRef.current = false;
@@ -88,10 +95,10 @@ function App() {
 
             const audioFile = isVideo
               ? new File(
-                  [await extractAudioFromVideo(upload.file)],
-                  "extracted.wav",
-                  { type: "audio/wav" }
-                )
+                [await extractAudioFromVideo(upload.file)],
+                "extracted.wav",
+                { type: "audio/wav" }
+              )
               : upload.file;
 
             const result =
@@ -115,7 +122,11 @@ function App() {
               outputName = buildOutputName(upload.file.name, resolvedFormat);
             }
 
-            const destinationFolder = await resolveOutputFolder(outputFolder);
+
+            const destinationFolder = await resolveOutputFolder(
+              outputFolder,
+              upload.sourcePath
+            );
             const outputPath = await join(destinationFolder, outputName);
 
             await saveBlobToPath(finalBlob, outputPath);
@@ -233,11 +244,21 @@ async function saveBlobToPath(blob: Blob, outputPath: string): Promise<void> {
   await writeFile(outputPath, bytes);
 }
 
-async function resolveOutputFolder(outputFolder: string): Promise<string> {
+async function resolveOutputFolder(
+  outputFolder: string,
+  inputSourcePath?: string
+): Promise<string> {
   if (outputFolder !== "same-as-input") {
     return outputFolder;
   }
-  return downloadDir();
+
+  if (inputSourcePath) {
+    return await dirname(inputSourcePath);
+  }
+
+  throw new Error(
+    "Cannot save next to the input file because its folder path is unknown. Select files with the file picker instead of drag-and-drop."
+  );
 }
 
 function resolveOutputFormat(format: string, inputName: string): string {

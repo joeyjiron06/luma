@@ -34,9 +34,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { open } from "@tauri-apps/plugin-dialog";
+import { pickMediaFiles } from "@/lib/native-files";
+import { useTauriDragDrop } from "@/hooks/use-tauri-drag-drop";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Label } from "./ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
@@ -152,11 +154,7 @@ export default function Component({
     selectedModel,
   } = state;
   const {
-    handleDragEnter,
-    handleDragLeave,
-    handleDragOver,
-    handleDrop,
-    openFileDialog,
+    addFilesWithSourcePaths,
     removeFile,
     setFormat,
     setOutputFolder,
@@ -164,6 +162,7 @@ export default function Component({
     setBitrate,
     setAttenuationLimit,
     setSelectedModel,
+    setIsDragging,
   } = actions;
 
   const [fileDurations, setFileDurations] = useState<Record<string, string>>({});
@@ -202,6 +201,27 @@ export default function Component({
       setOutputFolder(selected);
     }
   };
+
+  const handleOpenFiles = async () => {
+    const entries = await pickMediaFiles({ multiple: true });
+    if (entries.length > 0) {
+      addFilesWithSourcePaths(entries);
+    }
+  };
+
+  const handleNativeDrop = useCallback(
+    (entries: Parameters<typeof addFilesWithSourcePaths>[0]) => {
+      if (entries.length > 0) {
+        addFilesWithSourcePaths(entries);
+      }
+    },
+    [addFilesWithSourcePaths]
+  );
+
+  useTauriDragDrop({
+    onDrop: handleNativeDrop,
+    onDraggingChange: setIsDragging,
+  });
 
   useEffect(() => {
     const activeFileIds = new Set(files.map((file) => file.id));
@@ -271,10 +291,6 @@ export default function Component({
       <div
         className="relative flex min-h-40 max-w-3xl mx-auto w-full flex-col items-center justify-center rounded-xl border border-input px-3 py-3 transition-colors has-[input:focus]:border-ring has-[input:focus]:ring-[3px] has-[input:focus]:ring-ring/50 data-[dragging=true]:bg-accent/50 grow  gap-2 bg-muted/10"
         data-dragging={isDragging || undefined}
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
       >
         <input
           {...getInputProps()}
@@ -286,7 +302,7 @@ export default function Component({
 
         {files.length === 0 ? (
           <button className="flex flex-col items-center justify-center text-center gap-2 rounded-xl w-full h-full grow bg-muted/30 cursor-pointer"
-            onClick={openFileDialog}>
+            onClick={() => void handleOpenFiles()}>
             <p className="font-medium text-sm text-muted-foreground">Drop files or click here to upload
             </p>
           </button>
@@ -351,7 +367,7 @@ export default function Component({
             </DropdownMenu>
 
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="xs" onClick={openFileDialog} aria-label="Add media files" title="Add media files">
+              <Button variant="outline" size="xs" onClick={() => void handleOpenFiles()} aria-label="Add media files" title="Add media files">
                 <UploadIcon className="size-3" />
               </Button>
 
