@@ -134,16 +134,16 @@ From `marketing/CONTEXT.md`:
 ## Rules
 
 1. **Never identical copy** — vary descriptions per directory; moderators and search engines notice duplicates.
-2. **UTM every link** — `luma.app/?utm_source=<directory>&utm_medium=directory`
+2. **UTM every link** — `luma.pub/?utm_source=<directory>&utm_medium=directory`
 3. **Submit Free Tools to tool directories, Luma to app directories** — wrong category = rejection or junk traffic.
 4. **Product Hunt is a launch event, not a listing** — save it for when there is something to demo.
 5. **Track rejections** — if 3+ similar directories reject waitlist-only, pause that category until beta.
 
 ## Prerequisites (fill in before Session 1)
 
-- [ ] Waitlist URL live (domain + path)
-- [ ] Mac-only for now, or Windows planned — document in asset kit
-- [ ] List of any directories already submitted to
+- [x] Waitlist URL live: https://luma.pub
+- [x] Mac first; Windows planned — document in asset kit
+- [x] No directories submitted yet
 - [ ] Screenshots ready for submission forms
 
 ## Next files to create
