@@ -1,0 +1,163 @@
+name,url,category,tier,waitlist_ok,dofollow,status,submitted_date,notes
+BetaList,https://betalist.com/submit,startup_launch,A,yes,unknown,candidate,,Pre-launch waitlist specialist; review can take weeks on free tier
+Launching Next,https://www.launchingnext.com/submit/,startup_launch,A,yes,yes,candidate,,Evergreen startup directory; strong BetaList alternative
+ProductHype,https://www.producthype.co/submit,startup_launch,A,yes,unknown,candidate,,Pre-launch and early-stage products
+Tiny Startups,https://tinystartups.com/submit,startup_launch,A,yes,unknown,candidate,,Indie product gallery; waitlist-friendly
+StartupBase,https://startupbase.io/submit,startup_launch,A,yes,unknown,candidate,,Startup discovery; accepts early-stage
+Indie Makers Hub,https://indiemakershub.com/submit/,indie_maker,A,yes,unknown,candidate,,Free; Google Form; 2-3 day review
+Indie Hacker Projects,https://indiehackerprojects.com/submit,indie_maker,A,yes,unknown,candidate,,3-step form; AI/Productivity categories fit
+Does It Mac,https://doesitmac.com/submit,mac_desktop,A,maybe,yes,candidate,,Submit under Audio/Music; Mac-first fits now
+All Mac Apps,https://allmacapps.com/submit,mac_desktop,A,maybe,unknown,candidate,,Mac apps only; may need working build — try with waitlist URL
+Arius AI,https://ariusai.com/post-your-ai-tool/,ai_tools,A,maybe,yes,candidate,,Emphasize local/private processing and honest trade-offs
+AI Tools Directory,https://aitoolsdirectory.site/submit.html,ai_tools,A,maybe,unknown,candidate,,Audio/Voice category; manual review
+IndieShowcase,https://indieshowcase.io/,indie_maker,A,yes,unknown,candidate,,Requires badge on site footer after submit
+PitchWall,https://pitchwall.co/submit,startup_launch,A,yes,unknown,candidate,,Product discovery for early startups
+Fazier,https://fazier.com/submit,startup_launch,A,maybe,unknown,candidate,,Launch platform with community
+Open Launch,https://openlaunch.io/submit,startup_launch,A,maybe,unknown,candidate,,Open-source Product Hunt alternative
+Tiny Launch,https://tinylaunch.io/submit,startup_launch,A,yes,unknown,candidate,,Lightweight launch platform
+SideProjectors,https://sideprojectors.com/submit,indie_maker,A,yes,unknown,candidate,,Side project showcase
+Dev Hunt,https://devhunt.org/submit,indie_maker,B,yes,unknown,candidate,,Developer/maker audience; good for build-in-public angle
+StartupStash,https://startupstash.com/add-startup/,startup_launch,B,yes,unknown,candidate,,Curated startup tools list
+Get Worm,https://getworm.com/submit,startup_launch,B,yes,unknown,candidate,,Startup discovery
+10words,https://10words.io/submit,startup_launch,B,yes,unknown,candidate,,Short pitch format
+SaasPO,https://saashub.com/saaspo/submit,startup_launch,B,maybe,unknown,candidate,,SaaS/product discovery
+Alternative.me,https://alternative.me/submit,startup_launch,B,maybe,yes,candidate,,Software alternatives directory
+Uneed,https://uneed.best/submit,startup_launch,B,maybe,yes,candidate,,Curated tools; may prefer live products
+Peerlist,https://peerlist.io/,indie_maker,B,maybe,unknown,candidate,,Maker profiles; post as project update
+WIP.co,https://wip.co/,indie_maker,B,yes,unknown,candidate,,Maker community; ship log / pre-launch OK
+Makerlog,https://makerlog.org/,indie_maker,B,yes,unknown,candidate,,Daily maker log; build-in-public
+Startup Buffer,https://startupbuffer.com/submit,startup_launch,B,yes,unknown,candidate,,Startup directory
+Startup Lister,https://startuplister.com/submit,startup_launch,B,yes,unknown,candidate,,Aggregated startup listings
+Startupers,https://startupers.io/submit,startup_launch,B,yes,unknown,candidate,,Early-stage startup list
+Startups.fyi,https://startups.fyi/submit,startup_launch,B,yes,unknown,candidate,,Startup gallery
+Killer Startups,https://killerstartups.com/submit-startup/,startup_launch,B,maybe,unknown,candidate,,May prefer live products
+All Startups,https://allstartups.info/submit,startup_launch,B,yes,unknown,candidate,,Startup index
+Launch Vault,https://launchvault.xyz/submit,startup_launch,B,yes,unknown,candidate,,Launch directory
+Launching.io,https://launching.io/submit,startup_launch,B,yes,unknown,candidate,,Pre-launch friendly
+Betapage,https://betapage.co/submit,startup_launch,B,yes,unknown,candidate,,Beta and pre-launch products
+Early Stage Marketing,https://earlystage.marketing/submit,startup_launch,B,yes,unknown,candidate,,Pre-launch marketing directory
+Land-book,https://land-book.com/submit,startup_launch,B,yes,unknown,candidate,,Landing page showcase — submit luma.pub design
+One Page Love,https://onepagelove.com/submit,startup_launch,B,yes,unknown,candidate,,Landing page gallery
+Lapa Ninja,https://www.lapa.ninja/submit/,startup_launch,B,yes,unknown,candidate,,Landing page inspiration gallery
+Startup Pill,https://startuppill.com/submit,startup_launch,B,yes,unknown,candidate,,Startup submissions
+Startup Lift,https://www.startuplift.com/submit,startup_launch,C,yes,unknown,candidate,,Long-tail startup list
+Startup Tracker,https://startuptracker.io/submit,startup_launch,C,yes,unknown,candidate,,Startup index
+Startup Ranking,https://www.startupranking.com/,startup_launch,B,maybe,unknown,candidate,,May need more traction
+StartuPage,https://startupa.ge/,startup_launch,B,maybe,unknown,candidate,,Startup ecosystem profile
+Findfa.st,https://findfa.st/,startup_launch,B,no,yes,candidate,,Needs verified/launched product — revisit at beta
+Smol Launch,https://smollaunch.com/,startup_launch,B,no,yes,candidate,,Requires shipped product — revisit at launch
+Product Hunt,https://www.producthunt.com/,startup_launch,A,no,yes,candidate,,SAVE for launch day — not a waitlist listing
+Hacker News Show HN,https://news.ycombinator.com/submit,startup_launch,A,no,unknown,candidate,,SAVE for launch — Show HN post
+Indie Hackers Post,https://www.indiehackers.com/,indie_maker,A,no,unknown,candidate,,SAVE for milestone post — not a form listing
+SaaSHub,https://www.saashub.com/,startup_launch,B,no,yes,candidate,,Needs live product; high SEO value — post-launch wave
+AlternativeTo,https://alternativeto.net/,creator_audio,A,no,yes,candidate,,List as Descript/Audacity alternative — needs working product
+G2,https://www.g2.com/products/new,startup_launch,A,no,unknown,candidate,,Needs users/reviews — post-launch
+Capterra,https://www.capterra.com/vendors/sign-up,startup_launch,A,no,unknown,candidate,,Needs live product — post-launch SEO
+GetApp,https://www.getapp.com/,startup_launch,B,no,unknown,candidate,,Gartner Digital Markets — post-launch
+Software Advice,https://www.softwareadvice.com/,startup_launch,B,no,unknown,candidate,,Post-launch B2B reviews
+TrustRadius,https://www.trustradius.com/,startup_launch,B,no,unknown,candidate,,Post-launch reviews
+Crozdesk,https://crozdesk.com/,startup_launch,B,no,unknown,candidate,,B2B software discovery — post-launch
+spotSaaS,https://spotsaas.com/,startup_launch,B,no,unknown,candidate,,Software finder — post-launch
+B2Saas,https://b2saas.com/submit,startup_launch,B,maybe,unknown,candidate,,SaaS comparison
+eBool,https://ebool.com/submit,startup_launch,C,maybe,unknown,candidate,,Software alternatives
+Software Suggest,https://www.softwaresuggest.com/vendors,startup_launch,B,no,unknown,candidate,,Post-launch
+GoodFirms,https://www.goodfirms.co/,startup_launch,B,no,unknown,candidate,,Post-launch reviews
+FinancesOnline,https://financesonline.com/add-product/,startup_launch,C,no,unknown,candidate,,Post-launch
+SourceForge,https://sourceforge.net/,creator_audio,B,no,yes,candidate,,Post-launch; open source angle if applicable
+Slashdot,https://slashdot.org/submit,startup_launch,B,no,unknown,candidate,,Post-launch news submit
+Indie App Catalog,https://indieappcatalog.com/app/submit,mac_desktop,B,maybe,unknown,candidate,,Mac app catalog; may need App Store or download
+MacintoshApps,https://www.macintoshapps.com/submit,mac_desktop,B,no,unknown,candidate,,GitHub PR; needs app icon and metadata
+MacUpdate,https://www.macupdate.com/,mac_desktop,B,no,unknown,candidate,,Requires download URL — post-launch
+Pure Mac,https://www.pure-mac.com/submit,mac_desktop,B,no,unknown,candidate,,Needs downloadable Mac app
+MacDownload,https://www.macdownload.com/submit,mac_desktop,C,no,unknown,candidate,,Post-launch Mac software
+MacSoftReview,https://www.macsoftreview.com/submit,mac_desktop,C,no,unknown,candidate,,Post-launch
+Softpedia Mac,https://mac.softpedia.com/,mac_desktop,B,no,unknown,candidate,,Post-launch; editorial review
+Setapp,https://setapp.com/developers,mac_desktop,A,no,unknown,candidate,,Partnership — post-launch revenue share
+Awesome Native macOS Apps,https://github.com/iCHAIT/awesome-macOS,mac_desktop,B,no,no,candidate,,GitHub PR for native Mac apps — post-launch
+AI Toolboard,https://aitoolboard.com/list,ai_tools,B,maybe,unknown,candidate,,Audio Generator category available
+AITooli,https://www.aitooli.com/submit,ai_tools,B,maybe,yes,candidate,,Requires AI keywords in name; badge for backlink
+Futurepedia,https://www.futurepedia.io/submit-tool,ai_tools,A,no,yes,candidate,,Major AI directory — post-launch or strong demo
+There's An AI For That,https://theresanaiforthat.com/submit/,ai_tools,A,no,yes,candidate,,Top AI directory — post-launch
+Toolify AI,https://www.toolify.ai/submit,ai_tools,A,no,yes,candidate,,Large AI tool index — post-launch
+TopAI.tools,https://topai.tools/submit,ai_tools,B,no,unknown,candidate,,Post-launch
+Future Tools,https://www.futuretools.io/submit,ai_tools,B,no,unknown,candidate,,Matt Wolfe directory — post-launch
+Easy With AI,https://easywithai.com/submit,ai_tools,B,no,unknown,candidate,,Post-launch
+Insidr.ai,https://insidr.ai/submit-tools/,ai_tools,B,no,unknown,candidate,,Post-launch
+AIXploria,https://www.aixploria.com/en/submit-ai/,ai_tools,B,no,unknown,candidate,,Post-launch
+AI Scout,https://aiscout.net/submit,ai_tools,B,no,unknown,candidate,,Post-launch
+OpenTools,https://opentools.ai/submit,ai_tools,B,no,unknown,candidate,,Post-launch
+All The AI Tools,https://alltheaitools.com/submit,ai_tools,C,no,unknown,candidate,,Post-launch
+AIcyclopedia,https://www.aicyclopedia.com/submit,ai_tools,C,no,unknown,candidate,,Post-launch
+AIFindTools,https://aifindertools.com/submit-a-tool/,ai_tools,C,maybe,unknown,candidate,,May require payment for basic — verify before submit
+Ben's Bites,https://bensbites.com/,ai_tools,B,no,unknown,candidate,,Newsletter feature — pitch at launch
+The Rundown AI,https://www.therundown.ai/,ai_tools,B,no,unknown,candidate,,Newsletter — pitch at launch
+Futurepedia Newsletter,https://www.futurepedia.io/,ai_tools,B,no,unknown,candidate,,Pitch local audio AI angle at launch
+Tool Battles,https://toolbattles.com/submit,free_tool,C,maybe,unknown,candidate,,FOR FREE TOOLS — not Luma app
+The Free Tools Directory,https://thefreetoolsdirectory.com/submit,free_tool,B,yes,unknown,candidate,,FOR FREE TOOLS — primary target for Marketing Engineering
+1000.tools,https://1000.tools/submit,free_tool,B,yes,unknown,candidate,,FOR FREE TOOLS
+Twelve Tools,https://twelve.tools/submit,free_tool,B,yes,unknown,candidate,,FOR FREE TOOLS — handpicked daily
+Find Cool Tools,https://findcool.tools/submit,free_tool,B,yes,unknown,candidate,,FOR FREE TOOLS
+PostMake,https://postmake.io/submit,free_tool,B,yes,unknown,candidate,,FOR FREE TOOLS — maker resources
+CtrlAlt.cc,https://ctrlalt.cc/submit,free_tool,B,yes,unknown,candidate,,FOR FREE TOOLS
+Resource FYI,https://resourcefyi.com/submit,free_tool,C,yes,unknown,candidate,,FOR FREE TOOLS
+NoCode List,https://nocodelist.co/submit,free_tool,C,yes,unknown,candidate,,FOR FREE TOOLS — if tool is no-code friendly
+OpenAlternative,https://openalternative.co/submit,free_tool,B,maybe,yes,candidate,,FOR FREE TOOLS or open-source angle
+Micro SaaS Examples,https://microsaashq.com/submit,indie_maker,B,maybe,unknown,candidate,,Indie product gallery
+Awesome Indie,https://awesomeindie.com/submit,indie_maker,B,yes,unknown,candidate,,Curated indie products
+Open Startup,https://openstartup.com/,indie_maker,C,maybe,unknown,candidate,,Transparent startup list
+BuiltWith,https://builtwith.com/,indie_maker,C,no,unknown,candidate,,Tech stack lookup — not submission
+StackShare,https://stackshare.io/,indie_maker,B,no,yes,candidate,,Post-launch tool stack listing
+HypeDesk Free Directories,https://hypedesk.io/free-directories-to-promote,startup_launch,C,yes,unknown,candidate,,Meta list — mine for additional candidates
+LaunchDirectories.com,https://launchdirectories.com/,startup_launch,C,yes,unknown,candidate,,Meta list sorted by DR — research source
+SubmitSaaS Directory List,https://submitsaas.com/startup-directory-submission,startup_launch,C,yes,unknown,candidate,,Meta list of 140+ — research source
+Donkey Directories,https://www.donkey.directory/,startup_launch,C,yes,unknown,candidate,,Meta tracker of 294 directories — research source
+SaaSHub Submit List,https://www.saashub.com/submit/list,startup_launch,C,yes,unknown,candidate,,108 verified directories — research source
+Tool Finder,https://toolfinder.co/submit,free_tool,B,maybe,unknown,candidate,,FOR FREE TOOLS — AI-powered discovery
+No Film School Resources,https://nofilmschool.com/,creator_audio,C,no,unknown,candidate,,Editorial pitch — not form; video/audio tool angle
+Podcast Insights Tools,https://podcastinsights.com/,creator_audio,C,no,unknown,candidate,,Editorial/resource list — pitch not form
+Riverside Blog,https://riverside.com/blog,creator_audio,C,no,unknown,candidate,,Editorial — creator tool roundup pitch
+Descript Alternatives List,https://alternativeto.net/software/descript/,creator_audio,A,no,yes,candidate,,Post-launch — target as local/private alternative
+Audacity Alternatives,https://alternativeto.net/software/audacity/,creator_audio,B,no,yes,candidate,,Post-launch positioning
+Adobe Podcast Alternatives,https://alternativeto.net/software/adobe-podcast/,creator_audio,B,no,yes,candidate,,Post-launch — cloud vs local angle
+Cleanvoice AI Alternatives,https://alternativeto.net/software/cleanvoice/,creator_audio,B,no,yes,candidate,,Direct competitor alternative page
+Auphonic Alternatives,https://alternativeto.net/software/auphonic/,creator_audio,B,no,yes,candidate,,Post-production audio competitor
+Crunchbase,https://www.crunchbase.com/,startup_launch,B,maybe,yes,candidate,,Company profile — create when ready
+AngelList / Wellfound,https://wellfound.com/,startup_launch,C,maybe,unknown,candidate,,Company profile
+BetaBound,https://www.betabound.com/,startup_launch,B,maybe,unknown,candidate,,Beta tester community — post-beta
+AppSumo Marketplace,https://appsumo.com/partners/,startup_launch,A,no,unknown,candidate,,Needs mature product — later stage
+Mobbin,https://mobbin.com/,startup_launch,C,no,unknown,candidate,,UI patterns — not product listing
+Owwly,https://owwly.com/submit,startup_launch,C,yes,unknown,candidate,,Product discovery
+Feed My App,https://feedmyapp.com/submit,startup_launch,C,maybe,unknown,candidate,,App discovery
+Viesearch,https://viesearch.com/submit,startup_launch,C,yes,no,candidate,,General web directory — low quality tier
+WebWiki,https://www.webwiki.com/,startup_launch,C,yes,unknown,candidate,,Long-tail web directory
+SaaS Worthy,https://www.saasworthy.com/,startup_launch,B,no,unknown,candidate,,Post-launch SaaS reviews
+SaaS Genius,https://www.saasgenius.com/,startup_launch,C,no,unknown,candidate,,Post-launch
+SaaS Profile,https://saasprofile.com/,startup_launch,C,no,unknown,candidate,,Post-launch
+SaaS 1000,https://saas1000.com/,startup_launch,C,no,unknown,candidate,,Post-launch ranking
+Toolify (general),https://www.toolify.ai/,ai_tools,A,no,yes,candidate,,See Toolify AI entry — post-launch priority
+Theresanaiforthat Audio,https://theresanaiforthat.com/audio/,ai_tools,A,no,yes,candidate,,Category page — post-launch audio AI listing
+Futurepedia Audio,https://www.futurepedia.io/ai-tools/audio,ai_tools,A,no,yes,candidate,,Audio AI category — post-launch
+IndieStack,https://indiestack.ai/submit,indie_maker,B,no,unknown,candidate,,Developer tools only — out of scope for Luma
+Indie Hackers Product Directory,https://www.indiehackers.com/products,indie_maker,B,maybe,unknown,candidate,,Community product list
+Reddit r/SideProject,https://www.reddit.com/r/SideProject/,indie_maker,B,no,no,candidate,,Community post — not directory; launch milestone
+Reddit r/podcasting,https://www.reddit.com/r/podcasting/,creator_audio,B,no,no,candidate,,Community — share when tool is usable
+Reddit r/YouTubers,https://www.reddit.com/r/YouTubers/,creator_audio,B,no,no,candidate,,Community — audio cleanup angle
+Reddit r/audiophile,https://www.reddit.com/r/audiophile/,creator_audio,C,no,no,candidate,,Niche community — careful self-promo rules
+Productivity Directory,https://productivity.directory/submit,startup_launch,C,yes,unknown,candidate,,Productivity tools
+No Code Founders,https://nocodefounders.com/,startup_launch,C,maybe,unknown,candidate,,Community — if positioning allows
+Ship SaaS,https://shipsaas.com/submit,startup_launch,C,yes,unknown,candidate,,SaaS/product directory
+Launch Scroll,https://launchscroll.com/submit,startup_launch,C,yes,unknown,candidate,,Launch list
+Startup Spotlight,https://startupspotlight.co/submit,startup_launch,C,yes,unknown,candidate,,Long-tail launch
+Maker Thrive,https://makerthrive.com/submit,indie_maker,C,yes,unknown,candidate,,Maker products
+Indie Products,https://indieproducts.io/submit,indie_maker,C,yes,unknown,candidate,,Indie gallery
+Solo Founders,https://solofounders.com/submit,indie_maker,C,yes,unknown,candidate,,Solo founder products
+Bootstrapped SaaS,https://bootstrappedsaas.com/submit,startup_launch,C,maybe,unknown,candidate,,Needs some traction possibly
+Micro Launch,https://microlaunch.io/submit,startup_launch,C,yes,unknown,candidate,,Micro launch platform
+First 100 Users,https://first100users.com/submit,startup_launch,C,yes,unknown,candidate,,Early user acquisition list
+Launching Today,https://launchingtoday.com/submit,startup_launch,C,yes,unknown,candidate,,Daily launches
+Startup Inspire,https://startupinspire.com/submit,startup_launch,C,yes,unknown,candidate,,Startup gallery
+All Top Startups,https://alltopstartups.com/submit,startup_launch,C,yes,unknown,candidate,,Startup index
+Startups Gallery,https://startupsgallery.com/submit,startup_launch,C,yes,unknown,candidate,,Long-tail
+New Startups,https://newstartups.com/submit,startup_launch,C,yes,unknown,candidate,,Long-tail
+Springwise,https://www.springwise.com/submit,startup_launch,C,no,unknown,candidate,,Editorial innovation — pitch at launch
+BetaList Alternatives Roundup,https://smollaunch.com/alternatives/betalist,startup_launch,C,yes,unknown,candidate,,Research source for more launch sites
