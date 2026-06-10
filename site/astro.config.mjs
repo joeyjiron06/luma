@@ -9,5 +9,8 @@ export default defineConfig({
   integrations: [react()],
   vite: {
     plugins: [tailwindcss(), svgr()],
+    optimizeDeps: {
+      exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"],
+    },
   },
 });

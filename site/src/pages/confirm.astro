@@ -1,63 +1,11 @@
 ---
-import BuiltForCreators from "@/components/landingPage/sections/builtForCreators";
-import EditingStruggle from "@/components/landingPage/sections/editingStruggle";
-import Hero from "@/components/landingPage/sections/hero";
-import LandingFaq from "@/components/landingPage/sections/landingFaq";
-import NavBar from "@/components/landingPage/sections/navBar";
-import OriginalAudioDemo from "@/components/landingPage/sections/originalAudioDemo";
-import ProductIntro from "@/components/landingPage/sections/productIntro";
-import CTA from "@/components/landingPage/sections/cta";
-import StudioSound from "@/components/landingPage/sections/studioSound";
-
-import "./index.css";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <meta property="og:title" content="Luma" />
-
-    <meta
-      name="description"
-      content="Luma is an AI background noise removal app that sounds like you. It removes background noise from your audio and turns it into crisp clear speech. Perfect for film, podcast, and audio recordings."
-    />
-    <meta
-      property="og:description"
-      content="Luma is an AI background noise removal app that sounds like you. It removes background noise from your audio and turns it into crisp clear speech. Perfect for film, podcast, and audio recordings."
-    />
-    <meta property="og:image" content="https://luma.pub/preview.png" />
-    <meta property="og:url" content="https://luma.pub" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Luma" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Luma" />
-    <meta
-      name="twitter:description"
-      content="Luma is an AI background noise removal app that sounds like you. It removes background noise from your audio and turns it into crisp clear speech. Perfect for film, podcast, and audio recordings."
-    />
-    <meta name="twitter:image" content="https://luma.pub/preview.png" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Luma",
-        "description": "AI audio cleanup tool",
-        "applicationCategory": "MultimediaApplication"
-      }
-    </script>
-
-    <title>Luma</title>
-  </head>
-
-  <body
-    class="min-h-screen bg-background text-foreground flex items-center justify-center px-4"
-  >
+<BaseLayout
+  title="Luma"
+  bodyClass="min-h-screen bg-background text-foreground flex items-center justify-center px-4"
+>
     <main
       class="w-full max-w-md rounded-2xl border border-border bg-background/50 p-8 text-center"
     >
@@ -127,5 +75,4 @@ import "./index.css";
 
       confirmSignup();
     </script>
-  </body>
-</html>
+</BaseLayout>

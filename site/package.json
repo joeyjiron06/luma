@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@astrojs/react": "^5.0.4",
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@ffmpeg/util": "^0.12.2",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@phosphor-icons/react": "^2.1.10",
     "@react-three/fiber": "^9.6.1",
