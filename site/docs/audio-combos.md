@@ -1,0 +1,159 @@
+# Audio conversion combinations
+
+Popular format pairs supported by FFmpeg. Tuple format: `input,output`.
+
+**Video inputs:** mp4, mov, mkv, webm, avi, mpeg, flv, wmv, 3gp, m4v  
+**Audio inputs:** mp3, wav, aac, m4a, flac, ogg, opus, aiff  
+**Audio outputs:** wav, mp3, aac, m4a, flac, ogg, opus, aiff
+
+## Video → audio (80)
+
+- mp4,wav
+- mp4,mp3
+- mp4,aac
+- mp4,m4a
+- mp4,flac
+- mp4,ogg
+- mp4,opus
+- mp4,aiff
+- mov,wav
+- mov,mp3
+- mov,aac
+- mov,m4a
+- mov,flac
+- mov,ogg
+- mov,opus
+- mov,aiff
+- mkv,wav
+- mkv,mp3
+- mkv,aac
+- mkv,m4a
+- mkv,flac
+- mkv,ogg
+- mkv,opus
+- mkv,aiff
+- webm,wav
+- webm,mp3
+- webm,aac
+- webm,m4a
+- webm,flac
+- webm,ogg
+- webm,opus
+- webm,aiff
+- avi,wav
+- avi,mp3
+- avi,aac
+- avi,m4a
+- avi,flac
+- avi,ogg
+- avi,opus
+- avi,aiff
+- mpeg,wav
+- mpeg,mp3
+- mpeg,aac
+- mpeg,m4a
+- mpeg,flac
+- mpeg,ogg
+- mpeg,opus
+- mpeg,aiff
+- flv,wav
+- flv,mp3
+- flv,aac
+- flv,m4a
+- flv,flac
+- flv,ogg
+- flv,opus
+- flv,aiff
+- wmv,wav
+- wmv,mp3
+- wmv,aac
+- wmv,m4a
+- wmv,flac
+- wmv,ogg
+- wmv,opus
+- wmv,aiff
+- 3gp,wav
+- 3gp,mp3
+- 3gp,aac
+- 3gp,m4a
+- 3gp,flac
+- 3gp,ogg
+- 3gp,opus
+- 3gp,aiff
+- m4v,wav
+- m4v,mp3
+- m4v,aac
+- m4v,m4a
+- m4v,flac
+- m4v,ogg
+- m4v,opus
+- m4v,aiff
+
+## Audio → audio (64)
+
+- mp3,wav
+- mp3,mp3
+- mp3,aac
+- mp3,m4a
+- mp3,flac
+- mp3,ogg
+- mp3,opus
+- mp3,aiff
+- wav,wav
+- wav,mp3
+- wav,aac
+- wav,m4a
+- wav,flac
+- wav,ogg
+- wav,opus
+- wav,aiff
+- aac,wav
+- aac,mp3
+- aac,aac
+- aac,m4a
+- aac,flac
+- aac,ogg
+- aac,opus
+- aac,aiff
+- m4a,wav
+- m4a,mp3
+- m4a,aac
+- m4a,m4a
+- m4a,flac
+- m4a,ogg
+- m4a,opus
+- m4a,aiff
+- flac,wav
+- flac,mp3
+- flac,aac
+- flac,m4a
+- flac,flac
+- flac,ogg
+- flac,opus
+- flac,aiff
+- ogg,wav
+- ogg,mp3
+- ogg,aac
+- ogg,m4a
+- ogg,flac
+- ogg,ogg
+- ogg,opus
+- ogg,aiff
+- opus,wav
+- opus,mp3
+- opus,aac
+- opus,m4a
+- opus,flac
+- opus,ogg
+- opus,opus
+- opus,aiff
+- aiff,wav
+- aiff,mp3
+- aiff,aac
+- aiff,m4a
+- aiff,flac
+- aiff,ogg
+- aiff,opus
+- aiff,aiff
+
+**Total: 144 conversion pairs**

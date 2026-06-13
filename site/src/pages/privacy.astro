@@ -1,51 +1,9 @@
 ---
-import "./index.css";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<html lang="en" class="dark">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <meta property="og:title" content="Luma" />
-
-    <meta
-      name="description"
-      content="Luma is an AI background noise removal app that sounds like you. It removes background noise from your audio and turns it into crisp clear speech. Perfect for film, podcast, and audio recordings."
-    />
-    <meta
-      property="og:description"
-      content="Luma is an AI background noise removal app that sounds like you. It removes background noise from your audio and turns it into crisp clear speech. Perfect for film, podcast, and audio recordings."
-    />
-    <meta property="og:image" content="https://luma.app/preview.png" />
-    <meta property="og:url" content="https://luma.app" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Luma" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Luma" />
-    <meta
-      name="twitter:description"
-      content="Luma is an AI background noise removal app that sounds like you. It removes background noise from your audio and turns it into crisp clear speech. Perfect for film, podcast, and audio recordings."
-    />
-    <meta name="twitter:image" content="https://luma.app/preview.png" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Luma",
-        "description": "AI audio cleanup tool",
-        "applicationCategory": "MultimediaApplication"
-      }
-    </script>
-
-    <title>Luma Privacy Policy</title>
-  </head>
-
-  <body>
+<BaseLayout title="Luma Privacy Policy" htmlClass="dark">
+  <Fragment>
     <style>
       [data-custom-class="body"] {
         max-width: 45rem;
@@ -207,8 +165,7 @@ import "./index.css";
         </bdt>
       </div>
     </div>
-  </body>
-</html><div style="line-height: 1.5;">
+  <div style="line-height: 1.5;">
   <bdt class="block-component"><span style="font-size: 15px;"></span></bdt>
 </div><div style="line-height: 1.5;">
   <span style="font-size: 15px;">
@@ -4763,3 +4720,5 @@ import "./index.css";
     </span>
   </span>
 </span>
+  </Fragment>
+</BaseLayout>

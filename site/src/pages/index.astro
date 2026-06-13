@@ -1,4 +1,5 @@
 ---
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import BuiltForCreators from "@/components/landingPage/sections/builtForCreators";
 import EditingStruggle from "@/components/landingPage/sections/editingStruggle";
 import Hero from "@/components/landingPage/sections/hero";
@@ -8,54 +9,51 @@ import OriginalAudioDemo from "@/components/landingPage/sections/originalAudioDe
 import ProductIntro from "@/components/landingPage/sections/productIntro";
 import CTA from "@/components/landingPage/sections/cta";
 import StudioSound from "@/components/landingPage/sections/studioSound";
+import { buttonVariants } from "@/components/ui/button";
+import { AUDIO_CONVERTER_COMBOS } from "@/lib/audio/audioConverterCombos";
+import { cn } from "@/lib/utils";
 
-import "./index.css";
+const POPULAR_TOOL_SLUGS = [
+  "mp4-to-wav",
+  "mp4-to-mp3",
+  "mp4-to-m4a",
+  "mov-to-mp3",
+  "mkv-to-mp3",
+  "webm-to-mp3",
+  "wav-to-mp3",
+  "mp3-to-wav",
+  "m4a-to-mp3",
+  "flac-to-mp3",
+] as const;
+
+const popularTools = POPULAR_TOOL_SLUGS.map((slug) => {
+  const tool = AUDIO_CONVERTER_COMBOS.find((config) => config.slug === slug);
+  if (!tool) {
+    throw new Error(`Missing audio tool config for slug: ${slug}`);
+  }
+  return tool;
+});
+
+const footerLinkClass = cn(
+  buttonVariants({ variant: "link", size: "sm" }),
+  "h-auto justify-start px-0 text-sm font-normal whitespace-normal",
+);
 ---
 
-<html lang="en" class="dark">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <meta property="og:title" content="Luma" />
-
-    <meta
-      name="description"
-      content="Luma is an AI background noise removal app that sounds like you. It removes background noise from your audio and turns it into crisp clear speech. Perfect for film, podcast, and audio recordings."
-    />
-    <meta
-      property="og:description"
-      content="Luma is an AI background noise removal app that sounds like you. It removes background noise from your audio and turns it into crisp clear speech. Perfect for film, podcast, and audio recordings."
-    />
-    <meta property="og:image" content="https://luma.pub/preview.png" />
-    <meta property="og:url" content="https://luma.pub" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Luma" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Luma" />
-    <meta
-      name="twitter:description"
-      content="Luma is an AI background noise removal app that sounds like you. It removes background noise from your audio and turns it into crisp clear speech. Perfect for film, podcast, and audio recordings."
-    />
-    <meta name="twitter:image" content="https://luma.pub/preview.png" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Luma",
-        "description": "AI audio cleanup tool",
-        "applicationCategory": "MultimediaApplication"
-      }
-    </script>
-
-    <title>Luma</title>
-  </head>
-  <body class="min-h-screen bg-background text-foreground">
-    <main class="mx-auto flex min-h-screen w-full flex-col py-6">
+<BaseLayout
+  title="Luma"
+  description="Luma is an AI background noise removal app that sounds like you. It removes background noise from your audio and turns it into crisp clear speech. Perfect for film, podcast, and audio recordings."
+  ogUrl="https://luma.pub"
+  htmlClass="dark"
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Luma",
+    "description": "AI audio cleanup tool",
+    "applicationCategory": "MultimediaApplication",
+  }}
+>
+    <main class="mx-auto flex min-h-screen w-full flex-col pb-6">
       <NavBar />
 
       <Hero client:load />
@@ -85,9 +83,45 @@ import "./index.css";
       <LandingFaq client:load />
 
       <CTA client:load />
+
+      <footer class="border-t border-border mt-16">
+        <div class="container max-w-4xl mx-auto py-12">
+          <h2 class="text-lg font-semibold tracking-tight">
+            Free audio conversion tools
+          </h2>
+          <p class="mt-2 text-sm text-muted-foreground">
+            Convert video and audio files in your browser — no upload required.
+          </p>
+          <ul class="mt-6 grid grid-cols-1 gap-x-4 sm:grid-cols-2 md:grid-cols-3">
+            {
+              popularTools.map((tool) => (
+                <li class="mb-4">
+                  <a href={`/audio/${tool.slug}`} class={footerLinkClass}>
+                    {tool.jsonLdName}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+          <a href="/audio" class={cn(footerLinkClass, "mt-6 inline-flex")}>
+            View all audio tools
+          </a>
+        </div>
+        <div class="border-t border-border">
+          <div class="container max-w-4xl mx-auto py-6">
+            <a
+              href="https://joeyjiron.com"
+              class={cn(footerLinkClass, "inline-flex underline")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              joeyjiron.com
+            </a>
+          </div>
+        </div>
+      </footer>
     </main>
-  </body>
-</html>
+</BaseLayout>
 
 <!-- 
 
