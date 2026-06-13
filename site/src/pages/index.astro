@@ -9,6 +9,35 @@ import OriginalAudioDemo from "@/components/landingPage/sections/originalAudioDe
 import ProductIntro from "@/components/landingPage/sections/productIntro";
 import CTA from "@/components/landingPage/sections/cta";
 import StudioSound from "@/components/landingPage/sections/studioSound";
+import { buttonVariants } from "@/components/ui/button";
+import { AUDIO_CONVERTER_COMBOS } from "@/lib/audio/audioConverterCombos";
+import { cn } from "@/lib/utils";
+
+const POPULAR_TOOL_SLUGS = [
+  "mp4-to-wav",
+  "mp4-to-mp3",
+  "mp4-to-m4a",
+  "mov-to-mp3",
+  "mkv-to-mp3",
+  "webm-to-mp3",
+  "wav-to-mp3",
+  "mp3-to-wav",
+  "m4a-to-mp3",
+  "flac-to-mp3",
+] as const;
+
+const popularTools = POPULAR_TOOL_SLUGS.map((slug) => {
+  const tool = AUDIO_CONVERTER_COMBOS.find((config) => config.slug === slug);
+  if (!tool) {
+    throw new Error(`Missing audio tool config for slug: ${slug}`);
+  }
+  return tool;
+});
+
+const footerLinkClass = cn(
+  buttonVariants({ variant: "link", size: "sm" }),
+  "h-auto justify-start px-0 text-sm font-normal whitespace-normal",
+);
 ---
 
 <BaseLayout
@@ -54,6 +83,43 @@ import StudioSound from "@/components/landingPage/sections/studioSound";
       <LandingFaq client:load />
 
       <CTA client:load />
+
+      <footer class="border-t border-border mt-16">
+        <div class="container max-w-4xl mx-auto py-12">
+          <h2 class="text-lg font-semibold tracking-tight">
+            Free audio conversion tools
+          </h2>
+          <p class="mt-2 text-sm text-muted-foreground">
+            Convert video and audio files in your browser — no upload required.
+          </p>
+          <ul class="mt-6 grid grid-cols-1 gap-x-4 sm:grid-cols-2 md:grid-cols-3">
+            {
+              popularTools.map((tool) => (
+                <li class="mb-4">
+                  <a href={`/audio/${tool.slug}`} class={footerLinkClass}>
+                    {tool.jsonLdName}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+          <a href="/audio" class={cn(footerLinkClass, "mt-6 inline-flex")}>
+            View all audio tools
+          </a>
+        </div>
+        <div class="border-t border-border">
+          <div class="container max-w-4xl mx-auto py-6">
+            <a
+              href="https://joeyjiron.com"
+              class={cn(footerLinkClass, "inline-flex underline")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              joeyjiron.com
+            </a>
+          </div>
+        </div>
+      </footer>
     </main>
 </BaseLayout>
 
