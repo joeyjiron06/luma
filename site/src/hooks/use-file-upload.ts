@@ -60,7 +60,10 @@ export function useFileUpload(options: UseFileUploadOptions = {}) {
         if (error) {
           newErrors.push({ message: error, file });
         } else {
-          valid.push({ file, id: crypto.randomUUID() });
+          const id = typeof crypto !== "undefined" && crypto.randomUUID
+            ? crypto.randomUUID()
+            : String(performance.now());
+          valid.push({ file, id });
         }
       }
 

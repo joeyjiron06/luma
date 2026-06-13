@@ -54,7 +54,7 @@ export default function OriginalAudioDemo({
   const [activeDemo, setActiveDemo] = React.useState(demoList[0]?.value ?? "fan");
 
   return (
-    <section className="pb-16 text-foreground md:pb-24">
+    <section id="demo" className="scroll-mt-8 pb-16 text-foreground md:pb-24">
       <div className="container">
         <Tabs
           value={activeDemo}

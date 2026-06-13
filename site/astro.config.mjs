@@ -12,5 +12,8 @@ export default defineConfig({
     optimizeDeps: {
       exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"],
     },
+    server: {
+      allowedHosts: ["omarchy.tail1eb3a2.ts.net"],
+    },
   },
 });

@@ -1,10 +1,17 @@
 import { UploadSimple, X, File as FileIcon } from "@phosphor-icons/react";
 import { useFileUpload, type FileUploadError } from "@/hooks/use-file-upload";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 interface FileUploadProps {
   onFileSelected: (file: File) => void;
+  onFileRemoved?: () => void;
   accept?: string;
   maxSize?: number;
   disabled?: boolean;
@@ -20,6 +27,7 @@ function formatBytes(bytes: number): string {
 
 export function FileUpload({
   onFileSelected,
+  onFileRemoved,
   accept = "video/mp4,video/x-matroska,video/quicktime,video/x-msvideo,video/webm,audio/mp4,audio/aac,audio/ogg,audio/flac,audio/mpeg",
   maxSize = 2 * 1024 * 1024 * 1024,
   disabled = false,
@@ -40,7 +48,11 @@ export function FileUpload({
     accept,
     multiple: false,
     onFilesChange: (f) => {
-      if (f.length > 0) onFileSelected(f[0].file);
+      if (f.length > 0) {
+        onFileSelected(f[0].file);
+      } else {
+        onFileRemoved?.();
+      }
     },
   });
 
@@ -48,65 +60,82 @@ export function FileUpload({
 
   return (
     <div className="w-full space-y-2">
-      {!selectedFile ? (
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={disabled || selectedFile ? undefined : openFileDialog}
+        onKeyDown={(e) => {
+          if (!disabled && !selectedFile && (e.key === "Enter" || e.key === " ")) {
+            e.preventDefault();
+            openFileDialog();
+          }
+        }}
+        onDragEnter={selectedFile ? undefined : handleDragEnter}
+        onDragLeave={selectedFile ? undefined : handleDragLeave}
+        onDragOver={selectedFile ? undefined : handleDragOver}
+        onDrop={selectedFile ? undefined : handleDrop}
+        className={cn(
+          "relative flex flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed px-6 py-10 text-center transition-colors",
+          selectedFile
+            ? "border-border bg-muted/30"
+            : cn(
+                "cursor-pointer",
+                isDragging
+                  ? "border-primary bg-accent"
+                  : "border-border hover:border-primary/50 hover:bg-accent/50",
+              ),
+          disabled && "pointer-events-none opacity-50",
+        )}
+      >
+        {selectedFile && (
+          <Card
+            size="sm"
+            className="absolute inset-x-6 top-6 z-10 gap-0 py-0"
+          >
+            <CardContent className="flex items-center gap-2 py-1">
+              <FileIcon className="size-5 shrink-0 text-muted-foreground" />
+              <div className="min-w-0 flex-1 text-left">
+                <CardTitle className="truncate">
+                  {selectedFile.file.name}
+                </CardTitle>
+                <CardDescription className="text-xs">
+                  {formatBytes(selectedFile.file.size)}
+                </CardDescription>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeFile(selectedFile.id);
+                }}
+                aria-label="Remove file"
+              >
+                <X className="size-3.5" />
+              </Button>
+            </CardContent>
+          </Card>
+        )}
         <div
-          role="button"
-          tabIndex={0}
-          onClick={disabled ? undefined : openFileDialog}
-          onKeyDown={(e) => {
-            if (!disabled && (e.key === "Enter" || e.key === " ")) {
-              e.preventDefault();
-              openFileDialog();
-            }
-          }}
-          onDragEnter={handleDragEnter}
-          onDragLeave={handleDragLeave}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
           className={cn(
-            "flex flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed px-6 py-10 text-center transition-colors cursor-pointer",
-            isDragging
-              ? "border-primary bg-accent"
-              : "border-border hover:border-primary/50 hover:bg-accent/50",
-            disabled && "pointer-events-none opacity-50",
+            "flex size-12 items-center justify-center rounded-full bg-muted",
+            selectedFile && "invisible",
           )}
         >
-          <div className="flex size-12 items-center justify-center rounded-full bg-muted">
-            <UploadSimple className="size-5 text-muted-foreground" />
-          </div>
-          <div>
-            <p className="text-sm font-medium">
-              Drag & drop or click to browse
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              MP4, MOV, MKV, AVI, WebM, and audio files
-            </p>
-            <p className="mt-0.5 text-xs text-muted-foreground">
-              Up to {formatBytes(maxSize)}
-            </p>
-          </div>
+          <UploadSimple className="size-5 text-muted-foreground" />
         </div>
-      ) : (
-        <div className="flex items-center gap-3 rounded-lg border border-border bg-muted/50 px-4 py-3">
-          <FileIcon className="size-5 shrink-0 text-muted-foreground" />
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium">
-              {selectedFile.file.name}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              {formatBytes(selectedFile.file.size)}
-            </p>
-          </div>
-          <Button
-            variant="ghost"
-            size="icon-xs"
-            onClick={() => removeFile(selectedFile.id)}
-            aria-label="Remove file"
-          >
-            <X className="size-3.5" />
-          </Button>
+        <div className={cn(selectedFile && "invisible")}>
+          <p className="text-sm font-medium">
+            Drag & drop or click to browse
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            MP4, MOV, MKV, AVI, WebM, and audio files
+          </p>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            Up to {formatBytes(maxSize)}
+          </p>
         </div>
-      )}
+      </div>
 
       <input {...getInputProps()} />
 
