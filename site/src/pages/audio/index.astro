@@ -1,0 +1,147 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NavBar from "@/components/landingPage/sections/navBar";
+import { buttonVariants } from "@/components/ui/button";
+import { AUDIO_CONVERTER_COMBOS } from "@/lib/audio/audioConverterCombos";
+import type { AudioConverterPageConfig } from "@/lib/audio/types";
+import { cn } from "@/lib/utils";
+
+const title = "Audio conversion tools";
+const description =
+  "Browse free browser-based audio converters. Convert video to audio, change formats, and re-encode files — no upload required.";
+
+const VIDEO_INPUT_ORDER = [
+  "mp4",
+  "mov",
+  "mkv",
+  "webm",
+  "avi",
+  "mpeg",
+  "flv",
+  "wmv",
+  "3gp",
+  "m4v",
+] as const;
+
+const AUDIO_INPUT_ORDER = [
+  "mp3",
+  "wav",
+  "aac",
+  "m4a",
+  "flac",
+  "ogg",
+  "opus",
+  "aiff",
+] as const;
+
+const VIDEO_FORMATS = new Set<string>(VIDEO_INPUT_ORDER);
+
+function inputFromSlug(slug: string): string {
+  const separator = slug.lastIndexOf("-to-");
+  return slug.slice(0, separator);
+}
+
+function groupByInput(
+  tools: AudioConverterPageConfig[],
+  order: readonly string[],
+) {
+  const byInput = new Map<string, AudioConverterPageConfig[]>();
+
+  for (const tool of tools) {
+    const input = inputFromSlug(tool.slug);
+    const group = byInput.get(input) ?? [];
+    group.push(tool);
+    byInput.set(input, group);
+  }
+
+  return order
+    .filter((input) => byInput.has(input))
+    .map((input) => ({
+      input,
+      label: input.toUpperCase(),
+      tools: byInput
+        .get(input)!
+        .sort((a, b) => a.jsonLdName.localeCompare(b.jsonLdName)),
+    }));
+}
+
+const videoGroups = groupByInput(
+  AUDIO_CONVERTER_COMBOS.filter((tool) =>
+    VIDEO_FORMATS.has(inputFromSlug(tool.slug)),
+  ),
+  VIDEO_INPUT_ORDER,
+);
+
+const audioGroups = groupByInput(
+  AUDIO_CONVERTER_COMBOS.filter(
+    (tool) => !VIDEO_FORMATS.has(inputFromSlug(tool.slug)),
+  ),
+  AUDIO_INPUT_ORDER,
+);
+
+const linkClass = cn(
+  buttonVariants({ variant: "link", size: "sm" }),
+  "h-auto justify-start px-0 text-sm font-normal whitespace-normal",
+);
+---
+
+<BaseLayout
+  title={`${title} — Free, No Upload | Luma`}
+  description={description}
+  ogUrl="https://luma.pub/audio"
+  themeColor="#ffffff"
+  htmlClass="dark"
+>
+  <NavBar />
+  <main class="container max-w-4xl mx-auto py-12">
+    <h1 class="text-2xl font-semibold tracking-tight">{title}</h1>
+    <p class="mt-2 text-muted-foreground text-sm">{description}</p>
+
+    <section class="mt-12">
+      <h2 class="text-lg font-semibold tracking-tight">Video to audio</h2>
+      <p class="mt-1 text-sm text-muted-foreground">
+        Extract audio from video files — pick your video format, then choose an
+        output.
+      </p>
+      {
+        videoGroups.map((group) => (
+          <div class="mt-8">
+            <h3 class="text-sm font-medium">{group.label}</h3>
+            <ul class="mt-3 grid grid-cols-1 gap-x-4 sm:grid-cols-2 md:grid-cols-3">
+              {group.tools.map((tool) => (
+                <li class="mb-6">
+                  <a href={`/audio/${tool.slug}`} class={linkClass}>
+                    {tool.jsonLdName}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </section>
+
+    <section class="mt-16">
+      <h2 class="text-lg font-semibold tracking-tight">Audio to audio</h2>
+      <p class="mt-1 text-sm text-muted-foreground">
+        Convert between audio formats or re-encode with new settings.
+      </p>
+      {
+        audioGroups.map((group) => (
+          <div class="mt-8">
+            <h3 class="text-sm font-medium">{group.label}</h3>
+            <ul class="mt-3 grid grid-cols-1 gap-x-4 sm:grid-cols-2 md:grid-cols-3">
+              {group.tools.map((tool) => (
+                <li class="mb-6">
+                  <a href={`/audio/${tool.slug}`} class={linkClass}>
+                    {tool.jsonLdName}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </section>
+  </main>
+</BaseLayout>

@@ -36,6 +36,7 @@ export type AudioFormat =
   | "m4a"
   | "flac"
   | "ogg"
+  | "opus"
   | "aiff";
 
 export const AUDIO_FORMATS: { value: AudioFormat; label: string }[] = [
@@ -45,6 +46,7 @@ export const AUDIO_FORMATS: { value: AudioFormat; label: string }[] = [
   { value: "m4a", label: "M4a" },
   { value: "flac", label: "Flac" },
   { value: "ogg", label: "Ogg" },
+  { value: "opus", label: "Opus" },
   { value: "aiff", label: "Aiff" },
 ];
 
@@ -74,6 +76,8 @@ function buildCodecArgs(format: AudioFormat, bitrate: number): string[] {
       return ["-codec:a", "flac"];
     case "ogg":
       return ["-codec:a", "libvorbis", "-b:a", `${bitrate}k`];
+    case "opus":
+      return ["-codec:a", "libopus", "-b:a", `${bitrate}k`];
     case "aiff":
       return ["-codec:a", "pcm_s16be"];
     default:
@@ -107,6 +111,8 @@ function mimeTypeForFormat(format: AudioFormat): string {
       return "audio/flac";
     case "ogg":
       return "audio/ogg";
+    case "opus":
+      return "audio/opus";
     case "aiff":
       return "audio/aiff";
     default:

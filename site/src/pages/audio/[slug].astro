@@ -1,0 +1,54 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NavBar from "@/components/landingPage/sections/navBar";
+import AudioConverter from "@/components/tools/AudioConverter";
+import LumaCta from "@/components/tools/LumaCta";
+import { AUDIO_CONVERTER_COMBOS } from "@/lib/audio/audioConverterCombos";
+import type { AudioConverterPageConfig } from "@/lib/audio/types";
+
+export function getStaticPaths() {
+  return AUDIO_CONVERTER_COMBOS.map((config) => ({
+    params: { slug: config.slug },
+    props: { config },
+  }));
+}
+
+interface Props {
+  config: AudioConverterPageConfig;
+}
+
+const { config } = Astro.props;
+---
+
+<BaseLayout
+  title={config.title}
+  description={config.description}
+  ogUrl={config.ogUrl}
+  themeColor="#ffffff"
+  htmlClass="dark"
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: config.jsonLdName,
+    description: config.description,
+    applicationCategory: "MultimediaApplication",
+    operatingSystem: "Any",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+  }}
+>
+  <NavBar />
+  <main class="container max-w-4xl mx-auto py-12">
+    <h1 class="text-2xl font-semibold tracking-tight">{config.h1}</h1>
+    <p class="mt-2 text-muted-foreground text-sm">{config.subtitle}</p>
+
+    <div class="mt-8">
+      <AudioConverter client:load defaultFormat={config.defaultFormat} />
+    </div>
+
+    <LumaCta client:load />
+  </main>
+</BaseLayout>

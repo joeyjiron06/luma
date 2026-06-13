@@ -15,6 +15,12 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Spinner } from "@/components/ui/spinner";
 import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+import {
   SAMPLE_RATES_HZ,
   SampleRateSlider,
 } from "@/components/comp-246";
@@ -26,8 +32,40 @@ import {
   type AudioFormat,
 } from "@/lib/ffmpeg";
 
+type AudioConverterProps = {
+  defaultFormat: AudioFormat;
+};
+
 type State = "idle" | "fileSelected" | "loading" | "converting";
 type Channels = "mono" | "stereo";
+
+const faqItems = [
+  {
+    question: "Is my file uploaded to a server?",
+    answer:
+      "No. Everything runs entirely in your browser using WebAssembly. Your files never leave your device — there's no server upload, no account required, and nothing is stored.",
+  },
+  {
+    question: "What settings can I adjust?",
+    answer:
+      "Use the Settings panel to change output format, channels (mono or stereo), bitrate, volume, and sample rate before converting.",
+  },
+  {
+    question: "What file formats are supported?",
+    answer:
+      "You can upload common video files (MP4, MOV, MKV, AVI, WebM, and more) and audio files (MP3, WAV, AAC, M4A, FLAC, OGG, Opus, AIFF). Choose any supported output format from the format picker.",
+  },
+  {
+    question: "Is there a file size limit?",
+    answer:
+      "Yes, the maximum file size is 2 GB. For larger files, we recommend using desktop FFmpeg directly.",
+  },
+  {
+    question: "How long does conversion take?",
+    answer:
+      "It depends on the file size and your device's processing power. A 100 MB file typically converts in under 30 seconds on a modern computer.",
+  },
+];
 
 function getStem(filename: string): string {
   const idx = filename.lastIndexOf(".");
@@ -45,10 +83,10 @@ function downloadBlob(blob: Blob, filename: string) {
   URL.revokeObjectURL(url);
 }
 
-export default function Mp4ToWavConverter() {
+export default function AudioConverter({ defaultFormat }: AudioConverterProps) {
   const [state, setState] = useState<State>("idle");
   const [file, setFile] = useState<File | null>(null);
-  const [format, setFormat] = useState<AudioFormat>("wav");
+  const [format, setFormat] = useState<AudioFormat>(defaultFormat);
   const [showSettings, setShowSettings] = useState(false);
   const [channels, setChannels] = useState<Channels>("stereo");
   const [bitrate, setBitrate] = useState(128);
@@ -96,7 +134,7 @@ export default function Mp4ToWavConverter() {
       downloadBlob(blob, `${getStem(file.name)}.${format}`);
       setState("fileSelected");
     } catch (err) {
-      console.error("[mp4-to-wav] conversion error:", err);
+      console.error("[audio-converter] conversion error:", err);
       setErrorMessage(
         err instanceof Error ? err.message : "Conversion failed. Please try again.",
       );
@@ -244,6 +282,20 @@ export default function Mp4ToWavConverter() {
           <Spinner />
         </span>
       </Button>
+
+      <section className="mt-16">
+        <h2 className="text-lg font-semibold tracking-tight mb-4">
+          Frequently asked questions.
+        </h2>
+        <Accordion type="single" collapsible>
+          {faqItems.map((item, i) => (
+            <AccordionItem key={i} value={`faq-${i}`}>
+              <AccordionTrigger>{item.question}</AccordionTrigger>
+              <AccordionContent>{item.answer}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </section>
     </div>
   );
 }

@@ -7,6 +7,9 @@ import svgr from 'vite-plugin-svgr';
 // https://astro.build/config
 export default defineConfig({
   integrations: [react()],
+  redirects: {
+    "/tools/mp4-to-wav": "/audio/mp4-to-wav",
+  },
   vite: {
     plugins: [tailwindcss(), svgr()],
     optimizeDeps: {
