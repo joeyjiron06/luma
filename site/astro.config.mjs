@@ -2,11 +2,13 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
-import svgr from 'vite-plugin-svgr';
+import svgr from "vite-plugin-svgr";
+
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react()],
+  integrations: [react(), sitemap()],
   redirects: {
     "/tools/mp4-to-wav": "/audio/mp4-to-wav",
   },
