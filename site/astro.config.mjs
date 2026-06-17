@@ -12,6 +12,7 @@ export default defineConfig({
   redirects: {
     "/tools/mp4-to-wav": "/audio/mp4-to-wav",
   },
+  site: 'https://luma.pub',
   vite: {
     plugins: [tailwindcss(), svgr()],
     optimizeDeps: {
