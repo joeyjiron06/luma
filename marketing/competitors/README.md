@@ -19,6 +19,10 @@ tags: [competitor-research, index, luma]
 
 Exported from `~/.openclaw/workspace/luma/sqlite.db` on 2026-05-14.
 
+## Cross-competitor research
+
+- [Marketing channels](./marketing-channels.md) — how competitors acquire traffic (SEO, ads, content, marketplaces, social, community)
+
 ## Competitors (20 total)
 
 | # | Name | Type | Position | Website |
