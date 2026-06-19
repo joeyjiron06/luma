@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/utils";
-import LightRays from "./ui/lightRays";
-import LogoMark from "@/assets/images/logo.svg?react";
+// import LightRays from "./ui/lightRays";
+// import LogoMark from "@/assets/images/logo.svg?react";
 type ConfirmState = "loading" | "success" | "error";
 
 export default function ConfirmSignup() {
@@ -62,7 +62,7 @@ export default function ConfirmSignup() {
   return (
     <>
 
-      <LightRays
+      {/* <LightRays
         className="absolute inset-0 z-0 size-full opacity-50 mix-blend-screen"
         raysOrigin="top-center"
         raysColor="#ffffff"
@@ -75,15 +75,15 @@ export default function ConfirmSignup() {
         distortion={0.04}
         fadeDistance={0.9}
         saturation={0.85}
-      />
+      /> */}
 
-      <div
+      {/* <div
         className="pointer-events-none absolute inset-0 overflow-hidden"
         aria-hidden
       >
-        <LogoMark className="absolute bottom-[-10%] left-[-18%] size-40 opacity-10 md:bottom-[-6%] md:left-[-8%] md:size-60" />
-        <LogoMark className="absolute top-[-8%] right-[-14%] size-40 opacity-10 md:right-[-6%] md:top-[-4%] md:size-60" />
-      </div>
+        <LogoMark className="absolute bottom-[-10%] left-[-15%] size-40 opacity-5 md:bottom-[-6%] md:left-[-2%] md:size-80" />
+        <LogoMark className="absolute top-[-8%] right-[-14%] size-40 opacity-5 md:right-[-2%] md:top-[-4%] md:size-80" />
+      </div> */}
       <Card className="w-full max-w-md text-center">
         <CardHeader>
           {state === "success" ? (
