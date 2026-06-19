@@ -1,13 +1,14 @@
 # Luma
 
 ## Product Idea
+
 I want to build an desktop application that allows creators/media editors to clean up audio vocal soundtracks that might sound unprofessional and convert them to studio-quality audio. It's meant as a post-recording tool for cleanup.
 
 ## What the project is NOT
+
 This will not be a VST plugin.
 This will not be a web app.
 This will not be used for real-time scenarios.
-
 
 ## Project Phase
 
@@ -23,5 +24,10 @@ I'm currently in the ideation phase, looking to find a competitive edge, initial
 
 `/marketing` - where all the marketing materials live (youtube, X, etc.).
 
+`/design` - where all the design resources go
+
+[DESIGN.md](./DESIGN.md) - contains the brand style guide for colors, fonts, look and feel of Luma.
+
 ## AI Models
+
 In order to build and run the app locally, you need to get models from https://drive.google.com/drive/u/0/folders/1tWqZzinmzAuZPROLzWVGQnQmOVGdD95q then add them to the proper folder in app

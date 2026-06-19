@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luma Competitor Research — Visual Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style type="text/tailwindcss">
+    @theme {
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+      --color-bg: #171717;
+      --color-fg: #fafafa;
+      --color-card: #292929;
+      --color-muted: #363636;
+      --color-muted-fg: #a3a3a3;
+      --color-border: rgba(255,255,255,0.10);
+      --color-link: #0070f3;
+      --color-cyan: #50e3c2;
+      --color-violet: #7928ca;
+      --color-magenta: #eb367f;
+      --color-warning: #f5a623;
+      --color-destructive: #c55050;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-mono); background: var(--color-bg); color: var(--color-fg); }
+    ::selection { background: #fafafa; color: #171717; }
+    details > summary { list-style: none; cursor: pointer; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] .chevron { transform: rotate(180deg); }
+    .mesh-hero {
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 20%, rgba(0,124,240,0.25), transparent 50%),
+        radial-gradient(ellipse 60% 50% at 80% 30%, rgba(121,40,202,0.2), transparent 50%),
+        radial-gradient(ellipse 50% 40% at 60% 80%, rgba(80,227,194,0.15), transparent 50%),
+        var(--color-bg);
+    }
+    .card { background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
+    .badge { border-radius: 9999px; padding: 2px 10px; font-size: 12px; font-weight: 500; }
+    .nav-link { color: var(--color-muted-fg); transition: color 0.15s; }
+    .nav-link:hover { color: var(--color-fg); }
+    .filter-btn.active { background: var(--color-fg); color: var(--color-bg); }
+    .heat-0 { opacity: 0.15; }
+    .heat-1 { opacity: 0.4; background: var(--color-cyan); }
+    .heat-2 { opacity: 0.65; background: var(--color-cyan); }
+    .heat-3 { opacity: 0.9; background: var(--color-cyan); }
+  </style>
+</head>
+<body class="antialiased text-sm leading-5">
+
+<!-- NAV -->
+<nav class="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[#171717]/90 backdrop-blur-md">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
+    <a href="#" class="text-base font-semibold tracking-tight">Luma / Competitors</a>
+    <div class="hidden flex-wrap items-center gap-4 md:flex">
+      <a href="#overview" class="nav-link">Overview</a>
+      <a href="#landscape" class="nav-link">Landscape</a>
+      <a href="#pain-points" class="nav-link">Pain Points</a>
+      <a href="#competitors" class="nav-link">Competitors</a>
+      <a href="#channels" class="nav-link">Channels</a>
+      <a href="#recommendations" class="nav-link">For Luma</a>
+    </div>
+    <span class="badge bg-[var(--color-muted)] text-[var(--color-muted-fg)]">20 profiles · exported 2026-05-14</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="mesh-hero border-b border-[var(--color-border)]">
+  <div class="mx-auto max-w-7xl px-4 py-16 lg:px-8 lg:py-24">
+    <p class="mb-3 text-xs uppercase tracking-widest text-[var(--color-cyan)]">Competitor Research Index</p>
+    <h1 class="max-w-3xl text-3xl font-semibold tracking-tight lg:text-5xl lg:leading-tight">Audio cleanup competitive landscape</h1>
+    <p class="mt-4 max-w-2xl text-[var(--color-muted-fg)]">Visual dashboard of 20 competitors, user pain points, and marketing channel research — sourced from <code class="text-[var(--color-cyan)]">sqlite.db</code> export and web research.</p>
+    <div class="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:gap-4">
+      <div class="card p-4"><div class="text-2xl font-semibold">20</div><div class="text-xs text-[var(--color-muted-fg)]">Total competitors</div></div>
+      <div class="card p-4"><div class="text-2xl font-semibold text-[var(--color-cyan)]">15</div><div class="text-xs text-[var(--color-muted-fg)]">Direct</div></div>
+      <div class="card p-4"><div class="text-2xl font-semibold">5</div><div class="text-xs text-[var(--color-muted-fg)]">Indirect</div></div>
+      <div class="card p-4"><div class="text-2xl font-semibold text-[var(--color-magenta)]">5</div><div class="text-xs text-[var(--color-muted-fg)]">High Luma overlap</div></div>
+    </div>
+    <div class="mt-6 flex flex-wrap gap-2">
+      <span class="badge bg-[var(--color-magenta)]/20 text-[var(--color-magenta)]">High overlap: Adobe Enhance, Descript, Xound, CrumplePop, MetalVoice</span>
+    </div>
+  </div>
+</header>
+
+<main class="mx-auto max-w-7xl space-y-24 px-4 py-16 lg:px-8">
+
+<!-- OVERVIEW SVG -->
+<section id="overview">
+  <h2 class="text-xl font-semibold tracking-tight lg:text-2xl">Market structure</h2>
+  <p class="mt-2 max-w-2xl text-[var(--color-muted-fg)]">How competitors cluster by type, deployment, and processing mode.</p>
+  <div class="mt-8 grid gap-6 lg:grid-cols-2">
+    <div class="card p-6">
+      <h3 class="mb-4 text-sm font-medium text-[var(--color-muted-fg)]">Direct vs indirect</h3>
+      <svg viewBox="0 0 320 200" class="w-full" aria-label="Direct 75% indirect 25% donut">
+        <circle cx="100" cy="100" r="70" fill="none" stroke="var(--color-muted)" stroke-width="24"/>
+        <circle cx="100" cy="100" r="70" fill="none" stroke="var(--color-cyan)" stroke-width="24" stroke-dasharray="329.9 439.8" transform="rotate(-90 100 100)"/>
+        <text x="100" y="95" text-anchor="middle" fill="#fafafa" font-size="28" font-weight="600" font-family="JetBrains Mono">15</text>
+        <text x="100" y="118" text-anchor="middle" fill="#a3a3a3" font-size="11" font-family="JetBrains Mono">direct</text>
+        <text x="220" y="60" fill="#fafafa" font-size="13" font-family="JetBrains Mono">● Direct (75%)</text>
+        <text x="220" y="85" fill="#50e3c2" font-size="13" font-family="JetBrains Mono">● Indirect (25%)</text>
+        <text x="220" y="120" fill="#a3a3a3" font-size="11" font-family="JetBrains Mono">Indirect: NVIDIA Broadcast,</text>
+        <text x="220" y="136" fill="#a3a3a3" font-size="11" font-family="JetBrains Mono">Adobe Audition, Audacity,</text>
+        <text x="220" y="152" fill="#a3a3a3" font-size="11" font-family="JetBrains Mono">VEED, CapCut</text>
+      </svg>
+    </div>
+    <div class="card p-6">
+      <h3 class="mb-4 text-sm font-medium text-[var(--color-muted-fg)]">Deployment split</h3>
+      <svg viewBox="0 0 320 180" class="w-full" aria-label="Deployment bar chart">
+        <text x="0" y="20" fill="#a3a3a3" font-size="11" font-family="JetBrains Mono">Cloud</text>
+        <rect x="60" y="8" width="180" height="18" rx="4" fill="#eb367f" opacity="0.7"/>
+        <text x="248" y="22" fill="#fafafa" font-size="11" font-family="JetBrains Mono">11</text>
+        <text x="0" y="55" fill="#a3a3a3" font-size="11" font-family="JetBrains Mono">Local</text>
+        <rect x="60" y="43" width="65" height="18" rx="4" fill="#7928ca" opacity="0.7"/>
+        <text x="133" y="57" fill="#fafafa" font-size="11" font-family="JetBrains Mono">4</text>
+        <text x="0" y="90" fill="#a3a3a3" font-size="11" font-family="JetBrains Mono">Hybrid</text>
+        <rect x="60" y="78" width="98" height="18" rx="4" fill="#50e3c2" opacity="0.7"/>
+        <text x="166" y="92" fill="#fafafa" font-size="11" font-family="JetBrains Mono">6</text>
+        <text x="0" y="125" fill="#a3a3a3" font-size="11" font-family="JetBrains Mono">Real-time</text>
+        <rect x="60" y="113" width="82" height="18" rx="4" fill="#f5a623" opacity="0.7"/>
+        <text x="150" y="127" fill="#fafafa" font-size="11" font-family="JetBrains Mono">5</text>
+        <text x="0" y="160" fill="#a3a3a3" font-size="11" font-family="JetBrains Mono">Post-rec</text>
+        <rect x="60" y="148" width="200" height="18" rx="4" fill="#0070f3" opacity="0.7"/>
+        <text x="268" y="162" fill="#fafafa" font-size="11" font-family="JetBrains Mono">15</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- LANDSCAPE -->
+<section id="landscape">
+  <h2 class="text-xl font-semibold tracking-tight lg:text-2xl">Competitive landscape map</h2>
+  <p class="mt-2 max-w-2xl text-[var(--color-muted-fg)]">Positioning by deployment (local ↔ cloud) and use case (real-time ↔ post-recording). Bubble size = market position weight.</p>
+  <div class="card mt-8 overflow-x-auto p-4 lg:p-6">
+    <svg viewBox="0 0 700 420" class="min-w-[600px] w-full" aria-label="Competitive positioning map">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="700" height="420" fill="url(#grid)"/>
+      <line x1="60" y1="360" x2="660" y2="360" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <line x1="60" y1="40" x2="60" y2="360" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <text x="360" y="400" text-anchor="middle" fill="#a3a3a3" font-size="11" font-family="JetBrains Mono">LOCAL / ON-DEVICE ←→ CLOUD</text>
+      <text x="20" y="200" text-anchor="middle" fill="#a3a3a3" font-size="11" font-family="JetBrains Mono" transform="rotate(-90 20 200)">REAL-TIME ←→ POST-RECORDING</text>
+      <!-- Luma target zone -->
+      <rect x="80" y="280" width="200" height="70" rx="8" fill="rgba(80,227,194,0.08)" stroke="#50e3c2" stroke-width="1" stroke-dasharray="4 4"/>
+      <text x="180" y="318" text-anchor="middle" fill="#50e3c2" font-size="10" font-family="JetBrains Mono">Luma target zone</text>
+      <!-- Competitors -->
+      <g><circle cx="130" cy="310" r="22" fill="#50e3c2" opacity="0.9"/><text x="130" y="314" text-anchor="middle" fill="#171717" font-size="8" font-weight="600" font-family="JetBrains Mono">MetalVoice</text></g>
+      <g><circle cx="200" cy="300" r="20" fill="#50e3c2" opacity="0.8"/><text x="200" y="304" text-anchor="middle" fill="#171717" font-size="7" font-weight="600" font-family="JetBrains Mono">CrumplePop</text></g>
+      <g><circle cx="250" cy="290" r="14" fill="#50e3c2" opacity="0.7"/><text x="250" y="294" text-anchor="middle" fill="#171717" font-size="7" font-family="JetBrains Mono">Xound</text></g>
+      <g><circle cx="520" cy="120" r="28" fill="#eb367f" opacity="0.85"/><text x="520" y="124" text-anchor="middle" fill="#171717" font-size="8" font-weight="600" font-family="JetBrains Mono">Adobe Enhance</text></g>
+      <g><circle cx="580" cy="140" r="26" fill="#eb367f" opacity="0.85"/><text x="580" y="144" text-anchor="middle" fill="#171717" font-size="8" font-weight="600" font-family="JetBrains Mono">Descript</text></g>
+      <g><circle cx="480" cy="160" r="16" fill="#eb367f" opacity="0.7"/><text x="480" y="164" text-anchor="middle" fill="#171717" font-size="7" font-family="JetBrains Mono">Cleanvoice</text></g>
+      <g><circle cx="420" cy="180" r="14" fill="#eb367f" opacity="0.6"/><text x="420" y="184" text-anchor="middle" fill="#171717" font-size="7" font-family="JetBrains Mono">Audo</text></g>
+      <g><circle cx="150" cy="80" r="18" fill="#f5a623" opacity="0.8"/><text x="150" y="84" text-anchor="middle" fill="#171717" font-size="7" font-family="JetBrains Mono">NVIDIA</text></g>
+      <g><circle cx="100" cy="100" r="16" fill="#f5a623" opacity="0.7"/><text x="100" y="104" text-anchor="middle" fill="#171717" font-size="7" font-family="JetBrains Mono">Krisp</text></g>
+      <g><circle cx="200" cy="70" r="12" fill="#f5a623" opacity="0.6"/><text x="200" y="74" text-anchor="middle" fill="#171717" font-size="7" font-family="JetBrains Mono">Utterly</text></g>
+      <g><circle cx="180" cy="200" r="24" fill="#7928ca" opacity="0.8"/><text x="180" y="204" text-anchor="middle" fill="#fafafa" font-size="8" font-weight="600" font-family="JetBrains Mono">iZotope RX</text></g>
+      <g><circle cx="220" cy="220" r="20" fill="#7928ca" opacity="0.7"/><text x="220" y="224" text-anchor="middle" fill="#fafafa" font-size="7" font-family="JetBrains Mono">Audition</text></g>
+      <g><circle cx="600" cy="220" r="22" fill="#a3a3a3" opacity="0.6"/><text x="600" y="224" text-anchor="middle" fill="#171717" font-size="7" font-family="JetBrains Mono">CapCut</text></g>
+      <g><circle cx="550" cy="250" r="18" fill="#a3a3a3" opacity="0.5"/><text x="550" y="254" text-anchor="middle" fill="#171717" font-size="7" font-family="JetBrains Mono">VEED</text></g>
+      <g><circle cx="300" cy="150" r="20" fill="#0070f3" opacity="0.7"/><text x="300" y="154" text-anchor="middle" fill="#fafafa" font-size="7" font-family="JetBrains Mono">ElevenLabs</text></g>
+      <g><circle cx="260" cy="170" r="14" fill="#0070f3" opacity="0.6"/><text x="260" y="174" text-anchor="middle" fill="#fafafa" font-size="7" font-family="JetBrains Mono">LALAL.AI</text></g>
+      <g><circle cx="250" cy="120" r="12" fill="#363636" stroke="#a3a3a3"/><text x="250" y="124" text-anchor="middle" fill="#a3a3a3" font-size="7" font-family="JetBrains Mono">Audacity</text></g>
+    </svg>
+    <div class="mt-4 flex flex-wrap gap-4 text-xs text-[var(--color-muted-fg)]">
+      <span><span class="inline-block h-2 w-2 rounded-full bg-[var(--color-cyan)]"></span> High Luma overlap</span>
+      <span><span class="inline-block h-2 w-2 rounded-full bg-[var(--color-magenta)]"></span> Cloud post-rec leaders</span>
+      <span><span class="inline-block h-2 w-2 rounded-full bg-[var(--color-warning)]"></span> Real-time / meetings</span>
+      <span><span class="inline-block h-2 w-2 rounded-full bg-[var(--color-violet)]"></span> Pro / DAW tools</span>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN POINTS -->
+<section id="pain-points">
+  <h2 class="text-xl font-semibold tracking-tight lg:text-2xl">Key user pain points</h2>
+  <p class="mt-2 text-[var(--color-muted-fg)]">Cross-competitor themes from Reddit, reviews, and forums.</p>
+  <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="card p-4 border-l-2 border-l-[var(--color-magenta)]"><span class="text-xs text-[var(--color-magenta)]">#1</span><p class="mt-1 font-medium">Untreated room acoustics</p><p class="mt-1 text-xs text-[var(--color-muted-fg)]">Home creators' top challenge — reverb hardest to fix in post</p></div>
+    <div class="card p-4 border-l-2 border-l-[var(--color-destructive)]"><span class="text-xs text-[var(--color-destructive)]">Quality</span><p class="mt-1 font-medium">AI degrades audio & voice character</p><p class="mt-1 text-xs text-[var(--color-muted-fg)]">Robotic, muffled, digitized — top complaint across tools</p></div>
+    <div class="card p-4 border-l-2 border-l-[var(--color-warning)]"><span class="text-xs text-[var(--color-warning)]">Pricing</span><p class="mt-1 font-medium">Subscription resentment</p><p class="mt-1 text-xs text-[var(--color-muted-fg)]">Users strongly prefer one-time purchase (iZotope model)</p></div>
+    <div class="card p-4 border-l-2 border-l-[var(--color-violet)]"><span class="text-xs text-[var(--color-violet)]">Privacy</span><p class="mt-1 font-medium">Cloud upload concerns</p><p class="mt-1 text-xs text-[var(--color-muted-fg)]">Third-party servers, ghost voices (Adobe V2 bug)</p></div>
+    <div class="card p-4 border-l-2 border-l-[var(--color-warning)]"><span class="text-xs text-[var(--color-warning)]">Performance</span><p class="mt-1 font-medium">CPU/GPU resource drain</p><p class="mt-1 text-xs text-[var(--color-muted-fg)]">NVIDIA Broadcast, local plugins cause recording failures</p></div>
+    <div class="card p-4 border-l-2 border-l-[var(--color-cyan)]"><span class="text-xs text-[var(--color-cyan)]">Workflow</span><p class="mt-1 font-medium">No single tool handles everything</p><p class="mt-1 text-xs text-[var(--color-muted-fg)]">Fragmented stack, quality regresses with updates, no rollback</p></div>
+  </div>
+</section>
+
+<!-- COMPETITORS -->
+<section id="competitors">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <h2 class="text-xl font-semibold tracking-tight lg:text-2xl">All competitors</h2>
+      <p class="mt-2 text-[var(--color-muted-fg)]">Click any card to expand full profile, pain points, and activity.</p>
+    </div>
+    <div class="flex flex-wrap gap-2" id="filters">
+      <button class="filter-btn active badge bg-[var(--color-muted)]" data-filter="all">All</button>
+      <button class="filter-btn badge bg-[var(--color-muted)] text-[var(--color-muted-fg)]" data-filter="direct">Direct</button>
+      <button class="filter-btn badge bg-[var(--color-muted)] text-[var(--color-muted-fg)]" data-filter="indirect">Indirect</button>
+      <button class="filter-btn badge bg-[var(--color-muted)] text-[var(--color-muted-fg)]" data-filter="high">High overlap</button>
+      <button class="filter-btn badge bg-[var(--color-muted)] text-[var(--color-muted-fg)]" data-filter="local">Local/Mac</button>
+    </div>
+  </div>
+  <div id="competitor-grid" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+</section>
+
+<!-- MARKETING CHANNELS -->
+<section id="channels">
+  <h2 class="text-xl font-semibold tracking-tight lg:text-2xl">Marketing channels</h2>
+  <p class="mt-2 max-w-2xl text-[var(--color-muted-fg)]">How competitors acquire attention — ads, SEO, content, marketplaces, social, community. Research from competitor profiles + public case studies.</p>
+
+
+  <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="card p-4"><p class="text-xs font-medium text-[var(--color-cyan)]">SEO / content</p><p class="mt-1 text-xs text-[var(--color-muted-fg)]">Descript, Cleanvoice, ElevenLabs, Krisp, Audo</p><p class="mt-2 text-xs">Cleanvoice: 300% MRR from BOFU SEO</p></div>
+    <div class="card p-4"><p class="text-xs font-medium text-[var(--color-cyan)]">Free tools / PLG SEO</p><p class="mt-1 text-xs text-[var(--color-muted-fg)]">Descript, ElevenLabs, Adobe Enhance</p><p class="mt-2 text-xs">Interactive demos on landing pages</p></div>
+    <div class="card p-4"><p class="text-xs font-medium text-[var(--color-cyan)]">Affiliate + reviews</p><p class="mt-1 text-xs text-[var(--color-muted-fg)]">Descript, Krisp, iZotope, Alitu, LALAL.AI</p><p class="mt-2 text-xs">YouTube tutorials, best X for podcasters</p></div>
+    <div class="card p-4"><p class="text-xs font-medium text-[var(--color-cyan)]">Directory / marketplace</p><p class="mt-1 text-xs text-[var(--color-muted-fg)]">Xound, Utterly, Alitu, Audo, Cleanvoice</p><p class="mt-2 text-xs">Product Hunt, AppSumo, G2, AlternativeTo</p></div>
+    <div class="card p-4"><p class="text-xs font-medium text-[var(--color-cyan)]">Viral product moments</p><p class="mt-1 text-xs text-[var(--color-muted-fg)]">Adobe Enhance</p><p class="mt-2 text-xs">Before/after clips spread on social</p></div>
+    <div class="card p-4"><p class="text-xs font-medium text-[var(--color-cyan)]">Community</p><p class="mt-1 text-xs text-[var(--color-muted-fg)]">MetalVoice, Descript</p><p class="mt-2 text-xs">OBS forums, r/macapps, r/Descript</p></div>
+  </div>
+
+  <div class="mt-8 grid gap-6 lg:grid-cols-3">
+    <div class="card p-5 lg:col-span-2">
+      <h3 class="text-sm font-medium text-[var(--color-muted-fg)]">Channel effectiveness for Luma's ICP</h3>
+      <svg viewBox="0 0 520 220" class="mt-4 w-full" aria-label="Channel effectiveness bars">
+        <text x="0" y="18" fill="#a3a3a3" font-size="10" font-family="JetBrains Mono">BOFU SEO + free tools</text>
+        <rect x="180" y="6" width="320" height="14" rx="3" fill="#50e3c2" opacity="0.85"/>
+        <text x="0" y="48" fill="#a3a3a3" font-size="10" font-family="JetBrains Mono">Directory / marketplace</text>
+        <rect x="180" y="36" width="260" height="14" rx="3" fill="#50e3c2" opacity="0.7"/>
+        <text x="0" y="78" fill="#a3a3a3" font-size="10" font-family="JetBrains Mono">Community (Reddit/forums)</text>
+        <rect x="180" y="66" width="220" height="14" rx="3" fill="#50e3c2" opacity="0.55"/>
+        <text x="0" y="108" fill="#a3a3a3" font-size="10" font-family="JetBrains Mono">Comparison / alternative content</text>
+        <rect x="180" y="96" width="200" height="14" rx="3" fill="#0070f3" opacity="0.6"/>
+        <text x="0" y="138" fill="#a3a3a3" font-size="10" font-family="JetBrains Mono">YouTube demos</text>
+        <rect x="180" y="126" width="170" height="14" rx="3" fill="#0070f3" opacity="0.5"/>
+        <text x="0" y="168" fill="#a3a3a3" font-size="10" font-family="JetBrains Mono">Affiliates</text>
+        <rect x="180" y="156" width="140" height="14" rx="3" fill="#7928ca" opacity="0.5"/>
+        <text x="0" y="198" fill="#a3a3a3" font-size="10" font-family="JetBrains Mono">Paid ads / TikTok</text>
+        <rect x="180" y="186" width="60" height="14" rx="3" fill="#c55050" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="card p-5">
+      <h3 class="text-sm font-medium text-[var(--color-muted-fg)]">Proof points</h3>
+      <ul class="mt-4 space-y-3 text-xs">
+        <li><span class="text-[var(--color-cyan)]">Cleanvoice</span> — 300% MRR growth in 6 months from BOFU SEO</li>
+        <li><span class="text-[var(--color-cyan)]">Descript</span> — 100k organic visits in 6 months via 50+ free tools</li>
+        <li><span class="text-[var(--color-cyan)]">Xound</span> — Product Hunt 4.8/5 + AppSumo 4.7/5</li>
+        <li><span class="text-[var(--color-cyan)]">Adobe Enhance</span> — viral before/after clips on social</li>
+        <li><span class="text-[var(--color-cyan)]">iZotope</span> — +130% paid revenue QoQ (paid media)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mt-8 grid gap-4 lg:grid-cols-2">
+    <details class="card group">
+      <summary class="flex items-center justify-between gap-3 p-4">
+        <div><span class="font-medium">Adobe Podcast Enhance</span><span class="ml-2 text-xs text-[var(--color-muted-fg)]">— leader via product, not marketing spend</span></div>
+        <svg class="chevron h-4 w-4 shrink-0 text-[var(--color-muted-fg)] transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </summary>
+      <div class="border-t border-[var(--color-border)] px-4 pb-4 pt-3">
+        <ul class="space-y-1.5 text-xs text-[var(--color-muted-fg)]"><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Free product virality — before/after clips went viral on social</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>SEO via Adobe domain authority for enhance speech queries</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Third-party tutorials and comparison posts</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Piggybacks Adobe Creative Cloud social; Adobe MAX announcements</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Minimal paid acquisition — brand pulls traffic</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Takeaway: won on one-click free demo + shareable before/after, not blogging</li></ul></div></details>
+    <details class="card group">
+      <summary class="flex items-center justify-between gap-3 p-4">
+        <div><span class="font-medium">Descript</span><span class="ml-2 text-xs text-[var(--color-muted-fg)]">— the SEO + content machine</span></div>
+        <svg class="chevron h-4 w-4 shrink-0 text-[var(--color-muted-fg)] transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </summary>
+      <div class="border-t border-[var(--color-border)] px-4 pb-4 pt-3">
+        <ul class="space-y-1.5 text-xs text-[var(--color-muted-fg)]"><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>50+ free online tools, 130+ blogs in 6 months — GrowthTurn case study</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Affiliates: creator YouTube walkthroughs with affiliate links</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Each tool page targets a specific search query</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>SF billboard campaign; digital PR for AI search citations</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Officially runs r/Descript; responds to Studio Sound complaints</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Takeaway: tool pages + helpful content + affiliates — closest Marketing Engineering model</li></ul></div></details>
+    <details class="card group">
+      <summary class="flex items-center justify-between gap-3 p-4">
+        <div><span class="font-medium">Cleanvoice</span><span class="ml-2 text-xs text-[var(--color-muted-fg)]">— proof BOFU SEO works in this niche</span></div>
+        <svg class="chevron h-4 w-4 shrink-0 text-[var(--color-muted-fg)] transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </summary>
+      <div class="border-t border-[var(--color-border)] px-4 pb-4 pt-3">
+        <ul class="space-y-1.5 text-xs text-[var(--color-muted-fg)]"><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>SEO agency-driven content (Embarque case study)</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Bottom-of-funnel keywords: how to remove filler words, remove background noise</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>300% MRR, 40k+ monthly organic visits, 7.9% CTR claimed</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>First-mover on emerging AI queries</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Takeaway: clearest proof pain-point SEO works for this exact ICP</li></ul></div></details>
+    <details class="card group">
+      <summary class="flex items-center justify-between gap-3 p-4">
+        <div><span class="font-medium">Xound</span><span class="ml-2 text-xs text-[var(--color-muted-fg)]">— marketplace launch playbook</span></div>
+        <svg class="chevron h-4 w-4 shrink-0 text-[var(--color-muted-fg)] transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </summary>
+      <div class="border-t border-[var(--color-border)] px-4 pb-4 pt-3">
+        <ul class="space-y-1.5 text-xs text-[var(--color-muted-fg)]"><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Product Hunt Dec 2023 — 4.8/5 rating</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>AppSumo — 4.7/5 from 200+ reviews (lifetime-deal audience)</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Landing page targets AI voice cleaner for YouTubers, TikTokers, podcasters</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Takeaway: closest direct comp to Luma — leaned launchpads + deal sites, not content</li></ul></div></details>
+    <details class="card group">
+      <summary class="flex items-center justify-between gap-3 p-4">
+        <div><span class="font-medium">MetalVoice</span><span class="ml-2 text-xs text-[var(--color-muted-fg)]">— community + forums, not marketing</span></div>
+        <svg class="chevron h-4 w-4 shrink-0 text-[var(--color-muted-fg)] transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </summary>
+      <div class="border-t border-[var(--color-border)] px-4 pb-4 pt-3">
+        <ul class="space-y-1.5 text-xs text-[var(--color-muted-fg)]"><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>GitHub releases, OBS forums, r/macapps-style posts</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>No evidence of paid ads, SEO content, affiliates, Product Hunt</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Takeaway: organic technical community only — not scalable GTM</li></ul></div></details>
+    <details class="card group">
+      <summary class="flex items-center justify-between gap-3 p-4">
+        <div><span class="font-medium">CrumplePop SoundApp</span><span class="ml-2 text-xs text-[var(--color-muted-fg)]">— parent brand + plugin ecosystem</span></div>
+        <svg class="chevron h-4 w-4 shrink-0 text-[var(--color-muted-fg)] transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </summary>
+      <div class="border-t border-[var(--color-border)] px-4 pb-4 pt-3">
+        <ul class="space-y-1.5 text-xs text-[var(--color-muted-fg)]"><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Boris FX distribution, plugin marketplaces (Premiere, FCP, DaVinci)</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Press releases, blog tutorials on borisfx.com</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Boris FX partner program affiliates</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Takeaway: wins through editor workflow integration, not standalone brand marketing</li></ul></div></details>
+    <details class="card group">
+      <summary class="flex items-center justify-between gap-3 p-4">
+        <div><span class="font-medium">ElevenLabs Voice Isolator</span><span class="ml-2 text-xs text-[var(--color-muted-fg)]">— programmatic SEO at scale</span></div>
+        <svg class="chevron h-4 w-4 shrink-0 text-[var(--color-muted-fg)] transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </summary>
+      <div class="border-t border-[var(--color-border)] px-4 pb-4 pt-3">
+        <ul class="space-y-1.5 text-xs text-[var(--color-muted-fg)]"><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Thousands of pages (accents, personas, sound effects, X alternatives)</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Free interactive demo on every feature page</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>30% affiliate commission; ambassadors at 65%</li><li class="flex gap-2"><span class="text-[var(--color-cyan)]">→</span>Takeaway: overkill for Luma's stage — copy feature-page + free demo pattern</li></ul></div></details>
+  </div>
+
+  <!-- Channel cheat sheet -->
+  <div class="card mt-8 overflow-x-auto p-4">
+    <h3 class="mb-4 text-sm font-medium">Channel cheat sheet</h3>
+    <table class="w-full min-w-[800px] text-left text-xs">
+      <thead><tr class="border-b border-[var(--color-border)] text-[var(--color-muted-fg)]">
+        <th class="pb-2 pr-3">Competitor</th>
+        <th class="pb-2 px-1">Ads</th><th class="pb-2 px-1">SEO</th><th class="pb-2 px-1">Content</th>
+        <th class="pb-2 px-1">YouTube</th><th class="pb-2 px-1">Affiliates</th><th class="pb-2 px-1">PH/AppSumo</th>
+        <th class="pb-2 px-1">Social</th><th class="pb-2 px-1">Community</th><th class="pb-2 px-1">Directories</th>
+      </tr></thead>
+      <tbody id="channel-matrix"></tbody>
+    </table>
+  </div>
+
+  <div class="mt-6 grid gap-3 sm:grid-cols-2">
+    <div class="card p-4"><h4 class="text-xs font-medium text-[var(--color-destructive)]">Skip for now</h4>
+      <ul class="mt-2 space-y-1 text-xs text-[var(--color-muted-fg)]">
+        <li>Programmatic SEO at ElevenLabs scale</li>
+        <li>Paid social/LinkedIn ads (needs budget)</li>
+        <li>TikTok/Instagram as primary channels</li>
+        <li>AppSumo before traction exists</li>
+      </ul></div>
+    <div class="card p-4"><h4 class="text-xs font-medium text-[var(--color-cyan)]">Quick wins to copy</h4>
+      <ul class="mt-2 space-y-1 text-xs text-[var(--color-muted-fg)]">
+        <li>Cleanvoice: one BOFU article per pain point</li>
+        <li>Descript: free online tool per modifier keyword</li>
+        <li>Xound: Product Hunt + AlternativeTo pages</li>
+        <li>Adobe: before/after widget on every tool page</li>
+        <li>Alitu: pitch podcast-education sites for roundups</li>
+      </ul></div>
+  </div>
+</section>
+
+
+  <!-- Other competitors channel summary -->
+  <details class="card mt-6 group">
+    <summary class="flex items-center justify-between gap-3 p-4">
+      <span class="font-medium">Other direct competitors (medium overlap)</span>
+      <svg class="chevron h-4 w-4 shrink-0 text-[var(--color-muted-fg)] transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+    </summary>
+    <div class="overflow-x-auto border-t border-[var(--color-border)] p-4">
+      <table class="w-full min-w-[500px] text-left text-xs">
+        <thead><tr class="border-b border-[var(--color-border)] text-[var(--color-muted-fg)]"><th class="pb-2 pr-4">Competitor</th><th class="pb-2 pr-4">Main channels</th><th class="pb-2">Notes</th></tr></thead>
+        <tbody class="text-[var(--color-muted-fg)]">
+          <tr class="border-b border-[var(--color-border)]"><td class="py-2 pr-4 font-medium text-[var(--color-fg)]">Krisp</td><td class="py-2 pr-4">SEO (day one), paid ads, affiliates (30%), PR, G2</td><td class="py-2">Different ICP (calls) but strong GTM reference</td></tr>
+          <tr class="border-b border-[var(--color-border)]"><td class="py-2 pr-4 font-medium text-[var(--color-fg)]">iZotope RX</td><td class="py-2 pr-4">Affiliates (ShareASale 10%), paid media, YouTube, music-tech press</td><td class="py-2">Pro audience; affiliates do before/after demos</td></tr>
+          <tr class="border-b border-[var(--color-border)]"><td class="py-2 pr-4 font-medium text-[var(--color-fg)]">Auphonic</td><td class="py-2 pr-4">Word of mouth, podcast directories, API integrations</td><td class="py-2">2M+ users — legacy organic, not growth marketing</td></tr>
+          <tr class="border-b border-[var(--color-border)]"><td class="py-2 pr-4 font-medium text-[var(--color-fg)]">Audo Studio</td><td class="py-2 pr-4">Product Hunt, BOFU blog posts</td><td class="py-2">Small; SEO comparison content vs Audacity</td></tr>
+          <tr class="border-b border-[var(--color-border)]"><td class="py-2 pr-4 font-medium text-[var(--color-fg)]">Podcastle</td><td class="py-2 pr-4">PLG freemium, content marketing, paid ads, VC growth team</td><td class="py-2">150k → 1M users; ex-Canva CCO, Prezi VP Growth</td></tr>
+          <tr class="border-b border-[var(--color-border)]"><td class="py-2 pr-4 font-medium text-[var(--color-fg)]">Alitu</td><td class="py-2 pr-4">Affiliate (20–25%), thepodcasthost.com, Product Hunt, X</td><td class="py-2">Podcast-education sites as distribution</td></tr>
+          <tr class="border-b border-[var(--color-border)]"><td class="py-2 pr-4 font-medium text-[var(--color-fg)]">LALAL.AI</td><td class="py-2 pr-4">Affiliates (30%), blog, social, ambassador program</td><td class="py-2">Affiliates create YouTube reviews</td></tr>
+          <tr><td class="py-2 pr-4 font-medium text-[var(--color-fg)]">Utterly</td><td class="py-2 pr-4">Product Hunt (2021), bootstrapped to $2.2M ARR</td><td class="py-2">Minimal visible marketing — product + word of mouth</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details class="card mt-3 group">
+    <summary class="flex items-center justify-between gap-3 p-4">
+      <span class="font-medium">Indirect competitors</span>
+      <svg class="chevron h-4 w-4 shrink-0 text-[var(--color-muted-fg)] transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+    </summary>
+    <div class="overflow-x-auto border-t border-[var(--color-border)] p-4">
+      <table class="w-full text-left text-xs">
+        <thead><tr class="border-b border-[var(--color-border)] text-[var(--color-muted-fg)]"><th class="pb-2 pr-4">Competitor</th><th class="pb-2">Main channels</th></tr></thead>
+        <tbody class="text-[var(--color-muted-fg)]">
+          <tr class="border-b border-[var(--color-border)]"><td class="py-2 pr-4 font-medium text-[var(--color-fg)]">CapCut / VEED</td><td class="py-2">Massive social (TikTok/YouTube), ByteDance distribution, broad video SEO</td></tr>
+          <tr class="border-b border-[var(--color-border)]"><td class="py-2 pr-4 font-medium text-[var(--color-fg)]">NVIDIA Broadcast</td><td class="py-2">NVIDIA brand, GeForce forums, CES announcements, free with RTX GPUs</td></tr>
+          <tr><td class="py-2 pr-4 font-medium text-[var(--color-fg)]">Adobe Audition / Audacity</td><td class="py-2">Ecosystem (Adobe CC), open-source community, forum SEO</td></tr>
+        </tbody>
+      </table>
+      <p class="mt-3 text-xs text-[var(--color-muted-fg)]">These win on platform scale, not tactics replicable early. Treat as comparison-page targets ("Adobe Enhance alternative," "Descript Studio Sound alternative").</p>
+    </div>
+  </details>
+
+  <div class="card mt-6 p-5">
+    <h3 class="text-sm font-medium">Bottom line</h3>
+    <p class="mt-2 text-xs leading-relaxed text-[var(--color-muted-fg)]">Competitors winning with Luma's ICP are not out-spending on ads or going viral on TikTok. They capture <strong class="text-[var(--color-fg)]">high-intent search</strong> (Cleanvoice, Descript), <strong class="text-[var(--color-fg)]">launch on marketplaces</strong> (Xound), and <strong class="text-[var(--color-fg)]">show up where people complain</strong> (Reddit, forums). The Content Loop maps well — prioritize free tools + BOFU SEO first, directory listings second, community engagement in parallel.</p>
+  </div>
+
+<!-- RECOMMENDATIONS -->
+<section id="recommendations">
+  <h2 class="text-xl font-semibold tracking-tight lg:text-2xl">Recommended channel mix for Luma</h2>
+  <p class="mt-2 text-[var(--color-muted-fg)]">Aligned with the Content Loop: YouTube → Free Tools → Directory Listings</p>
+  <div class="mt-8 overflow-x-auto">
+    <table class="w-full min-w-[600px] text-left text-sm">
+      <thead><tr class="border-b border-[var(--color-border)] text-[var(--color-muted-fg)]">
+        <th class="pb-3 pr-4">Priority</th><th class="pb-3 pr-4">Channel</th><th class="pb-3 pr-4">Leading indicator</th><th class="pb-3">Competitor proof</th>
+      </tr></thead>
+      <tbody class="text-xs">
+        <tr class="border-b border-[var(--color-border)]"><td class="py-3 pr-4"><span class="badge bg-[var(--color-cyan)]/20 text-[var(--color-cyan)]">1</span></td><td class="py-3 pr-4 font-medium">Free Tools + BOFU SEO</td><td class="py-3 pr-4 text-[var(--color-muted-fg)]">Organic traffic, tool usage</td><td class="py-3 text-[var(--color-muted-fg)]">Cleanvoice (+300% MRR), Descript (50+ tools)</td></tr>
+        <tr class="border-b border-[var(--color-border)]"><td class="py-3 pr-4"><span class="badge bg-[var(--color-cyan)]/20 text-[var(--color-cyan)]">2</span></td><td class="py-3 pr-4 font-medium">Directory listings</td><td class="py-3 pr-4 text-[var(--color-muted-fg)]">Accepted listings, backlinks</td><td class="py-3 text-[var(--color-muted-fg)]">Xound (PH/AppSumo), directory backlog</td></tr>
+        <tr class="border-b border-[var(--color-border)]"><td class="py-3 pr-4"><span class="badge bg-[var(--color-cyan)]/20 text-[var(--color-cyan)]">3</span></td><td class="py-3 pr-4 font-medium">Community (Reddit/forums)</td><td class="py-3 pr-4 text-[var(--color-muted-fg)]">Helpful replies, soft mentions</td><td class="py-3 text-[var(--color-muted-fg)]">Descript (r/Descript), MetalVoice (OBS)</td></tr>
+        <tr class="border-b border-[var(--color-border)]"><td class="py-3 pr-4"><span class="badge bg-[#0070f3]/20 text-[#0070f3]">4</span></td><td class="py-3 pr-4 font-medium">Comparison / alternative content</td><td class="py-3 pr-4 text-[var(--color-muted-fg)]">Rankings for X alternative</td><td class="py-3 text-[var(--color-muted-fg)]">ElevenLabs, Cleanvoice SEO</td></tr>
+        <tr class="border-b border-[var(--color-border)]"><td class="py-3 pr-4"><span class="badge bg-[#0070f3]/20 text-[#0070f3]">5</span></td><td class="py-3 pr-4 font-medium">YouTube demos</td><td class="py-3 pr-4 text-[var(--color-muted-fg)]">Views on problem-solution videos</td><td class="py-3 text-[var(--color-muted-fg)]">Industry comparison videos</td></tr>
+        <tr class="border-b border-[var(--color-border)]"><td class="py-3 pr-4"><span class="badge bg-[var(--color-violet)]/20 text-[var(--color-violet)]">6</span></td><td class="py-3 pr-4 font-medium">Affiliates</td><td class="py-3 pr-4 text-[var(--color-muted-fg)]">Referred signups</td><td class="py-3 text-[var(--color-muted-fg)]">Alitu, Descript, LALAL.AI</td></tr>
+        <tr><td class="py-3 pr-4"><span class="badge bg-[var(--color-muted)] text-[var(--color-muted-fg)]">Later</span></td><td class="py-3 pr-4 font-medium">Paid ads</td><td class="py-3 pr-4 text-[var(--color-muted-fg)]">CAC vs Luma Interest</td><td class="py-3 text-[var(--color-muted-fg)]">Krisp, iZotope</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card mt-8 p-6">
+    <h3 class="text-sm font-medium text-[var(--color-muted-fg)]">BOFU SEO targets for Luma</h3>
+    <div class="mt-4 flex flex-wrap gap-2">
+      <span class="badge bg-[var(--color-muted)]">remove background noise from podcast</span>
+      <span class="badge bg-[var(--color-muted)]">remove reverb from audio</span>
+      <span class="badge bg-[var(--color-muted)]">adobe enhance speech alternative</span>
+      <span class="badge bg-[var(--color-muted)]">descript studio sound alternative</span>
+      <span class="badge bg-[var(--color-muted)]">robotic AI voice fix</span>
+      <span class="badge bg-[var(--color-muted)]">room echo removal</span>
+      <span class="badge bg-[var(--color-muted)]">cloud privacy audio tool</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="border-t border-[var(--color-border)] py-8 text-center text-xs text-[var(--color-muted-fg)]">
+  <p>Source: marketing/competitors/ · Exported 2026-05-14 · Marketing channels research 2026-06-17</p>
+  <p class="mt-1">Design system: DESIGN.md (Vercel-inspired, JetBrains Mono, dark mode)</p>
+</footer>
+<script id="competitor-data" type="application/json">[{"rank": 1, "name": "Adobe Podcast Enhance", "slug": "adobe-podcast-enhance", "type": "direct", "position": "leader", "overlap": "high", "pricing": "freemium", "platforms": ["web"], "deployment": "cloud", "mode": "post-recording", "website": "https://podcast.adobe.com/enhance", "sentiment": "mixed", "desc": "Free web-based AI tool by Adobe that transforms recordings to studio-quality audio with one click. Removes noise, echo, and reverb.", "headline": "Enhance Speech from Adobe", "cta": "Try for Free", "features": ["Free AI filter for cleaning up spoken audio", "Remove background noise from recordings", "Studio-quality audio enhancement", "Works with podcast recordings", "No software installation required"], "luma": "Free one-click benchmark users compare against; V2 quality regression and cloud privacy concerns are positioning openings for a local desktop alternative.", "tags": ["ai-enhancement", "noise-removal", "echo-removal", "cloud-only"], "social": [{"p": "Twitter/X", "u": "https://twitter.com/AdobeCreativeCloud"}, {"p": "YouTube", "u": "https://www.youtube.com/adobe"}], "activity": [{"d": "2025-10-28", "p": "Twitter/X", "t": "Adobe MAX 2025: Generate Soundtrack in public beta"}, {"d": "2025-10-28", "p": "Twitter/X", "t": "Adobe MAX 2025: Generate Speech in public beta"}, {"d": "2025-10-28", "p": "YouTube", "t": "Adobe MAX 2025 highlights: Firefly Audio Model"}], "pain": [{"src": "Reddit r/premiere \u2014 V2 launch", "q": "Since Adobe updated to V2, my enhanced audio files have included some bonus content: other people!", "s": "negative", "pts": ["Ghost voices privacy bug", "AI alters natural voice character", "No control over processing intensity", "Unpredictable output post-update"]}, {"src": "Adobe Community \u2014 quality regression", "q": "Enhance Speech has somehow gotten worse.", "s": "negative", "pts": ["Quality regresses with updates", "Lost sibilance \u2014 muffled voices", "No rollback option"]}, {"src": "Video producer torture test", "s": "neutral", "pts": ["Great for terrible audio; degrades good audio", "Fails on non-American accents", "Cannot handle music", "Binary output \u2014 no enhancement control"]}, {"src": "Professional podcast consultant", "q": "Ideal for remote guests with bad audio but not for your main host mic.", "s": "neutral", "pts": ["Damage control not quality enhancement", "V2 voice alteration", "No selective segment application"]}, {"src": "Nearstream.us review", "s": "neutral", "pts": ["Privacy concerns uploading to cloud", "Daily usage limits", "No offline workflow", "Browser-only friction"]}, {"src": "vs Descript comparison", "q": "Voices sound digitized and unnatural with traffic noise.", "s": "neutral", "pts": ["Heavy echo difficult for all AI", "Voice character preservation is key differentiator"]}]}, {"rank": 2, "name": "iZotope RX 11", "slug": "izotope-rx-11", "type": "direct", "position": "leader", "overlap": "medium", "pricing": "one-time", "platforms": ["mac", "windows"], "deployment": "local", "mode": "post-recording", "website": "https://www.izotope.com/en/products/rx.html", "sentiment": "positive", "desc": "Professional-grade audio repair suite with AI-driven noise reduction, spectral editing, and Dialogue Isolate module. Industry standard for audio engineers and filmmakers.", "headline": "Fix Audio Problems with the Best-in-Class Audio Repair Tools", "cta": "Buy Now", "features": ["Dialogue Isolate with De-Reverb", "Repair Assistant with ML technology", "Music Rebalance for stem extraction", "Spectral Editor ARA plugin support", "Text Navigation speech-to-text"], "luma": "Industry standard but priced and complex for Creator-Editors; Luma can own the pro results without pro learning curve gap.", "tags": ["professional", "spectral-editing", "dialogue-isolate", "one-time-purchase"], "social": [], "activity": [], "pain": [{"src": "Reddit r/podcasting", "q": "Ask anyone who uses RX and they'll swear by it.", "s": "positive", "pts": ["Most editors lack capable noise reduction", "RX powerful but price barrier for hobbyists", "Need separate tools for each problem"]}, {"src": "iZotope blog", "q": "I wish I had known about it earlier.", "s": "neutral", "pts": ["Untreated room acoustics #1 challenge", "Learning about pro tools comes too late", "Steep learning curve deters beginners"]}, {"src": "Reddit r/audioengineering", "q": "You can never really get rid of unwanted reverb in post, only alleviate it.", "s": "neutral", "pts": ["Reverb harder than noise", "Steep learning curve", "Users accept partial fixes"]}]}, {"rank": 3, "name": "Krisp", "slug": "krisp", "type": "direct", "position": "challenger", "overlap": "low", "pricing": "freemium", "platforms": ["web", "mac", "windows", "ios", "android"], "deployment": "hybrid", "mode": "real-time", "website": "https://krisp.ai", "sentiment": "negative", "desc": "Real-time AI noise cancellation app for calls, meetings, and streaming. Filters background noise from both speaker and listener ends.", "headline": "Works with you, for you", "cta": "Get Started Free", "features": ["AI Noise Cancellation", "Accent Conversion", "AI Meeting Notes and summaries", "CRM sync to Salesforce, HubSpot, Slack", "SOC2, GDPR, HIPAA compliant"], "luma": "Real-time meeting focus \u2014 adjacent, not post-recording; contrast messaging (Luma is for finished recordings).", "tags": ["real-time", "noise-cancellation", "meetings", "subscription"], "social": [{"p": "Twitter/X", "u": "https://twitter.com/krisp_app"}, {"p": "LinkedIn", "u": "https://www.linkedin.com/company/krisp/"}, {"p": "YouTube", "u": "https://www.youtube.com/c/Krisp"}], "activity": [{"d": "2025-05-15", "p": "Twitter/X", "t": "Krisp mobile app live \u2014 record in-person meetings, transcribe, AI bot for Zoom/Meet/Teams"}, {"d": "2025-06-01", "p": "Twitter/X", "t": "All-in-one Voice AI Platform for call centers"}, {"d": "2026-02-01", "p": "Twitter/X", "t": "Introducing VIVA \u2014 Voice Isolation for Voice Agents, <20ms latency"}], "pain": [{"src": "Reddit r/discordapp", "s": "negative", "pts": ["Discord integration broken", "No warning when tool stops working"]}, {"src": "Reddit r/OnlineESLTeaching", "q": "A massive scam. (yearly fee)", "s": "negative", "pts": ["Subscription feels like scam", "CPU performance impact", "60 min daily limit too restrictive"]}, {"src": "Reddit r/buhaydigital", "q": "Sounds choppy or slightly robotic.", "s": "negative", "pts": ["Poor customer support", "Choppy/robotic voice", "Poor DAW integration"]}]}, {"rank": 4, "name": "Descript", "slug": "descript", "type": "direct", "position": "challenger", "overlap": "high", "pricing": "freemium", "platforms": ["web", "mac", "windows"], "deployment": "hybrid", "mode": "post-recording", "website": "https://www.descript.com", "sentiment": "mixed", "desc": "Comprehensive audio/video production suite with Studio Sound feature for noise cleanup and text-based editing. Also removes filler words and supports voice cloning.", "headline": "AI-editing for every kind of video", "cta": "Get started for free", "features": ["Text-based video and audio editing", "Studio Sound AI noise removal", "Filler word removal", "AI transcription and captions", "Eye Contact and Green Screen AI effects"], "luma": "Studio Sound wins on voice character vs Adobe; Luma can compete on focused vocal cleanup without full editing-suite complexity or credit-based pricing.", "tags": ["studio-sound", "text-based-editing", "filler-word-removal", "voice-cloning"], "social": [{"p": "Twitter/X", "u": "https://x.com/descript/"}, {"p": "YouTube", "u": "https://www.youtube.com/@Descript"}, {"p": "LinkedIn", "u": "https://www.linkedin.com/company/descript/"}], "activity": [{"d": "2025-04-01", "p": "Twitter/X", "t": "Zoom integration: import cloud recordings with speaker separation"}, {"d": "2025-09-01", "p": "Twitter/X", "t": "Pricing change: transcription hours \u2192 media minutes + AI credits"}, {"d": "2026-02-10", "p": "Twitter/X", "t": "Brand rebrand blue \u2192 red; Claude Opus 4.6 in Underlord"}], "pain": [{"src": "Reddit r/podcasting", "q": "Result sounds a little over processed.", "s": "negative", "pts": ["AI reverb removal over-processed", "Studio Sound robotic at higher settings", "No easy intensity control"]}, {"src": "vs Adobe comparison", "q": "Descript Studio Sound: more natural-sounding, better preserves voice character.", "s": "neutral", "pts": ["Both struggle with heavy echo", "Voice character preservation is key", "Descript wins everyday use"]}]}, {"rank": 5, "name": "Auphonic", "slug": "auphonic", "type": "direct", "position": "niche", "overlap": "medium", "pricing": "freemium", "platforms": ["web"], "deployment": "cloud", "mode": "post-recording", "website": "https://auphonic.com", "sentiment": "mixed", "desc": "AI-powered audio post-production service for automated loudness optimization, EQ, noise reduction. Long-standing favorite for podcasters and broadcasters.", "headline": "Make better audio", "cta": "Listen to our algorithms", "features": ["Noise & Reverb Reduction", "Intelligent Leveler", "De-Esser, De-Plosive filtering", "Cut filler words, coughs, and silence", "Speech2Text and automatic shownotes"], "luma": "Pay-as-you-go resonates with users who hate subscriptions; quality regression eroded trust \u2014 reliability is a differentiator.", "tags": ["loudness-optimization", "automated-post-production", "pay-as-you-go"], "social": [], "activity": [], "pain": [{"src": "Reddit r/podcasting \u2014 praise", "q": "Auphonic was clearly the best \u2014 it wasn't even close. (vs 5 tools for HVAC noise)", "s": "positive", "pts": ["Local plugins overload CPU/GPU", "Sudden environmental noises ruin recordings", "Pay-as-you-go preferred over subscription"]}, {"src": "Reddit r/podcasting \u2014 regression", "q": "I recently used it on a recording and it came back so bad.", "s": "negative", "pts": ["Inconsistent quality over time", "No way to know if AI changed", "Loss of trust in reliable tools"]}]}, {"rank": 6, "name": "NVIDIA Broadcast", "slug": "nvidia-broadcast", "type": "indirect", "position": "niche", "overlap": "low", "pricing": "freemium", "platforms": ["windows"], "deployment": "local", "mode": "real-time", "website": "https://www.nvidia.com/en-us/geforce/broadcasting/broadcast-app/", "sentiment": "negative", "desc": "Free real-time noise and echo removal app leveraging NVIDIA RTX GPU AI. Designed for streamers and content creators in live settings.", "headline": "Rise Above the Noise", "cta": "Download Now", "features": ["AI Noise and Echo Removal", "Studio Voice AI mic upgrade", "Virtual Background with AI greenscreen", "Eye Contact AI camera effect", "Auto Frame dynamic tracking"], "luma": "GPU-heavy real-time tool \u2014 indirect; users frustrated by resource drain may prefer lightweight post-recording cleanup.", "tags": ["real-time", "gpu-accelerated", "streaming", "rtx"], "social": [{"p": "Twitter/X", "u": "https://twitter.com/nvidia"}, {"p": "YouTube", "u": "https://www.youtube.com/nvidia"}], "activity": [{"d": "2025-01-01", "p": "Twitter/X", "t": "Broadcast 2.0: Studio Voice beta, Virtual Key Light beta"}, {"d": "2026-01-06", "p": "Twitter/X", "t": "Broadcast 2.1 at CES 2026: Virtual Key Light out of beta"}], "pain": [{"src": "Reddit r/podcasting", "q": "I really don't want to pay a subscription... I would prefer a one time fee.", "s": "negative", "pts": ["Too resource-heavy, recording failures", "Subscription resented", "Free tiers too limited"]}, {"src": "Reddit r/nvidia", "s": "negative", "pts": ["Crackling/popping artifacts", "Studio Voice degrades audio", "GPU load impractical", "Updates break audio setups"]}, {"src": "Reddit r/streaming", "q": "Voice quality degrades to robotic/fuzzy when GPU is insufficient.", "s": "negative", "pts": ["Worse than no cancellation", "Unpredictable based on system load", "No graceful degradation"]}]}, {"rank": 7, "name": "Cleanvoice AI", "slug": "cleanvoice-ai", "type": "direct", "position": "niche", "overlap": "medium", "pricing": "freemium", "platforms": ["web"], "deployment": "cloud", "mode": "post-recording", "website": "https://cleanvoice.ai", "sentiment": "neutral", "desc": "AI tool specifically for podcasters that removes background noise, filler words, and silences automatically.", "headline": "Edit your podcast in 10 mins. Automatically.", "cta": "Try it for free", "features": ["Automatic filler word removal", "Background noise removal", "Silence and dead air cutting", "Podcast transcription", "Multi-track editing support"], "luma": "Podcast-specific cloud tool; removes filler words and silences \u2014 broader than Luma's vocal-cleanup focus but same audience.", "tags": ["filler-word-removal", "silence-cutting", "podcast-editing", "cloud-only"], "social": [{"p": "Twitter/X", "u": "https://twitter.com/cleanvoiceai"}, {"p": "LinkedIn", "u": "https://www.linkedin.com/company/cleanvoiceai/"}], "activity": [], "pain": [{"src": "G2 reviews", "s": "neutral", "pts": ["AI misinterprets intentional pauses", "Subtle fidelity loss", "Cloud-only", "Not a complete solution"]}]}, {"rank": 8, "name": "Audo Studio", "slug": "audo-studio", "type": "direct", "position": "new-entrant", "overlap": "medium", "pricing": "freemium", "platforms": ["web"], "deployment": "cloud", "mode": "post-recording", "website": "https://audo.ai", "sentiment": "none", "desc": "One-click audio cleaning with advanced noise removal, automatic volume leveling, and echo reduction. Built for creators.", "headline": "One Click Audio Cleaning", "cta": "Try for Free", "features": ["One-click background noise removal", "Voice clarity enhancement", "Works for podcasts and online courses", "Simple drag-and-drop interface", "No audio engineering skills required"], "luma": "One-click cloud cleaning with minimal positioning \u2014 similar promise to Luma but web-only.", "tags": ["one-click", "noise-removal", "echo-reduction", "drag-and-drop"], "social": [], "activity": [], "pain": []}, {"rank": 9, "name": "ElevenLabs Voice Isolator", "slug": "elevenlabs-voice-isolator", "type": "direct", "position": "challenger", "overlap": "medium", "pricing": "freemium", "platforms": ["web"], "deployment": "cloud", "mode": "post-recording", "website": "https://elevenlabs.io/voice-isolator", "sentiment": "none", "desc": "AI tool for extracting clean vocal tracks from noisy environments. Part of ElevenLabs' broader voice AI platform.", "headline": "Extract crystal-clear speech from any audio", "cta": "Sign up", "features": ["AI voice isolation from chaotic backgrounds", "Remove music, noise, and interference", "Studio-quality neural speech separation", "Supports WAV, MP3, FLAC, OGG, AAC", "API and SDK integration available"], "luma": "Secondary feature within TTS/voice-AI platform; API available but not dedicated desktop vocal cleanup product.", "tags": ["voice-isolation", "stem-separation", "api", "tts-platform"], "social": [{"p": "Twitter/X", "u": "https://x.com/elevenlabsio"}, {"p": "YouTube", "u": "https://www.youtube.com/@elevenlabsio"}, {"p": "GitHub", "u": "https://github.com/elevenlabs"}], "activity": [{"d": "2025-02-01", "p": "Twitter/X", "t": "Introducing Scribe: speech-to-text 96.7% accuracy"}, {"d": "2026-02-01", "p": "Twitter/X", "t": "Eleven v3 generally available \u2014 68% fewer errors"}], "pain": []}, {"rank": 10, "name": "Xound", "slug": "xound", "type": "direct", "position": "new-entrant", "overlap": "high", "pricing": "freemium", "platforms": ["web", "mac"], "deployment": "hybrid", "mode": "post-recording", "website": "https://xound.io", "sentiment": "none", "desc": "AI voice cleaner focused on voice enhancement, noise removal, and natural-sounding pitch correction. Trusted by 3000+ creators.", "headline": "Studio-Quality Audio in One Click", "cta": "Try Xound for free", "features": ["AI Background Noise Removal", "Natural Pitch Correction", "Studio-Quality Voice Enhancement", "Smart Audio Leveling", "AI Voice Cloning & Voice Changer (local processing)"], "luma": "Direct benchmark \u2014 Mac app plus web, same Creator-Editor ICP, studio-quality one-click positioning; includes local voice cloning.", "tags": ["mac-app", "noise-removal", "pitch-correction", "voice-cloning"], "social": [], "activity": [], "pain": [], "notes": ["Has Mac app \u2014 direct overlap with Luma's target platform", "Positions for YouTubers, TikTokers, podcasters \u2014 same ICP"]}, {"rank": 11, "name": "Podcastle", "slug": "podcastle", "type": "direct", "position": "new-entrant", "overlap": "medium", "pricing": "freemium", "platforms": ["web"], "deployment": "cloud", "mode": "post-recording", "website": "https://podcastle.ai", "sentiment": "none", "desc": "AI-powered platform for podcasts and video with noise removal, voice clarity, and comprehensive editing tools.", "headline": "One AI for audio, video & voice", "cta": "Try for free", "features": ["AI-powered audio and video editing suite", "AI dubbing and subtitle generation (15 languages)", "Studio-quality podcast recording", "Viral clip generator for TikTok and Reels", "Voice cloning in 3 seconds"], "luma": "Full audio/video/voice platform \u2014 noise removal is one feature among recording, dubbing, and voice cloning.", "tags": ["ai-editing", "voice-cloning", "dubbing", "viral-clips"], "social": [{"p": "Twitter/X", "u": "https://twitter.com/podcastleai"}], "activity": [{"d": "2025-03-01", "p": "Twitter/X", "t": "Asyncflow v1.0 \u2014 450+ natural-sounding voices"}, {"d": "2025-06-01", "p": "Twitter/X", "t": "Revoice enhanced: few seconds of voice needed for clone"}], "pain": []}, {"rank": 12, "name": "Adobe Audition", "slug": "adobe-audition", "type": "indirect", "position": "leader", "overlap": "medium", "pricing": "subscription", "platforms": ["mac", "windows"], "deployment": "local", "mode": "post-recording", "website": "https://www.adobe.com/products/audition.html", "sentiment": "negative", "desc": "Professional audio editing suite with advanced noise cleanup, spectral editing, multitrack mixing, and AI-based auto-ducking. Industry-standard DAW.", "headline": "Create. Mix. Design.", "cta": "Start free trial", "features": ["Multitrack and waveform editing", "Noise reduction and audio restoration", "Spectral frequency display", "Creative Cloud integration", "Real-time clip stretching"], "luma": "Pro DAW with insufficient reverb reduction for room echo; users redirected to physical treatment \u2014 gap for AI-native cleanup tools.", "tags": ["daw", "spectral-editing", "creative-cloud", "multitrack"], "social": [{"p": "Twitter/X", "u": "https://twitter.com/AdobeCreativeCloud"}, {"p": "YouTube", "u": "https://www.youtube.com/adobe"}], "activity": [{"d": "2025-06-01", "p": "Twitter/X", "t": "Enhance Speech in Premiere Pro now generally available"}], "pain": [{"src": "Reddit r/premiere", "q": "Adobe Audition reverb reduction insufficient for real room echo.", "s": "negative", "pts": ["Community redirects to physical room treatment", "No software reliably solves room echo"]}]}, {"rank": 13, "name": "Audacity", "slug": "audacity", "type": "indirect", "position": "incumbent", "overlap": "low", "pricing": "free", "platforms": ["mac", "windows", "linux"], "deployment": "local", "mode": "post-recording", "website": "https://www.audacityteam.org", "sentiment": "neutral", "desc": "Free, open-source audio editor with noise reduction tools. Popular for podcasters and beginners. Not AI-native but widely used.", "headline": "Level up your Audacity", "cta": "Download Free", "features": ["Free and open source", "Cross-platform", "Import/export all major formats", "VST3, Nyquist, and AU plugin support", "Spectral frequency analysis"], "luma": "Not AI-native; steep learning curve for noise reduction \u2014 Luma targets users who outgrow manual Audacity workflows.", "tags": ["open-source", "free", "plugin-support", "non-ai"], "social": [{"p": "Twitter/X", "u": "https://twitter.com/audacity"}, {"p": "YouTube", "u": "https://www.youtube.com/c/AudacityTeam"}], "activity": [{"d": "2025-10-01", "p": "Twitter/X", "t": "Audacity x Intel OpenVINO: AI plugins for stem separation"}, {"d": "2026-01-01", "p": "Twitter/X", "t": "Audacity 4.0 announced: Qt UI, dark theme, DAW features"}], "pain": [{"src": "Reddit r/podcasting", "q": "Noise reduction tools are a compromise \u2014 clean recording is always better.", "s": "neutral", "pts": ["Steep learning curve", "No single simple solution", "iZotope RX not beginner-friendly", "Post cleanup time-consuming"]}]}, {"rank": 14, "name": "LALAL.AI", "slug": "lalalai", "type": "direct", "position": "niche", "overlap": "medium", "pricing": "freemium", "platforms": ["web", "mac", "windows"], "deployment": "hybrid", "mode": "post-recording", "website": "https://www.lalal.ai", "sentiment": "neutral", "desc": "Web-based AI tool for background noise removal and audio stem separation. Used by musicians, podcasters, and content creators.", "headline": "What is LALAL.AI?", "cta": "Try for Free", "features": ["Vocal and instrumental separation", "10-stem separation support", "Drums, bass, piano, guitar stem extraction", "VST Plugin for DAW integration", "Batch processing for multiple files"], "luma": "Stem separation focus more than vocal enhancement; upcoming offline VST plugin may increase overlap with desktop workflows.", "tags": ["stem-separation", "vocal-remover", "vst-plugin", "batch-processing"], "social": [{"p": "Twitter/X", "u": "https://twitter.com/lalalai_splitter"}, {"p": "YouTube", "u": "https://www.youtube.com/c/LALALAI"}], "activity": [{"d": "2026-01-01", "p": "Twitter/X", "t": "Coming soon: LALAL.AI VST plugin \u2014 offline, no internet"}, {"d": "2026-02-01", "p": "Twitter/X", "t": "LALAL.AI API v1 available for developers"}], "pain": [{"src": "G2 reviews", "q": "Bait and switch \u2014 free trial doesn't let you download without paying.", "s": "neutral", "pts": ["Misleading free trial", "Inconsistent AI results", "Pricing feels deceptive"]}]}, {"rank": 15, "name": "MetalVoice", "slug": "metalvoice", "type": "direct", "position": "new-entrant", "overlap": "high", "pricing": "freemium", "platforms": ["mac"], "deployment": "local", "mode": "real-time", "website": "https://metalvoice.app", "sentiment": "none", "desc": "Native macOS utility for Apple Silicon using deep learning for real-time noise elimination and room reverb removal. Leverages Apple Neural Engine.", "headline": "Studio Clarity. Zero Latency.", "cta": "Download Free", "features": ["Real-time AI noise removal", "De-reverberation for studio-clean audio", "Zero latency via Apple Neural Engine", "100% on-device processing for privacy", "Universal mic compatibility"], "luma": "Closest direct competitor \u2014 Mac-only, on-device, noise + de-reverb; benchmark target despite real-time vs Luma's post-recording focus.", "tags": ["apple-silicon", "on-device", "zero-latency", "de-reverb", "privacy"], "social": [], "activity": [], "pain": [], "notes": ["Closest direct competitor to Luma", "Differentiator: Zero latency and privacy", "Luma should directly benchmark against MetalVoice"]}, {"rank": 16, "name": "CrumplePop SoundApp", "slug": "crumplepop-soundapp", "type": "direct", "position": "niche", "overlap": "high", "pricing": "subscription", "platforms": ["mac", "windows"], "deployment": "local", "mode": "post-recording", "website": "https://www.crumplepop.com/soundapp/", "sentiment": "none", "desc": "Desktop Mac/Windows app for noise cancellation combining room noise removal and echo removal tools in one interface. Creator-focused.", "headline": "Professional Audio Quality in One Click", "cta": "Start Free Trial", "features": ["AI Noise Removal and Echo Remover", "Voice Enhance for podcast clarity", "WindRemover and TrafficRemover", "Levelmatic automatic audio leveling", "AU, AAX, VST3 plugin formats"], "luma": "Desktop Mac/Windows app with one-click noise and echo removal \u2014 very similar product shape to Luma; also offers plugin formats.", "tags": ["desktop-app", "noise-removal", "echo-removal", "plugins", "subscription"], "social": [], "activity": [], "pain": []}, {"rank": 17, "name": "Alitu", "slug": "alitu", "type": "direct", "position": "niche", "overlap": "medium", "pricing": "subscription", "platforms": ["web"], "deployment": "cloud", "mode": "post-recording", "website": "https://alitu.com", "sentiment": "none", "desc": "Automated podcast production tool with hands-off audio cleanup, leveling, and noise reduction. Designed for non-technical creators.", "headline": "Podcasting is hard enough. So Alitu keeps the tech simple.", "cta": "Start free trial", "features": ["Automatic audio cleanup and noise removal", "Transcript-based editing", "Built-in podcast hosting", "One-click publish to Apple Podcasts and Spotify", "AI transcription for show notes"], "luma": "End-to-end podcast production platform \u2014 audio cleanup is bundled with hosting and publishing, not a standalone vocal tool.", "tags": ["podcast-production", "transcript-editing", "hosting", "automated-cleanup"], "social": [{"p": "Twitter/X", "u": "https://twitter.com/alitupodcast"}, {"p": "YouTube", "u": "https://www.youtube.com/c/Alitu"}], "activity": [{"d": "2025-03-01", "p": "Twitter/X", "t": "1080p video recording \u2014 mosaic grid for multi-participant podcasts"}, {"d": "2026-01-26", "p": "Twitter/X", "t": "Divide long audio into chunks, episode chapters, Bandwidth Extension filter"}], "pain": []}, {"rank": 18, "name": "VEED.IO", "slug": "veed-io", "type": "indirect", "position": "challenger", "overlap": "low", "pricing": "freemium", "platforms": ["web", "ios", "android"], "deployment": "cloud", "mode": "post-recording", "website": "https://www.veed.io", "sentiment": "none", "desc": "Online video editing platform with AI-powered audio enhancement, noise removal, and one-click speech clarity for creators.", "headline": "Everything you need, all in one place", "cta": "Create your first video", "features": ["AI-powered video editing suite", "Custom AI Avatar creation", "Auto subtitles and captions", "Background removal and AI effects", "Real-time collaboration for teams"], "luma": "Video-first editor with Clean Audio as secondary feature \u2014 indirect overlap for users who only need audio cleanup.", "tags": ["video-editing", "clean-audio", "subtitles", "ai-avatars"], "social": [{"p": "Twitter/X", "u": "https://twitter.com/veedstudio"}, {"p": "YouTube", "u": "https://www.youtube.com/c/VEEDstudio"}, {"p": "TikTok", "u": "https://www.tiktok.com/@veedstudio"}], "activity": [{"d": "2025-06-01", "p": "Twitter/X", "t": "Clean Audio: background noise removal for all video projects"}, {"d": "2025-10-01", "p": "Twitter/X", "t": "Text-to-video with Google Veo 3, PixVerse, Kling AI"}], "pain": []}, {"rank": 19, "name": "CapCut", "slug": "capcut", "type": "indirect", "position": "leader", "overlap": "low", "pricing": "freemium", "platforms": ["web", "ios", "android", "mac", "windows"], "deployment": "hybrid", "mode": "post-recording", "website": "https://www.capcut.com", "sentiment": "none", "desc": "Popular video editor for creators with AI audio enhancement, voice clarity, and background noise reduction features built-in.", "headline": "AI-Powered Video Editor for Everyone", "cta": "Try online", "features": ["AI video generator from text/images", "AI caption generator with filler word removal", "Voice enhancement and noise reduction", "Background removal and retouch", "100+ caption templates"], "luma": "Dominant free video editor with built-in voice enhancement \u2014 users may not seek dedicated vocal cleanup if CapCut suffices.", "tags": ["video-editing", "voice-enhancement", "captions", "tiktok"], "social": [{"p": "TikTok", "u": "https://www.tiktok.com/@capcut"}, {"p": "YouTube", "u": "https://www.youtube.com/c/CapCut"}], "activity": [{"d": "2025-06-01", "p": "TikTok", "t": "CapCut Commerce Pro \u2014 TikTok Shop and Shopify integration"}, {"d": "2026-02-01", "p": "TikTok", "t": "Seedance 2.0 in CapCut desktop \u2014 cinematic clips with lip-sync"}], "pain": []}, {"rank": 20, "name": "Utterly", "slug": "utterly", "type": "direct", "position": "new-entrant", "overlap": "medium", "pricing": "unknown", "platforms": ["web", "mac"], "deployment": "hybrid", "mode": "real-time", "website": "https://www.utterly.app", "sentiment": "none", "desc": "Mac-specific AI plugin for removing background noise from meetings and audio streams. Integrates with Zoom, OBS, Teams, and more.", "headline": "Noise cancellation for calls", "cta": "Get Started", "features": ["Real-time noise cancellation for calls", "Works with any video calling app", "Simple one-click interface", "Background noise removal", "Improved call audio quality"], "luma": "Mac + web but positioned for live call noise cancellation (Zoom, OBS, Teams) \u2014 adjacent use case, not post-recording content creation.", "tags": ["real-time", "mac", "meeting-noise-cancellation", "obs-integration"], "social": [], "activity": [], "pain": [], "notes": ["Mac + Web \u2014 partial overlap with Luma's Mac focus", "Positioned for calls/meetings, not content creation"]}]</script>
+<script id="matrix-data" type="application/json">[["Adobe Enhance", [0, 3, 1, 2, 0, 0, 3, 1, ""]], ["Descript", [1, 3, 3, 2, 2, 0, 2, 2, "G2"]], ["Cleanvoice", [0, 3, 2, 0, 0, 0, 1, 0, "G2, AltTo"]], ["Xound", [0, 1, 0, 0, 0, 3, 0, 0, ""]], ["MetalVoice", [0, 0, 0, 0, 0, 0, 0, 2, ""]], ["Krisp", [2, 3, 2, 1, 2, 1, 2, 0, "G2"]], ["ElevenLabs", [1, 3, 3, 2, 2, 0, 2, 1, ""]], ["iZotope RX", [2, 1, 1, 2, 2, 0, 0, 0, "G2"]], ["Auphonic", [0, 1, 0, 0, 0, 0, 0, 1, "Podcast dirs"]], ["Alitu", [0, 1, 1, 1, 2, 1, 1, 0, "G2, Trustpilot"]], ["Utterly", [0, 0, 0, 0, 0, 1, 0, 0, ""]], ["Audo", [0, 1, 1, 0, 0, 1, 0, 0, ""]], ["CrumplePop", [0, 1, 1, 0, 1, 0, 0, 0, "Plugin stores"]], ["Podcastle", [1, 2, 2, 0, 0, 0, 1, 0, "G2"]], ["CapCut/VEED", [3, 2, 1, 3, 0, 0, 3, 0, "App stores"]]]</script>
+<script>
+const competitors = JSON.parse(document.getElementById('competitor-data').textContent);
+const matrixData = JSON.parse(document.getElementById('matrix-data').textContent);
+
+const posColors = { leader: '#50e3c2', challenger: '#0070f3', niche: '#7928ca', 'new-entrant': '#eb367f', incumbent: '#a3a3a3' };
+const sentColors = { positive: '#50e3c2', negative: '#c55050', neutral: '#f5a623', mixed: '#eb367f', none: '#a3a3a3' };
+const overlapColors = { high: '#eb367f', medium: '#f5a623', low: '#a3a3a3' };
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function renderCompetitors(filter = 'all') {
+  const grid = document.getElementById('competitor-grid');
+  const filtered = competitors.filter(c => {
+    if (filter === 'all') return true;
+    if (filter === 'direct') return c.type === 'direct';
+    if (filter === 'indirect') return c.type === 'indirect';
+    if (filter === 'high') return c.overlap === 'high';
+    if (filter === 'local') return c.deployment === 'local' || c.platforms.includes('mac');
+    return true;
+  });
+  grid.innerHTML = filtered.map(c => {
+    const painHtml = c.pain.length ? c.pain.map(p => `
+      <div class="mt-3 rounded-md bg-[var(--color-muted)] p-3">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-xs font-medium">${esc(p.src)}</span>
+          <span class="badge" style="background:${sentColors[p.s]||'#363636'}22;color:${sentColors[p.s]||'#a3a3a3'}">${p.s}</span>
+        </div>
+        ${p.q ? `<blockquote class="mt-2 border-l-2 border-[var(--color-border)] pl-3 text-xs italic text-[var(--color-muted-fg)]">"${esc(p.q)}"</blockquote>` : ''}
+        <ul class="mt-2 space-y-1 text-xs text-[var(--color-muted-fg)]">${(p.pts||[]).map(pt => `<li>• ${esc(pt)}</li>`).join('')}</ul>
+      </div>`).join('') : '<p class="text-xs text-[var(--color-muted-fg)]">No user research captured.</p>';
+
+    const activityHtml = c.activity.length ? `<table class="mt-2 w-full text-xs"><tbody>${c.activity.map(a => `<tr class="border-b border-[var(--color-border)]"><td class="py-1.5 pr-2 text-[var(--color-muted-fg)]">${esc(a.d)}</td><td class="py-1.5 pr-2">${esc(a.p)}</td><td class="py-1.5">${esc(a.t)}</td></tr>`).join('')}</tbody></table>` : '<p class="text-xs text-[var(--color-muted-fg)]">No posts captured.</p>';
+
+    const socialHtml = c.social.length ? c.social.map(s => `<a href="${esc(s.u)}" target="_blank" rel="noopener" class="text-[var(--color-link)] hover:underline">${esc(s.p)}</a>`).join(' · ') : '—';
+
+    const notesHtml = (c.notes||[]).length ? `<div class="mt-3 rounded-md border border-[var(--color-cyan)]/30 bg-[var(--color-cyan)]/5 p-3"><p class="text-xs font-medium text-[var(--color-cyan)]">Notes</p><ul class="mt-1 space-y-1 text-xs text-[var(--color-muted-fg)]">${c.notes.map(n => `<li>→ ${esc(n)}</li>`).join('')}</ul></div>` : '';
+
+    return `<details class="card competitor-card group" data-type="${c.type}" data-overlap="${c.overlap}" data-deployment="${c.deployment}">
+      <summary class="p-4">
+        <div class="flex items-start justify-between gap-2">
+          <div class="min-w-0">
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span class="text-xs text-[var(--color-muted-fg)]">#${c.rank}</span>
+              <span class="font-semibold">${esc(c.name)}</span>
+            </div>
+            <div class="mt-2 flex flex-wrap gap-1">
+              <span class="badge" style="background:${posColors[c.position]||'#363636'}22;color:${posColors[c.position]||'#a3a3a3'}">${c.position}</span>
+              <span class="badge bg-[var(--color-muted)] text-[var(--color-muted-fg)]">${c.type}</span>
+              ${c.overlap === 'high' ? '<span class="badge bg-[var(--color-magenta)]/20 text-[var(--color-magenta)]">high overlap</span>' : ''}
+            </div>
+            <p class="mt-2 line-clamp-2 text-xs text-[var(--color-muted-fg)]">${esc(c.desc)}</p>
+          </div>
+          <svg class="chevron mt-1 h-4 w-4 shrink-0 text-[var(--color-muted-fg)] transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+        <div class="mt-3 grid grid-cols-3 gap-2 text-xs">
+          <div><span class="text-[var(--color-muted-fg)]">Pricing</span><br/><span class="font-medium">${c.pricing}</span></div>
+          <div><span class="text-[var(--color-muted-fg)]">Deploy</span><br/><span class="font-medium">${c.deployment}</span></div>
+          <div><span class="text-[var(--color-muted-fg)]">Mode</span><br/><span class="font-medium">${c.mode}</span></div>
+        </div>
+      </summary>
+      <div class="border-t border-[var(--color-border)] px-4 pb-4 pt-3 space-y-4">
+        <div class="flex flex-wrap gap-1">${c.platforms.map(p => `<span class="badge bg-[var(--color-muted)]">${p}</span>`).join('')}${c.tags.map(t => `<span class="badge bg-[var(--color-muted)] text-[var(--color-muted-fg)]">${esc(t)}</span>`).join('')}</div>
+        <a href="${c.website}" target="_blank" rel="noopener" class="inline-block text-xs text-[var(--color-link)] hover:underline">${c.website}</a>
+        <div class="rounded-md bg-[var(--color-muted)] p-3"><p class="text-xs font-medium text-[var(--color-cyan)]">Luma positioning</p><p class="mt-1 text-xs text-[var(--color-muted-fg)]">${esc(c.luma)}</p></div>
+        <details class="group/nested"><summary class="flex cursor-pointer items-center justify-between text-xs font-medium"><span>Landing page & features</span><svg class="chevron h-3 w-3 text-[var(--color-muted-fg)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary>
+          <div class="mt-2 space-y-2 text-xs"><p><span class="text-[var(--color-muted-fg)]">Headline:</span> ${esc(c.headline)}</p><p><span class="text-[var(--color-muted-fg)]">CTA:</span> ${esc(c.cta)}</p><ul class="mt-1 space-y-0.5 text-[var(--color-muted-fg)]">${c.features.map(f => `<li>✓ ${esc(f)}</li>`).join('')}</ul></div>
+        </details>
+        <details class="group/nested"><summary class="flex cursor-pointer items-center justify-between text-xs font-medium"><span>User research & pain points (${c.pain.length})</span><svg class="chevron h-3 w-3 text-[var(--color-muted-fg)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><div class="mt-2">${painHtml}</div></details>
+        <details class="group/nested"><summary class="flex cursor-pointer items-center justify-between text-xs font-medium"><span>Recent activity (${c.activity.length})</span><svg class="chevron h-3 w-3 text-[var(--color-muted-fg)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></summary><div class="mt-2">${activityHtml}</div></details>
+        <p class="text-xs"><span class="text-[var(--color-muted-fg)]">Social:</span> ${socialHtml}</p>
+        ${notesHtml}
+      </div>
+    </details>`;
+  }).join('');
+}
+
+function renderMatrix() {
+  const tbody = document.getElementById('channel-matrix');
+  tbody.innerHTML = matrixData.map(([name, vals]) => {
+    const cells = vals.map((v, i) => {
+      if (typeof v === 'string') return `<td class="py-1.5 px-1 text-[var(--color-muted-fg)]">${esc(v)}</td>`;
+      const cls = v === 0 ? 'heat-0' : `heat-${Math.min(v,3)}`;
+      return `<td class="py-1.5 px-1"><span class="inline-block h-3 w-3 rounded-sm ${cls}"></span></td>`;
+    }).join('');
+    return `<tr class="border-b border-[var(--color-border)]"><td class="py-1.5 pr-3 font-medium">${esc(name)}</td>${cells}</tr>`;
+  }).join('');
+}
+
+document.getElementById('filters').addEventListener('click', e => {
+  const btn = e.target.closest('[data-filter]');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('active'); b.classList.add('text-[var(--color-muted-fg)]'); });
+  btn.classList.add('active');
+  btn.classList.remove('text-[var(--color-muted-fg)]');
+  renderCompetitors(btn.dataset.filter);
+});
+
+renderCompetitors();
+renderMatrix();
+</script>
+</body>
+</html>
